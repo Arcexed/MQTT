@@ -9,9 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecondTestProject", "Second
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThirdEmptyWebApplication", "ThirdEmptyWebApplication\ThirdEmptyWebApplication.csproj", "{34E04301-F0EA-4E03-8071-291B6423AFFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MQTTWebApi", "TestWebApiApplication\MQTTWebApi.csproj", "{914C8513-C305-436E-9AC1-BEB22365301C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MQTTServer", "MQTTServer\MQTTServer.csproj", "{DE5AF38C-B95F-4195-BC5D-9A4FD02C30E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MQTTWebApi", "TestWebApiApplication\MQTTWebApi.csproj", "{914C8513-C305-436E-9AC1-BEB22365301C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +33,6 @@ Global
 		{914C8513-C305-436E-9AC1-BEB22365301C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{914C8513-C305-436E-9AC1-BEB22365301C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{914C8513-C305-436E-9AC1-BEB22365301C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DE5AF38C-B95F-4195-BC5D-9A4FD02C30E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DE5AF38C-B95F-4195-BC5D-9A4FD02C30E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DE5AF38C-B95F-4195-BC5D-9A4FD02C30E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DE5AF38C-B95F-4195-BC5D-9A4FD02C30E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -13,7 +13,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 
-namespace TestWebApiApplication
+namespace MQTTWebApi
 {
     public class Startup
     {

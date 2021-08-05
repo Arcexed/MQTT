@@ -4,19 +4,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TestWebApiApplication.Models;
+using MQTTWebApi.Models;
+using MQTTWebApi.Static;
 
-namespace TestWebApiApplication.Controllers
+namespace MQTTWebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
     public class MeasurementsController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
+        
         private readonly ILogger<MeasurementsController> _logger;
 
         public MeasurementsController(ILogger<MeasurementsController> logger)
@@ -25,18 +22,29 @@ namespace TestWebApiApplication.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get(int limit)
+        
+        public IEnumerable<Device> Get(int limit)
         {
-            var rng = new Random();
-            return Enumerable.Range(1, limit).Select(index => new WeatherForecast
+            using (MqttDBContext db = new MqttDBContext())
             {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)],
-                RadiationRoentgen = rng.Next(50)
-                
-            })
-                .Take(limit).ToArray();
+                return db.Device.ToArray().Take(limit);
+                //return Enumerable.Range(1, limit).Select(x => db.Device).Take().ToArray();
+                //    .Take(limit).ToArray();
+                //// получаем объекты из бд и выводим на консоль
+                //var users = db.Device.ToList();
+                //Console.WriteLine("Список объектов:");
+               
+            }
+            //return Enumerable.Range(1, limit).Select(index => new WeatherForecast
+            //    {
+            //        Date = DateTime.Now.AddDays(index),
+            //        TemperatureC = rng.Next(-20, 55),
+            //        Summary = Summaries[rng.Next(Summaries.Length)],
+            //        RadiationRoentgen = rng.Next(50)
+
+            //    })
+            //    .Take(limit).ToArray();
+
         }
     }
 }
