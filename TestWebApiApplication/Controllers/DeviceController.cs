@@ -27,9 +27,12 @@ namespace MQTTWebApi.Controllers
 
         // GET api/<DeviceController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IEnumerable<Device> Get(string name)
         {
-            return "value";
+            using (MqttDBContext db = new MqttDBContext())
+            {
+                return db.Device.Where(d => d.Name.Equals(name)).ToArray();
+            }
         }
         [HttpPost("Add")]
         public string Post(string name, string descr,string geo)
@@ -43,6 +46,7 @@ namespace MQTTWebApi.Controllers
                     if (!isDuplicateItem)
                     {
                         db.Device.Add(new Device(name, descr, geo));
+                        db.SaveChanges();
                         return "Success";
                     }
                     else
