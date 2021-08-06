@@ -22,20 +22,15 @@ namespace MQTTWebApi.Static
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(GetConfigurationString());
+            optionsBuilder.UseSql(@"Server=(localdb)\mssqllocaldb;Database=helloappdb;Trusted_Connection=True;");
 
         }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Device>().HasKey(u => u.Id);
-            modelBuilder.Entity<Measurements>().HasKey(u => u.Id);
-            modelBuilder.Entity<Events>().HasKey(u => u.Id);
-        }
+
         private string GetConfigurationString()
         {
             var builder = new ConfigurationBuilder();
             // установка пути к текущему каталогу
-            builder.SetBasePath(Directory.GetCurrentDirectory()+"\\Properties");
+            builder.SetBasePath(Directory.GetCurrentDirectory());
             // получаем конфигурацию из файла appsettings.json
             builder.AddJsonFile("appsettings.json");
             // создаем конфигурацию

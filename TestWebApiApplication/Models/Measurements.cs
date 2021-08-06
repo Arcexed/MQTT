@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,14 +8,15 @@ namespace MQTTWebApi.Models
 {
     public class Measurements
     {
-        public string id { get; set; }
-        public Device device { get; set; }
-        public DateTime time { get; set; }
-        public float atmospheric_pressure { get; set; }
-        public float temperature { get; set; }
-        public float air_humidity { get; set; }
-        public float light_level { get; set; }
-        public float smoke_level { get; set; }
+        [Key]
+        public string Id { get; set; }
+        public Device Id_device { get; set; }
+        public DateTime Time { get; set; }
+        public float AtmosphericPressure { get; set; }
+        public float Temperature { get; set; }
+        public float AirHumidity { get; set; }
+        public float LightLevel { get; set; }
+        public float SmokeLevel { get; set; }
 
     }
 }
