@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using Microsoft.Extensions.Logging;
 using MQTTWebApi.Models;
 using MQTTWebApi.Static;
 
@@ -15,9 +16,16 @@ namespace MQTTWebApi.Controllers
     [ApiController]
     public class DeviceController : ControllerBase
     {
-        // GET: api/<DeviceController>
+
+        private readonly ILogger<DeviceController> _logger;
+
+        public DeviceController(ILogger<DeviceController> logger)
+        {
+            _logger = logger;
+        }
+        // GET: <DeviceController>
         [HttpGet]
-        public IEnumerable<Device> Get()
+        public IEnumerable<Device> AllDevicesGET()
         {
             using (MqttDBContext db = new MqttDBContext())
             {
@@ -25,8 +33,8 @@ namespace MQTTWebApi.Controllers
             }
         }
 
-        // GET api/<DeviceController>/5
-        [HttpGet("{id}")]
+        // GET <DeviceController>/5
+        [HttpGet("{name}")]
         public IEnumerable<Device> Get(string name)
         {
             using (MqttDBContext db = new MqttDBContext())
@@ -34,8 +42,8 @@ namespace MQTTWebApi.Controllers
                 return db.Device.Where(d => d.Name.Equals(name)).ToArray();
             }
         }
-        [HttpPost("Add")]
-        public string Post(string name, string descr,string geo)
+        [HttpGet("Add")]
+        public string AddDeviceGET(string name, string descr,string geo)
         {
             try
             {
@@ -47,7 +55,7 @@ namespace MQTTWebApi.Controllers
                     {
                         db.Device.Add(new Device(name, descr, geo));
                         db.SaveChanges();
-                        return "Success";
+                        return "Success adding";
                     }
                     else
                     {
@@ -62,6 +70,66 @@ namespace MQTTWebApi.Controllers
         }
 
 
+        [HttpGet("Edit")]
+        public string EditDeviceGET(string name,string descr, string geo)
+        {
+            try
+            {
+                using (MqttDBContext db = new MqttDBContext())
+                {
+                    var ExistsItem = db.Device.Where(d => d.Name.ToUpper() == name).FirstOrDefault();
 
+                    if (ExistsItem!=null)
+                    {
+                        if (descr != null)
+                        {
+                            ExistsItem.Descr = descr;
+                        }
+
+                        if (geo != null)
+                        {
+                            ExistsItem.Geo = geo;
+                        }
+                        db.SaveChanges();
+                        return "Success editing";
+                    }
+                    else
+                    {
+                        return "This device is not exists";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+        [HttpGet("Delete")]
+        public string DeleteDeviceGET(string name)
+        {
+            try
+            {
+                using (MqttDBContext db = new MqttDBContext())
+                {
+                    var ExistsItem = db.Device.Where(d => d.Name.ToUpper() == name).FirstOrDefault();
+
+                    if (ExistsItem != null)
+                    {
+                        db.Device.Remove(ExistsItem);
+                        
+                        db.SaveChanges();
+                        return "Success delete";
+                    }
+                    else
+                    {
+                        return "This device is not exists";
+                    }
+                }
+            }
+            catch (Exception ex)    
+            {
+                return ex.Message;
+            }
+        }
     }
 }

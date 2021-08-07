@@ -9,8 +9,9 @@ namespace MQTTWebApi.Models
     public class Measurements
     {
         [Key]
-        public string Id { get; set; }
-        public Guid Id_device { get; set; }
+        public Guid Id { get; set; }
+        [Key]
+        public Device Device { get; set; }
         public DateTime Time { get; set; }
         public float AtmosphericPressure { get; set; }
         public float Temperature { get; set; }

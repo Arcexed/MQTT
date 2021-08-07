@@ -10,7 +10,7 @@ namespace MQTTWebApi.Models
     {
         [Key]
         public string Id { get; set; }
-        public Guid id_device { get; set; }
+        public Device Device { get; set; }
         public string Message { get; set; }
     }
 }
