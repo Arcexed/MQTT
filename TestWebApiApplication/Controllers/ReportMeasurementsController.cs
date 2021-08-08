@@ -23,70 +23,56 @@ namespace MQTTWebApi.Controllers
         }
 
 
-        [HttpGet("Minutely")]
-        public IEnumerable<Measurements> MinutelyInfoGET(string deviceName)
+        [HttpGet("{deviceName}/Minutely")]
+        public ReportMeasurements MinutelyInfoGET(string deviceName)
         {
 
             using (MqttDBContext db = new MqttDBContext())
             {
-
-                return db.Measurements.Where(m => m.Device.Name == deviceName && m.Time >= DateTime.Now.AddMinutes(-1));
+                var measurements = db.Measurements.Where(m =>
+                    m.Device.Name == deviceName && m.Time >= DateTime.Now.AddMinutes(-1));
+                var device = db.Device.Where(d => d.Name == deviceName).FirstOrDefault();
+                ReportMeasurements report =  ReportMeasurements.GenerateReportMeasurements(measurements,device);
+                return report;
             }
         }
 
-        [HttpGet("Hourly")]
-        public IEnumerable<Measurements> HourlyInfoGET(string deviceName)
+        [HttpGet("{deviceName}/Hourly")]
+        public ReportMeasurements HourlyInfoGET(string deviceName)
         {
 
             using (MqttDBContext db = new MqttDBContext())
             {
+                var measurements = db.Measurements.Where(m => m.Device.Name==deviceName && m.Time>=DateTime.Now.AddHours(-1));
+                var device = db.Device.Where(d => d.Name == deviceName).FirstOrDefault();
+                ReportMeasurements report = ReportMeasurements.GenerateReportMeasurements(measurements, device);
+                return report;
+            }
+        }
+
         
-                return db.Measurements.Where(m => m.Device.Name==deviceName && m.Time>=DateTime.Now.AddHours(-1));
-            }
-        }
-
-        private ReportMeasurements AvgMinuteMeasurements(string deviceName)
+        [HttpGet("{deviceName}/Daily")]
+        public ReportMeasurements DailyInfoGET(string deviceName)
         {
             using (MqttDBContext db = new MqttDBContext())
             {
                 var measurements =
-                    db.Measurements.Where(m => m.Device.Name == deviceName && m.Time >= DateTime.Now.AddMinutes(-1));
-                if (measurements.Count() > 0)
-                {
-                    var MeasurementTempMin = measurements.FirstOrDefault(x => x.Temperature == measurements.Min(y => y.Temperature));
-
-                    //ReportMeasurements report = MeasurementTempMin;
-                   
-
-                    return null;
-
-                }
-                else
-                {
-                    return null;
-                }
-
+                    db.Measurements.Where(m => m.Device.Name == deviceName && m.Time >= DateTime.Now.AddDays(-1));
+                var device = db.Device.Where(d => d.Name == deviceName).FirstOrDefault();
+                ReportMeasurements report = ReportMeasurements.GenerateReportMeasurements(measurements, device);
+                return report;
             }
-
-            return null;
         }
-        [HttpGet("Daily")]
-        public IEnumerable<Measurements> DailyInfoGET(string deviceName)
-        {
-            return null;
-            //using (MqttDBContext db = new MqttDBContext())
-            //{
-            //    return db.Measurements.Where(m => m.Device.Name == deviceName && DateTime.Now - m.Time);
-            //}
-
-        }
-        [HttpGet("Monthly")]
-        public IEnumerable<Measurements> MonthlyInfoGET(string deviceName)
+        [HttpGet("{deviceName}/Monthly")]
+        public ReportMeasurements MonthlyInfoGET(string deviceName)
         {
 
             using (MqttDBContext db = new MqttDBContext())
-            { 
-                return db.Measurements.Where(m => m.Device.Name == deviceName && m.Time > m.Time.AddMonths(-1));
+            {
+                var measurements = db.Measurements.Where(m => m.Device.Name == deviceName && m.Time > m.Time.AddMonths(-1));
+                var device = db.Device.Where(d => d.Name == deviceName).FirstOrDefault();
+                ReportMeasurements report = ReportMeasurements.GenerateReportMeasurements(measurements, device);
+                return report;
             }
         }
     }

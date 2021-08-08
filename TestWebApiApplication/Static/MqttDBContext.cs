@@ -27,6 +27,7 @@ namespace MQTTWebApi.Static
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Ignore<ReportMeasurements>();
             //modelBuilder.Entity<Device>()
             //    .HasMany(p => p.Blog)
             //    .WithMany(b => b.Posts)

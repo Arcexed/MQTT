@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace MQTTWebApi.Models
 {
     public class ReportMeasurements
     {
-        public Device device { get; set; }
+        public Device Device { get; set; }
         public Measurements MinTemp { get; set; }
-        public float AvgTemp { get; set; }
+        public Measurements AvgTemp { get; set; }
         public Measurements MaxTemp { get; set; }
         public Measurements MinAtmosphericPressure { get; set; }
         public float AvgAtmosphericPressure { get; set; }
@@ -24,11 +25,16 @@ namespace MQTTWebApi.Models
         public float AvgSmokeLevel { get; set; }
         public Measurements MaxSmokeLevel { get; set; }
 
-        public static ReportMeasurements GenerateReportMeasurements(IQueryable<Measurements> measurements)
+        public static ReportMeasurements GenerateReportMeasurements(IQueryable<Measurements> measurements, Device device)
         {
-            if (measurements != null)
+            if (measurements != null && device!=null)
             {
-                return null;
+                ReportMeasurements report = new ReportMeasurements();
+                report.Device = device;
+                report.MinTemp = measurements.FirstOrDefault(x => x.Temperature == measurements.Min(y => y.Temperature));
+                report.AvgTemp = measurements.FirstOrDefault(x => x.Temperature == measurements.Average(y => y.Temperature));
+                report.MaxTemp = measurements.FirstOrDefault(x => x.Temperature == measurements.Max(y => y.Temperature));
+                return report;
             }
             else
             {
