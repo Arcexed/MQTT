@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using MQTTWebApi.Static;
 
 namespace MQTTWebApi.Models
 {
     public class Measurements
     {
         [Key] public Guid Id { get; set; }
-        [Key] public Device Device { get; set; }
+        [Key] [Column("id_device")] public Device Device { get; set; }
         public DateTime Time { get; set; }
         public float AtmosphericPressure { get; set; }
         public float Temperature { get; set; }
@@ -17,10 +19,12 @@ namespace MQTTWebApi.Models
         public float LightLevel { get; set; }
         public float SmokeLevel { get; set; }
 
-        public Measurements(Device device,float atmosphericPressure,float temperature,float airHumidity,float lightLevel, float smokeLevel)
+        public Measurements(string deviceId,float atmosphericPressure,float temperature,float airHumidity,float lightLevel, float smokeLevel)
         {
-            this.Device = device;
-            this.Time=DateTime.Now;
+            using MqttDBContext db = new MqttDBContext();
+
+            this.Device = db.Device.Where(d=>d.Id.ToString()==deviceId).First();
+            this.Time = DateTime.Now;
             this.AtmosphericPressure = atmosphericPressure;
             this.Temperature = temperature;
             this.AirHumidity = airHumidity;

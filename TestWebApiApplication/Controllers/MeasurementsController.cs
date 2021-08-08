@@ -25,7 +25,7 @@ namespace MQTTWebApi.Controllers
                 var device = db.Device.Where(d => d.Name == deviceName).FirstOrDefault();
                 if (device != null)
                 {
-                    var measurement = new Measurements(device,atmosphericPressure,temperature,airHumidity,lightLevel,smokeLevel);
+                    var measurement = new Measurements(device.Id.ToString(),atmosphericPressure,temperature,airHumidity,lightLevel,smokeLevel);
                     db.Measurements.Add(measurement);
                     db.SaveChanges();
                     return "Success";

@@ -27,14 +27,10 @@ namespace MQTTWebApi.Static
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Device>().ToTable("device");
+            modelBuilder.Entity<Measurements>().ToTable("measurements");
+            modelBuilder.Entity<Events>().ToTable("events");
             modelBuilder.Ignore<ReportMeasurements>();
-            //modelBuilder.Entity<Device>()
-            //    .HasMany(p => p.Blog)
-            //    .WithMany(b => b.Posts)
-            //    .HasForeignKey(p => p.BlogUrl)
-            //modelBuilder.Entity<Device>().HasKey(u => u.Id);
-            //modelBuilder.Entity<Measurements>().HasKey(u => u.Id);
-            //modelBuilder.Entity<Events>().HasKey(u => u.Id);
         }
         private string GetConfigurationString()
         {
