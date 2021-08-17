@@ -11,8 +11,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using MQTTWebApi.Models;
 
 namespace MQTTWebApi
 {
@@ -30,6 +33,16 @@ namespace MQTTWebApi
         {
 
             services.AddControllers();
+            string connection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<MqttdbContext>(options =>
+            {
+                options.UseSqlServer(connection);
+                options.LogTo(Console.WriteLine);
+            });
+            var mappingConfig = new MapperConfiguration(mc => {
+                mc.AddProfile(new DeviceProfile());
+            });
+            IMapper mapper = mappingConfig.CreateMapper();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });

@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.Extensions.Logging;
 using MQTTWebApi.Models;
-using MQTTWebApi.Static;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,52 +16,58 @@ namespace MQTTWebApi.Controllers
     [ApiController]
     public class DeviceController : ControllerBase
     {
-
+        private readonly IMapper _mapper;
+        private readonly MqttdbContext _db;
         private readonly ILogger<DeviceController> _logger;
 
-        public DeviceController(ILogger<DeviceController> logger)
+        public DeviceController(ILogger<DeviceController> logger,MqttdbContext db, IMapper mapper)
         {
             _logger = logger;
+            _db = db;
+            _mapper = mapper;
         }
         // GET: <DeviceController>
         [HttpGet]
         public IEnumerable<Device> AllDevicesGET()
         {
-            using (MqttDBContext db = new MqttDBContext())
-            {
-                return db.Device.ToArray();
-            }
+
+            return _db.Devices.ToArray();
+
         }
 
         // GET <DeviceController>/5
         [HttpGet("{name}")]
         public IEnumerable<Device> Get(string name)
         {
-            using (MqttDBContext db = new MqttDBContext())
-            {
-                return db.Device.Where(d => d.Name.Equals(name)).ToArray();
-            }
+
+            return _db.Devices.Where(d => d.Name.Equals(name)).ToArray();
         }
         [HttpGet("Add")]
-        public string AddDeviceGET(string name, string descr,string geo)
+        public string AddDeviceGET(string name, string descr, string geo)
         {
             try
             {
-                using (MqttDBContext db = new MqttDBContext())
-                {
-                    var isDuplicateItem = db.Device.Any(d => d.Name.ToUpper() == name);
-                        
+                var isDuplicateItem = _db.Devices.Any(d => d.Name.ToUpper() == name);
+
                     if (!isDuplicateItem)
                     {
-                        db.Device.Add(new Device(name, descr, geo));
-                        db.SaveChanges();
+                        Device device = new Device()
+                        {
+                            Name=name,
+                            Descr=descr,
+                            Geo=geo,
+                            CreateDate = DateTime.Now,
+                            EditDate = null
+                        };
+                        _db.Devices.Add(device);
+                        _db.SaveChanges();
                         return "Success adding";
                     }
                     else
                     {
                         return "This device is exists";
                     }
-                }
+                
             }
             catch (Exception ex)
             {
@@ -71,26 +77,27 @@ namespace MQTTWebApi.Controllers
 
 
         [HttpGet("Edit")]
-        public string EditDeviceGET(string name,string descr, string geo)
+        public string EditDeviceGET(string name, string descr, string geo)
         {
-            try
+            if (!string.IsNullOrEmpty(name))
             {
-                using (MqttDBContext db = new MqttDBContext())
+                try
                 {
-                    var ExistsItem = db.Device.Where(d => d.Name.ToUpper() == name).FirstOrDefault();
+                    var device = _db.Devices.Where(d => d.Name.ToUpper() == name).FirstOrDefault();
 
-                    if (ExistsItem!=null)
+                    if (device != null)
                     {
                         if (descr != null)
                         {
-                            ExistsItem.Descr = descr;
+                            device.Descr = descr;
                         }
 
                         if (geo != null)
                         {
-                            ExistsItem.Geo = geo;
+                            device.Geo = geo;
                         }
-                        db.SaveChanges();
+                        device.EditDate=DateTime.Now;
+                        _db.SaveChanges();
                         return "Success editing";
                     }
                     else
@@ -98,26 +105,30 @@ namespace MQTTWebApi.Controllers
                         return "This device is not exists";
                     }
                 }
+                catch (Exception ex)
+                {
+                    return ex.Message;
+                }
             }
-            catch (Exception ex)
+            else
             {
-                return ex.Message;
+                return "Name is null or empty";
             }
         }
         [HttpGet("Delete")]
         public string DeleteDeviceGET(string name)
         {
-            try
-            {
-                using (MqttDBContext db = new MqttDBContext())
-                {
-                    var ExistsItem = db.Device.Where(d => d.Name.ToUpper() == name).FirstOrDefault();
 
+            if (string.IsNullOrEmpty(name))
+            {
+                try
+                {
+                    var ExistsItem = _db.Devices.Where(d => d.Name.ToUpper() == name).FirstOrDefault();
                     if (ExistsItem != null)
                     {
-                        db.Device.Remove(ExistsItem);
-                        
-                        db.SaveChanges();
+                        _db.Devices.Remove(ExistsItem);
+
+                        _db.SaveChanges();
                         return "Success delete";
                     }
                     else
@@ -125,10 +136,14 @@ namespace MQTTWebApi.Controllers
                         return "This device is not exists";
                     }
                 }
+                catch (Exception ex)
+                {
+                    return ex.Message;
+                }
             }
-            catch (Exception ex)    
+            else
             {
-                return ex.Message;
+                return "Name is null or empty";
             }
         }
     }
