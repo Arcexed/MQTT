@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MQTTWebApi", "TestWebApiApp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenerateMeasurements", "UnitTests\GenerateMeasurements.csproj", "{5DF7B81D-0D32-4E5C-B743-40C750094E6F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MQTTDashboard", "MQTTDashboard\MQTTDashboard.csproj", "{4A0F10A1-C585-4306-928F-03F6BEC468FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{5DF7B81D-0D32-4E5C-B743-40C750094E6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DF7B81D-0D32-4E5C-B743-40C750094E6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DF7B81D-0D32-4E5C-B743-40C750094E6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A0F10A1-C585-4306-928F-03F6BEC468FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A0F10A1-C585-4306-928F-03F6BEC468FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A0F10A1-C585-4306-928F-03F6BEC468FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A0F10A1-C585-4306-928F-03F6BEC468FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
