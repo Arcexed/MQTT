@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Routing.Constraints;
+using MQTTDashboard.Models.DbModels;
 using MQTTWebApi.Models.ForReport;
 
 namespace MQTTWebApi.Models.Profiles

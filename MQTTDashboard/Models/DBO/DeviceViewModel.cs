@@ -18,9 +18,8 @@ namespace MQTTWebApi.Models.ForReport
         [JsonIgnore]
         public DateTime? _editDate  { get; set; }
         public string EditDate => _editDate.Value.ToString("G");
-
         public IEnumerable<MeasurementViewModel> LastTenMeasurements { get; set; } 
-        public IEnumerable<EventViewModel> LastTenEvents { get; set; }
+        public IEnumerable<EventDeviceViewModel> LastTenEvents { get; set; }
         private DateTime? _lastMeasurement {
             get
             {

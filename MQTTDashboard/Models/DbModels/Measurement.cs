@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 
 #nullable disable
 
-namespace MQTTWebApi.Models
+namespace MQTTDashboard.Models.DbModels
 {
     public partial class Measurement
     {
@@ -16,6 +15,7 @@ namespace MQTTWebApi.Models
         public double AirHumidity { get; set; }
         public double LightLevel { get; set; }
         public double SmokeLevel { get; set; }
+
         public virtual Device Device { get; set; }
     }
 }

@@ -9,6 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenerateMeasurements", "Uni
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MQTTDashboard", "MQTTDashboard\MQTTDashboard.csproj", "{4A0F10A1-C585-4306-928F-03F6BEC468FA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DB", "DB", "{0979D7FB-EBFC-4D43-97FC-BC60E04A8F68}"
+	ProjectSection(SolutionItems) = preProject
+		CreateNewDB.sql = CreateNewDB.sql
+		CreateOldDb.sql = CreateOldDb.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

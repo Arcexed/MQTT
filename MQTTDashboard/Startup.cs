@@ -8,6 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using MQTTDashboard.Models.dbmodels;
+using MQTTDashboard.Models.Profiles;
 using MQTTWebApi.Models;
 using MQTTWebApi.Models.Profiles;
 
@@ -27,7 +31,7 @@ namespace MQTTDashboard
         {
             services.AddControllersWithViews();
             string connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<MqttdbContext>(options =>
+            services.AddDbContext<Mqttdb_newContext>(options =>
             {
                 options.UseSqlServer(connection);
                 options.LogTo(Console.WriteLine);
@@ -35,8 +39,10 @@ namespace MQTTDashboard
             // automapper
             var mappingConfig = new MapperConfiguration(mc => {
                 mc.AddProfile(new DeviceProfile());
-                mc.AddProfile(new EventProfile());
+                mc.AddProfile(new EventDeviceProfile());
                 mc.AddProfile(new MeasurementProfile());
+                mc.AddProfile(new EventUserProfile());
+                mc.AddProfile(new UserProfile());
             });
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);

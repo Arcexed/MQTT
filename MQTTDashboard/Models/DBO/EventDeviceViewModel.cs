@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MQTTWebApi.Models
 {
-    public class EventViewModel {
+    public class EventDeviceViewModel {
         public Guid Id { get; set; }
         public string Message { get; set; }
         [JsonIgnore]

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using MQTTDashboard.Models.DbModels;
 
 namespace MQTTWebApi.Models.ForReport
 {
@@ -17,8 +18,7 @@ namespace MQTTWebApi.Models.ForReport
         public float AirHumidity { get; set; }
         public float LightLevel { get; set; }
         public float SmokeLevel { get; set; }
-        [JsonIgnore]
-        public Device Device { get; set; }
+        
 
     }
 }
