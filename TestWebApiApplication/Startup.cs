@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using MQTTWebApi.Models;
+using MQTTWebApi.Models.Profiles;
 
 namespace MQTTWebApi
 {
@@ -31,18 +32,24 @@ namespace MQTTWebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+           
             services.AddControllers();
+            // ef core
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<MqttdbContext>(options =>
             {
                 options.UseSqlServer(connection);
                 options.LogTo(Console.WriteLine);
             });
+            // automapper
             var mappingConfig = new MapperConfiguration(mc => {
                 mc.AddProfile(new DeviceProfile());
+                mc.AddProfile(new EventProfile());
+                mc.AddProfile(new MeasurementProfile());
             });
             IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });

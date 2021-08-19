@@ -3,9 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MQTTWebApi.Models;
+using MQTTWebApi.Models.ForReport;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,12 +17,14 @@ namespace MQTTWebApi.Controllers
     [ApiController]
     public class MeasurementsController : ControllerBase
     {
+        private readonly IMapper _mapper;
         private readonly ILogger<MeasurementsController> _logger;
         private readonly MqttdbContext _db;
-        public MeasurementsController(ILogger<MeasurementsController> logger, MqttdbContext db)
+        public MeasurementsController(ILogger<MeasurementsController> logger, MqttdbContext db,IMapper mapper)
         {
             _logger = logger;
             _db = db;
+            _mapper = mapper;
         }
         // GET api/<MeasurementsController>/5
         [HttpGet("{deviceName}/Add")]
@@ -51,9 +55,17 @@ namespace MQTTWebApi.Controllers
         }
 
         [HttpGet("{deviceName}/Get")]
-        public IEnumerable<Measurement> GetMeasurements(string deviceName)
+        public IEnumerable<MeasurementViewModel> GetMeasurements(string deviceName)
         {
-            return _db.Measurements.Where(m => m.Device.Name == deviceName);
+            IEnumerable<MeasurementViewModel> measurementViewModels =
+                _mapper.Map<IEnumerable<Measurement>, IEnumerable<MeasurementViewModel>>(_db.Measurements
+                    .Where(m => m.Device.Name == deviceName).ToArray());
+
+            //IEnumerable<MeasurementViewModel> measurementViewModels =
+            //    _mapper.Map<IEnumerable<Measurement>, IEnumerable<MeasurementViewModel>>(_db.Measurements
+            //        .Where(m => m.Device.Name == deviceName).Take(limit != 0 ? (limit < 1000 ? limit : 1000) : 10));
+            return measurementViewModels;
+
         }
     }
 }

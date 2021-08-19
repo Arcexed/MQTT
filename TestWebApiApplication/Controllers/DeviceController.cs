@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.Extensions.Logging;
 using MQTTWebApi.Models;
+using MQTTWebApi.Models.ForReport;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -28,19 +30,24 @@ namespace MQTTWebApi.Controllers
         }
         // GET: <DeviceController>
         [HttpGet]
-        public IEnumerable<Device> AllDevicesGET()
+        public IEnumerable<DeviceViewModel> AllDevicesGET()
         {
-
-            return _db.Devices.ToArray();
+            return _mapper.Map<IEnumerable<Device>, IEnumerable<DeviceViewModel>>(_db.Devices.Include(d => d.Measurements).Take(10).Include(d=>d.Events).Take(10).ToArray());
 
         }
 
         // GET <DeviceController>/5
         [HttpGet("{name}")]
-        public IEnumerable<Device> Get(string name)
+        public DeviceViewModel Get(string name)
         {
-
-            return _db.Devices.Where(d => d.Name.Equals(name)).ToArray();
+            if (!string.IsNullOrEmpty(name))
+            {
+                return _mapper.Map<Device, DeviceViewModel>(_db.Devices.Where(d => d.Name.Equals(name)).Include(d=>d.Measurements).Take(10).Include(d=>d.Events).Take(10).ToArray().FirstOrDefault());
+            }
+            else
+            {
+                return null;
+            }
         }
         [HttpGet("Add")]
         public string AddDeviceGET(string name, string descr, string geo)
