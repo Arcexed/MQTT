@@ -53,7 +53,6 @@ namespace MQTTWebApi.Models
                     .HasColumnName("creating_date");
 
                 entity.Property(e => e.EditDate)
-                    .IsRequired()
                     .HasColumnName("editing_date");
 
             });

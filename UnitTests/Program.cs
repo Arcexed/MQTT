@@ -28,8 +28,7 @@ namespace UnitTests
                     float airHumidity = rnd.Next(15, 80);
                     float lightLevel = rnd.Next(15, 30);
                     float smokeLevel = rnd.Next(15, 50);
-                    var builder = new UriBuilder($"https://localhost:44395/Measurements/{deviceName}/Add");
-                    builder.Port = 44395;
+                    var builder = new UriBuilder($"https://mqttwebapi20210821214922.azurewebsites.net/Measurements/{deviceName}/Add");
                     var query = HttpUtility.ParseQueryString(builder.Query);
                     query["atmosphericPressure"] = atmosphericPressure.ToString();
                     query["temperature"] = temperature.ToString();

@@ -16,12 +16,12 @@ namespace MQTTWebApi.Models.ForReport
         public DateTime _createDate { get; set; }
         public string CreateDate => _createDate.ToString("G");
         [JsonIgnore]
-        public DateTime? _editDate  { get; set; }
+        public DateTime? _editDate { get; set; }
         public string EditDate => _editDate.Value.ToString("G");
-
-        public IEnumerable<MeasurementViewModel> LastTenMeasurements { get; set; } 
+        public IEnumerable<MeasurementViewModel> LastTenMeasurements { get; set; }
         public IEnumerable<EventViewModel> LastTenEvents { get; set; }
-        private DateTime? _lastMeasurement {
+        private DateTime? _lastMeasurement
+        {
             get
             {
                 return LastTenMeasurements.Select(d => d._date).OrderByDescending(d => d.Date).FirstOrDefault();
@@ -29,5 +29,6 @@ namespace MQTTWebApi.Models.ForReport
         }
 
         public string LastMeasurement => _lastMeasurement.Value.ToString("G");
+
     }
 }

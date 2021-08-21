@@ -22,7 +22,7 @@ namespace MQTTWebApi.Models
         public DateTime CreateDate { get; set; }
         public DateTime? EditDate { get; set; }
 
-        public virtual ICollection<Event> Events { get; set; }
-        public virtual ICollection<Measurement> Measurements { get; set; }
+        public virtual ICollection<Event>? Events { get; set; }
+        public virtual ICollection<Measurement>? Measurements { get; set; }
     }
 }

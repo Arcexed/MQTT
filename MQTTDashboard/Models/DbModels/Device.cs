@@ -9,7 +9,7 @@ namespace MQTTDashboard.Models.DbModels
     {
         public Device()
         {
-            Events = new HashSet<EventDevice>();
+            EventsDevice = new HashSet<EventDevice>();
             Measurements = new HashSet<Measurement>();
         }
 
@@ -22,7 +22,7 @@ namespace MQTTDashboard.Models.DbModels
         public string Descr { get; set; }
 
         public virtual User User { get; set; }
-        public virtual ICollection<EventDevice> Events { get; set; }
+        public virtual ICollection<EventDevice> EventsDevice { get; set; }
         public virtual ICollection<Measurement> Measurements { get; set; }
     }
 }

@@ -32,7 +32,9 @@ namespace MQTTWebApi.Controllers
         [HttpGet]
         public IEnumerable<DeviceViewModel> AllDevicesGET()
         {
-            return _mapper.Map<IEnumerable<Device>, IEnumerable<DeviceViewModel>>(_db.Devices.Include(d => d.Measurements).Take(10).Include(d=>d.Events).Take(10).ToArray());
+            IEnumerable<Device> devices = _db.Devices.Include(d => d.Measurements).Take(10).Include(d => d.Events)
+                .Take(10).ToArray();
+            return _mapper.Map<IEnumerable<Device>, IEnumerable<DeviceViewModel>>(devices);
 
         }
 
@@ -126,7 +128,7 @@ namespace MQTTWebApi.Controllers
         public string DeleteDeviceGET(string name)
         {
 
-            if (string.IsNullOrEmpty(name))
+            if (!string.IsNullOrEmpty(name))
             {
                 try
                 {

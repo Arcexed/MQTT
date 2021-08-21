@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using MQTTDashboard.Models.DbModels;
 
 #nullable disable
 
@@ -18,19 +19,11 @@ namespace MQTTDashboard.Models.dbmodels
         }
 
         public virtual DbSet<Device> Devices { get; set; }
-        public virtual DbSet<EventsDevice> EventsDevices { get; set; }
-        public virtual DbSet<EventsUser> EventsUsers { get; set; }
+        public virtual DbSet<EventDevice> EventsDevices { get; set; }
+        public virtual DbSet<EventUser> EventsUsers { get; set; }
         public virtual DbSet<Measurement> Measurements { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=LANPC044;Initial Catalog=Mqttdb_new;Integrated Security=True");
-            }
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -64,13 +57,13 @@ namespace MQTTDashboard.Models.dbmodels
                     .IsUnicode(false)
                     .HasColumnName("name");
 
-                entity.HasOne(d => d.IdUserNavigation)
+                entity.HasOne(d => d.User)
                     .WithMany(p => p.Devices)
                     .HasForeignKey(d => d.IdUser)
                     .HasConstraintName("FK__device__id_user__2A4B4B5E");
             });
 
-            modelBuilder.Entity<EventsDevice>(entity =>
+            modelBuilder.Entity<EventDevice>(entity =>
             {
                 entity.ToTable("events_device");
 
@@ -87,13 +80,13 @@ namespace MQTTDashboard.Models.dbmodels
                     .HasColumnType("text")
                     .HasColumnName("message");
 
-                entity.HasOne(d => d.IdDeviceNavigation)
-                    .WithMany(p => p.EventsDevices)
+                entity.HasOne(d => d.Device)
+                    .WithMany(p => p.EventsDevice)
                     .HasForeignKey(d => d.IdDevice)
                     .HasConstraintName("FK__events_de__id_de__35BCFE0A");
             });
 
-            modelBuilder.Entity<EventsUser>(entity =>
+            modelBuilder.Entity<EventUser>(entity =>
             {
                 entity.ToTable("events_user");
 
@@ -110,8 +103,8 @@ namespace MQTTDashboard.Models.dbmodels
                     .HasColumnType("text")
                     .HasColumnName("message");
 
-                entity.HasOne(d => d.IdUserNavigation)
-                    .WithMany(p => p.EventsUsers)
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.EventsUser)
                     .HasForeignKey(d => d.IdUser)
                     .HasConstraintName("FK__events_us__id_us__31EC6D26");
             });
@@ -138,7 +131,7 @@ namespace MQTTDashboard.Models.dbmodels
 
                 entity.Property(e => e.Temperature).HasColumnName("temperature");
 
-                entity.HasOne(d => d.IdDeviceNavigation)
+                entity.HasOne(d => d.Device)
                     .WithMany(p => p.Measurements)
                     .HasForeignKey(d => d.IdDevice)
                     .HasConstraintName("FK__measureme__id_de__2E1BDC42");
@@ -173,7 +166,7 @@ namespace MQTTDashboard.Models.dbmodels
 
                 entity.Property(e => e.IsBlock).HasColumnName("is_block");
 
-                entity.Property(e => e.Name)
+                entity.Property(e => e.Username)
                     .IsRequired()
                     .HasMaxLength(64)
                     .IsUnicode(false)
