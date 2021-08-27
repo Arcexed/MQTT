@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,7 +10,8 @@ using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.Extensions.Logging;
 using MQTTWebApi.Models;
 using MQTTWebApi.Models.ForReport;
-
+using System.Text.Json;
+using System.Text.Json.Serialization;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MQTTWebApi.Controllers
@@ -32,9 +34,14 @@ namespace MQTTWebApi.Controllers
         [HttpGet]
         public IEnumerable<DeviceViewModel> AllDevicesGET()
         {
+            _logger.LogInformation();
             IEnumerable<Device> devices = _db.Devices.Include(d => d.Measurements).Take(10).Include(d => d.Events)
                 .Take(10).ToArray();
-            return _mapper.Map<IEnumerable<Device>, IEnumerable<DeviceViewModel>>(devices);
+            IEnumerable<DeviceViewModel> deviceView =
+                _mapper.Map<IEnumerable<Device>, IEnumerable<DeviceViewModel>>(devices);
+               // string response = JsonSerializer.Serialize(deviceView);
+ //           _logger.LogInformation($"Proccessing {Request.} {Request.Path}");
+            return deviceView;
 
         }
 
@@ -42,14 +49,17 @@ namespace MQTTWebApi.Controllers
         [HttpGet("{name}")]
         public DeviceViewModel Get(string name)
         {
-            if (!string.IsNullOrEmpty(name))
-            {
-                return _mapper.Map<Device, DeviceViewModel>(_db.Devices.Where(d => d.Name.Equals(name)).Include(d=>d.Measurements).Take(10).Include(d=>d.Events).Take(10).ToArray().FirstOrDefault());
-            }
-            else
-            {
-                return null;
-            }
+            DeviceViewModel deviceViewModel = _mapper.Map<Device, DeviceViewModel>(_db.Devices.Where(d => d.Name.Equals(name)).Include(d => d.Measurements).Take(10).Include(d => d.Events).Take(10).ToArray().FirstOrDefault());
+               // string response = JsonSerializer.Serialize(deviceViewModel);
+               if (deviceViewModel != null)
+               {
+                   return deviceViewModel;
+               }
+               else
+               {
+                   Response.StatusCode = 404;
+                   return null;
+               }
         }
         [HttpGet("Add")]
         public string AddDeviceGET(string name, string descr, string geo)
@@ -111,6 +121,7 @@ namespace MQTTWebApi.Controllers
                     }
                     else
                     {
+                        Response.StatusCode = 404;
                         return "This device is not exists";
                     }
                 }
@@ -121,6 +132,7 @@ namespace MQTTWebApi.Controllers
             }
             else
             {
+                Response.StatusCode = 404;
                 return "Name is null or empty";
             }
         }
@@ -142,6 +154,7 @@ namespace MQTTWebApi.Controllers
                     }
                     else
                     {
+                        Response.StatusCode = 404;
                         return "This device is not exists";
                     }
                 }
@@ -152,6 +165,7 @@ namespace MQTTWebApi.Controllers
             }
             else
             {
+                Response.StatusCode = 404;
                 return "Name is null or empty";
             }
         }

@@ -50,6 +50,7 @@ namespace MQTTWebApi.Controllers
                 }
                 else
                 {
+                    Response.StatusCode = 404;
                     return "Device does not exists";
                 }
         }
@@ -57,15 +58,23 @@ namespace MQTTWebApi.Controllers
         [HttpGet("{deviceName}/Get")]
         public IEnumerable<MeasurementViewModel> GetMeasurements(string deviceName)
         {
-            IEnumerable<MeasurementViewModel> measurementViewModels =
-                _mapper.Map<IEnumerable<Measurement>, IEnumerable<MeasurementViewModel>>(_db.Measurements
-                    .Where(m => m.Device.Name == deviceName).ToArray());
+            Device device = _db.Devices.Where(d => d.Name == deviceName).FirstOrDefault();
+            if (device != null)
+            {
+                IEnumerable<MeasurementViewModel> measurementViewModels =
+                    _mapper.Map<IEnumerable<Measurement>, IEnumerable<MeasurementViewModel>>(_db.Measurements
+                        .Where(m => m.Device.Name == deviceName).ToArray());
 
-            //IEnumerable<MeasurementViewModel> measurementViewModels =
-            //    _mapper.Map<IEnumerable<Measurement>, IEnumerable<MeasurementViewModel>>(_db.Measurements
-            //        .Where(m => m.Device.Name == deviceName).Take(limit != 0 ? (limit < 1000 ? limit : 1000) : 10));
-            return measurementViewModels;
-
+                //IEnumerable<MeasurementViewModel> measurementViewModels =
+                //    _mapper.Map<IEnumerable<Measurement>, IEnumerable<MeasurementViewModel>>(_db.Measurements
+                //        .Where(m => m.Device.Name == deviceName).Take(limit != 0 ? (limit < 1000 ? limit : 1000) : 10));
+                return measurementViewModels;
+            }
+            else
+            {
+                Response.StatusCode = 404;
+                return null;
+            }
         }
     }
 }

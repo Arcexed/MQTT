@@ -7,13 +7,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MQTTWebApi", "TestWebApiApp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenerateMeasurements", "UnitTests\GenerateMeasurements.csproj", "{5DF7B81D-0D32-4E5C-B743-40C750094E6F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MQTTDashboard", "MQTTDashboard\MQTTDashboard.csproj", "{4A0F10A1-C585-4306-928F-03F6BEC468FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MQTTDashboard", "MQTTDashboard\MQTTDashboard.csproj", "{4A0F10A1-C585-4306-928F-03F6BEC468FA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DB", "DB", "{0979D7FB-EBFC-4D43-97FC-BC60E04A8F68}"
 	ProjectSection(SolutionItems) = preProject
 		CreateNewDB.sql = CreateNewDB.sql
 		CreateOldDb.sql = CreateOldDb.sql
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MQTTDashboarsWithAuth", "MQTTDashboarsWithAuth\MQTTDashboarsWithAuth.csproj", "{029871EC-ABED-4AF4-BE27-54B08CC0EAD6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MQTTDashboardWithCustomAuth", "MQTTDashboardWithCustomAuth\MQTTDashboardWithCustomAuth.csproj", "{DD0B7133-FDA6-4E3D-9DDC-A259AA3AA3BF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{84F95342-B20B-4AE1-B956-43FD6E82F4F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,9 +39,21 @@ Global
 		{4A0F10A1-C585-4306-928F-03F6BEC468FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A0F10A1-C585-4306-928F-03F6BEC468FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A0F10A1-C585-4306-928F-03F6BEC468FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{029871EC-ABED-4AF4-BE27-54B08CC0EAD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{029871EC-ABED-4AF4-BE27-54B08CC0EAD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{029871EC-ABED-4AF4-BE27-54B08CC0EAD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{029871EC-ABED-4AF4-BE27-54B08CC0EAD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD0B7133-FDA6-4E3D-9DDC-A259AA3AA3BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD0B7133-FDA6-4E3D-9DDC-A259AA3AA3BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD0B7133-FDA6-4E3D-9DDC-A259AA3AA3BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD0B7133-FDA6-4E3D-9DDC-A259AA3AA3BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{029871EC-ABED-4AF4-BE27-54B08CC0EAD6} = {84F95342-B20B-4AE1-B956-43FD6E82F4F9}
+		{DD0B7133-FDA6-4E3D-9DDC-A259AA3AA3BF} = {84F95342-B20B-4AE1-B956-43FD6E82F4F9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5CE39B16-F88F-42FB-B90F-0E2FAF33E2CD}

@@ -9,7 +9,7 @@ CREATE TABLE device (
     geo text,
     descr text
 );
-
+    
 
 CREATE TABLE measurements(
     id uniqueidentifier NOT NULL PRIMARY KEY DEFAULT newid(),

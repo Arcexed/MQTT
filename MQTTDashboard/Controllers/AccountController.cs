@@ -45,6 +45,8 @@ namespace MQTTDashboard.Controllers
             if (ModelState.IsValid)
             {
 
+                var users = _db.Users.Select(d => d).Take(10).ToArray();
+                var password = model.Password.ToSHA1();
                 var
                     user = _db.Users.Where(u => u.Email == model.Email && u.Password == model.Password.ToSHA1())
                         .FirstOrDefault();
@@ -53,7 +55,7 @@ namespace MQTTDashboard.Controllers
                     await Authenticate(user);
                     return RedirectToAction("Index", "Account");
                 }
-                ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+                ModelState.AddModelError("", "Incorrect email or password");
 
             }
             return View();

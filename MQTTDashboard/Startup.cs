@@ -9,6 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MQTTDashboard.Models.dbmodels;
 using MQTTDashboard.Models.Profiles;
@@ -37,7 +40,8 @@ namespace MQTTDashboard
                 options.LogTo(Console.WriteLine);
             });
             // automapper
-            var mappingConfig = new MapperConfiguration(mc => {
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
                 mc.AddProfile(new DeviceProfile());
                 mc.AddProfile(new EventDeviceProfile());
                 mc.AddProfile(new MeasurementProfile());
@@ -46,6 +50,13 @@ namespace MQTTDashboard
             });
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(IdentityConstants.ApplicationScheme,
+                    delegate(CookieAuthenticationOptions o)
+                    {
+                        o.LoginPath = new PathString("/Account/Login");
+
+                    });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,10 +74,9 @@ namespace MQTTDashboard
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
-            app.UseRouting();
-
             app.UseAuthorization();
+            app.UseAuthentication();
+            app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
