@@ -28,10 +28,10 @@ namespace MQTTWebApi.Controllers
         }
         // GET api/<MeasurementsController>/5
         [HttpGet("{deviceName}/Add")]
-        public string AddMeasurements(string deviceName, float atmosphericPressure, float temperature, float airHumidity, float lightLevel, float smokeLevel)
+        public async Task<string> AddMeasurements(string deviceName, float atmosphericPressure, float temperature, float airHumidity, float lightLevel, float smokeLevel)
         {
             
-                var device = _db.Devices.Where(d => d.Name == deviceName).FirstOrDefault();
+                var device = _db.Devices.Where(d => d.Name == deviceName).AsSingleQuery().FirstOrDefault();
                 if (device != null)
                 {
                     var measurement = new Measurement()
@@ -44,8 +44,8 @@ namespace MQTTWebApi.Controllers
                         SmokeLevel = smokeLevel,
                         Date = DateTime.Now
                     };
-                    _db.Measurements.Add(measurement);
-                    _db.SaveChanges();
+                    await _db.Measurements.AddAsync(measurement);
+                    await _db.SaveChangesAsync();
                     return "Success";
                 }
                 else
@@ -56,14 +56,14 @@ namespace MQTTWebApi.Controllers
         }
 
         [HttpGet("{deviceName}/Get")]
-        public IEnumerable<MeasurementViewModel> GetMeasurements(string deviceName)
+        public async Task<IEnumerable<MeasurementViewModel>> GetMeasurements(string deviceName)
         {
-            Device device = _db.Devices.Where(d => d.Name == deviceName).FirstOrDefault();
+            Device device = await _db.Devices.Where(d => d.Name == deviceName).FirstOrDefaultAsync();
             if (device != null)
             {
                 IEnumerable<MeasurementViewModel> measurementViewModels =
-                    _mapper.Map<IEnumerable<Measurement>, IEnumerable<MeasurementViewModel>>(_db.Measurements
-                        .Where(m => m.Device.Name == deviceName).ToArray());
+                    _mapper.Map<IEnumerable<Measurement>, IEnumerable<MeasurementViewModel>>(await _db.Measurements
+                        .Where(m => m.Device.Name == deviceName).ToArrayAsync());
 
                 //IEnumerable<MeasurementViewModel> measurementViewModels =
                 //    _mapper.Map<IEnumerable<Measurement>, IEnumerable<MeasurementViewModel>>(_db.Measurements

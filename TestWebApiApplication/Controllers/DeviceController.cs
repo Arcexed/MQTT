@@ -30,13 +30,11 @@ namespace MQTTWebApi.Controllers
             _db = db;
             _mapper = mapper;
         }
-        // GET: <DeviceController>
+        // GET: <DeviceController>  
         [HttpGet]
         public IEnumerable<DeviceViewModel> AllDevicesGET()
         {
-            _logger.LogInformation();
-            IEnumerable<Device> devices = _db.Devices.Include(d => d.Measurements).Take(10).Include(d => d.Events)
-                .Take(10).ToArray();
+            IEnumerable<Device> devices = _db.Devices.Include(d => d.Measurements.Take(3)).Include(d => d.Events.Take(3)).AsSingleQuery();
             IEnumerable<DeviceViewModel> deviceView =
                 _mapper.Map<IEnumerable<Device>, IEnumerable<DeviceViewModel>>(devices);
                // string response = JsonSerializer.Serialize(deviceView);
@@ -49,7 +47,7 @@ namespace MQTTWebApi.Controllers
         [HttpGet("{name}")]
         public DeviceViewModel Get(string name)
         {
-            DeviceViewModel deviceViewModel = _mapper.Map<Device, DeviceViewModel>(_db.Devices.Where(d => d.Name.Equals(name)).Include(d => d.Measurements).Take(10).Include(d => d.Events).Take(10).ToArray().FirstOrDefault());
+            DeviceViewModel deviceViewModel = _mapper.Map<Device, DeviceViewModel>(_db.Devices.Where(d => d.Name.Equals(name)).Include(d => d.Measurements.Take(3)).Include(d => d.Events.Take(3)).AsSingleQuery().FirstOrDefault());
                // string response = JsonSerializer.Serialize(deviceViewModel);
                if (deviceViewModel != null)
                {

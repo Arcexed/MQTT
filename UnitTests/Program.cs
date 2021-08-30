@@ -11,24 +11,36 @@ namespace UnitTests
 {
     class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
+            for (int i = 0; i < 50000; i++)
+            {
+                
+                    Task.Run(() => Generate());
+                    counter++;
+                
+            }
+            
 
+            Console.ReadKey();
+        }
 
-
+        public static int counter = 0;
+        static async Task Generate()
+        {
             using (WebClient webClient = new WebClient())
             {
-                int i = 1;
-                while (true)
+                Random rnd = new Random();
+                string deviceName = "TestNameAndrey";
+                float atmosphericPressure = rnd.Next(650, 850);
+                float temperature = rnd.Next(15, 35);
+                float airHumidity = rnd.Next(15, 80);
+                float lightLevel = rnd.Next(15, 30);
+                float smokeLevel = rnd.Next(15, 50);
+                try
                 {
-                    Random rnd = new Random();
-                    string deviceName = "TestName";
-                    float atmosphericPressure = rnd.Next(650, 850);
-                    float temperature = rnd.Next(15, 35);
-                    float airHumidity = rnd.Next(15, 80);
-                    float lightLevel = rnd.Next(15, 30);
-                    float smokeLevel = rnd.Next(15, 50);
-                    var builder = new UriBuilder($"https://mqttwebapi20210821214922.azurewebsites.net/Measurements/{deviceName}/Add");
+                     //var builder = new UriBuilder($"http://178.54.86.113/Measurements/{deviceName}/Add");
+                    var builder = new UriBuilder($"http://192.168.3.160/Measurements/{deviceName}/Add");
                     var query = HttpUtility.ParseQueryString(builder.Query);
                     query["atmosphericPressure"] = atmosphericPressure.ToString();
                     query["temperature"] = temperature.ToString();
@@ -37,16 +49,17 @@ namespace UnitTests
                     query["smokeLevel"] = smokeLevel.ToString();
                     builder.Query = query.ToString();
                     string url = builder.ToString();
-                    webClient.DownloadString(url);
-                    Console.WriteLine(
-                        $"{i} {deviceName} {DateTime.Now.ToString("G")} {atmosphericPressure} {temperature} {airHumidity} {lightLevel} {smokeLevel}");
-                    i++;
-                    Thread.Sleep(1000);
+                    await webClient.DownloadStringTaskAsync(builder.Uri);
                 }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                
+                Console.WriteLine($"{counter} {deviceName} {DateTime.Now.ToString("G")} {atmosphericPressure} {temperature} {airHumidity} {lightLevel} {smokeLevel}");
+                // Thread.Sleep(1000);
+
             }
-
-
-
         }
     }
 }

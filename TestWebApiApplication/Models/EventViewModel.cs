@@ -9,8 +9,6 @@ namespace MQTTWebApi.Models
     public class EventViewModel {
         public Guid Id { get; set; }
         public string Message { get; set; }
-        [JsonIgnore]
-        public DateTime _date { get; set; }
-        public string Date => _date.ToString("G");
+        public DateTime Date { get; set; }
     }
 }

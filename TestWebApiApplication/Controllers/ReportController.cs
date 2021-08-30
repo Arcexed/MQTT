@@ -6,6 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using MQTTWebApi.Models;
 using MQTTWebApi.Models.ForReport;
 
@@ -28,50 +29,73 @@ namespace MQTTWebApi.Controllers
 
 
         [HttpGet("{deviceName}/Minutely")]
-        public ReportViewModel MinutelyInfoGET(string deviceName)
+        public async Task<ReportViewModel> MinutelyInfoGET(string deviceName)
         {
 
-            var measurements = _mapper.Map<IEnumerable<Measurement>, IEnumerable<MeasurementViewModel>>(_db.Measurements.Where(m =>
-                m.Device.Name == deviceName && m.Date >= DateTime.Now.AddMinutes(-1)));
-            var device = _mapper.Map<Device, DeviceViewModel>(_db.Devices.Where(d => d.Name == deviceName).FirstOrDefault());
-            ReportViewModel report = ReportViewModel.GenerateReportMeasurements(measurements, device);
-            return report;
+            var device = _mapper.Map<Device, DeviceViewModel>(await _db.Devices.Where(d => d.Name == deviceName).FirstOrDefaultAsync());
+            if (device != null)
+            {
+                ReportViewModel report =
+                    await ReportViewModel.GenerateReportMeasurements(device, _db, DateTime.Now.AddMinutes(-1), _mapper);
+                return report;
+            }
+            else
+            {
+                return null;
+            }
 
         }
 
         [HttpGet("{deviceName}/Hourly")]
-        public ReportViewModel HourlyInfoGET(string deviceName)
+        public async Task<ReportViewModel> HourlyInfoGET(string deviceName)
         {
 
 
-            var measurements = _mapper.Map<IEnumerable<Measurement>, IEnumerable<MeasurementViewModel>>(_db.Measurements.Where(m =>
-                m.Device.Name == deviceName && m.Date >= DateTime.Now.AddHours(-1)));
-            var device = _mapper.Map<Device, DeviceViewModel>(_db.Devices.Where(d => d.Name == deviceName).FirstOrDefault());
-            ReportViewModel report = ReportViewModel.GenerateReportMeasurements(measurements, device);
-            return report;
-
+            var device = _mapper.Map<Device, DeviceViewModel>(await _db.Devices.Where(d => d.Name == deviceName).FirstOrDefaultAsync());
+            if (device != null)
+            {
+                ReportViewModel report =
+                    await ReportViewModel.GenerateReportMeasurements(device, _db, DateTime.Now.AddHours(-1), _mapper);
+                return report;
+            }
+            else
+            {
+                return null;
+            }
         }
 
 
         [HttpGet("{deviceName}/Daily")]
-        public ReportViewModel DailyInfoGET(string deviceName)
+        public async Task<ReportViewModel> DailyInfoGET(string deviceName)
         {
 
-            var measurements = _mapper.Map<IEnumerable<Measurement>, IEnumerable<MeasurementViewModel>>(_db.Measurements.Where(m =>
-                m.Device.Name == deviceName && m.Date >= DateTime.Now.AddDays(-1)));
-            var device = _mapper.Map<Device, DeviceViewModel>(_db.Devices.Where(d => d.Name == deviceName).FirstOrDefault());
-            ReportViewModel report = ReportViewModel.GenerateReportMeasurements(measurements, device);
-            return report;
+            var device = _mapper.Map<Device, DeviceViewModel>(await _db.Devices.Where(d => d.Name == deviceName).FirstOrDefaultAsync());
+            if (device != null)
+            {
+                ReportViewModel report =
+                    await ReportViewModel.GenerateReportMeasurements(device, _db, DateTime.Now.AddDays(-1), _mapper);
+                return report;
+            }
+            else
+            {
+                return null;
+            }
 
         }
         [HttpGet("{deviceName}/Monthly")]
-        public ReportViewModel MonthlyInfoGET(string deviceName)
+        public async Task<ReportViewModel> MonthlyInfoGET(string deviceName)
         {
-            var measurements = _mapper.Map<IEnumerable<Measurement>, IEnumerable<MeasurementViewModel>>(_db.Measurements.Where(m =>
-                m.Device.Name == deviceName && m.Date >= DateTime.Now.AddMonths(-1)));
-            var device = _mapper.Map<Device, DeviceViewModel>(_db.Devices.Where(d => d.Name == deviceName).FirstOrDefault());
-            ReportViewModel report = ReportViewModel.GenerateReportMeasurements(measurements, device);
-            return report;
+            var device = _mapper.Map<Device, DeviceViewModel>(await _db.Devices.Where(d => d.Name == deviceName).FirstOrDefaultAsync());
+            if (device != null)
+            {
+                ReportViewModel report =
+                    await ReportViewModel.GenerateReportMeasurements(device, _db, DateTime.Now.AddMonths(-1), _mapper);
+                return report;
+            }
+            else
+            {
+                return null;
+            }
 
         }
     }

@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -39,7 +40,11 @@ namespace MQTTWebApi
             services.AddDbContext<MqttdbContext>(options =>
             {
                 options.UseSqlServer(connection);
-                options.LogTo(Console.WriteLine);
+                options.LogTo(s =>
+                {
+                    File.AppendAllText("logs.txt",s);
+                });
+                options.EnableSensitiveDataLogging();
             });
             // automapper
             var mappingConfig = new MapperConfiguration(mc => {
