@@ -23,6 +23,7 @@ namespace MQTTDashboard.Models.dbmodels
         public virtual DbSet<EventUser> EventsUsers { get; set; }
         public virtual DbSet<Measurement> Measurements { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -177,8 +178,33 @@ namespace MQTTDashboard.Models.dbmodels
                     .HasMaxLength(64)
                     .IsUnicode(false)
                     .HasColumnName("password");
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.Users)
+                    .HasForeignKey(d => d.IdRole)
+                    .HasConstraintName("PK__roles__3213E83F978B8A3E");
+
             });
 
+            modelBuilder.Entity<Role>(entity =>
+            {
+                
+                    entity.ToTable("roles");
+
+                    entity.Property(e => e.Id)
+                        .HasColumnName("id")
+                        .HasDefaultValueSql("(newid())");
+
+                    entity.Property(e => e.Name)
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .IsUnicode(false)
+                        .HasColumnName("name")
+                        .IsFixedLength(true);
+
+                    entity.Property(e => e.Descr)
+                        .HasColumnType("text")
+                        .HasColumnName("descr");
+            });
             OnModelCreatingPartial(modelBuilder);
         }
 

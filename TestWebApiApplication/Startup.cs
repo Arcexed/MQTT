@@ -40,11 +40,6 @@ namespace MQTTWebApi
             services.AddDbContext<MqttdbContext>(options =>
             {
                 options.UseSqlServer(connection);
-                options.LogTo(s =>
-                {
-                    File.AppendAllText("logs.txt",s);
-                });
-                options.EnableSensitiveDataLogging();
             });
             // automapper
             var mappingConfig = new MapperConfiguration(mc => {
@@ -65,8 +60,11 @@ namespace MQTTWebApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseDeveloperExceptionPage();
-            app.UseSwagger();
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            app.UseSwagger();   
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1");

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MQTTDashboard.Models.DbModels;
+using Newtonsoft.Json;
 
 namespace MQTTDashboard.Models
 {
@@ -14,5 +16,10 @@ namespace MQTTDashboard.Models
         public string Ip { get; set; }
         public bool IsBlock { get; set; }
         public string AccessToken { get; set; }
+        [JsonIgnore]
+        public virtual Role Role { get; set; }
+        [JsonIgnore]
+        public virtual IEnumerable<Device> Devices { get; set; }
+
     }
 }

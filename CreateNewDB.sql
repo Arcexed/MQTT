@@ -1,4 +1,11 @@
 use mqttdb_new
+
+CREATE TABLE roles(
+    id uniqueidentifier NOT NULL PRIMARY KEY DEFAULT newid(),
+    name varchar(25) NOT NULL,
+    descr text
+);
+
 CREATE TABLE users(
     id uniqueidentifier NOT NULL PRIMARY KEY DEFAULT newid(),
     name varchar(64) NOT NULL,
@@ -6,8 +13,11 @@ CREATE TABLE users(
     email varchar(64) NOT NULL,
     ip varchar(21) NOT NULL,
     is_block bit NOT NULL DEFAULT 0,
-    accessToken char(32) NOT NULL
+    accessToken char(32) NOT NULL,
+    id_role uniqueidentifier NOT NULL,
+    FOREIGN KEY (id_role) REFERENCES roles(id)
 );
+
 
 
 CREATE TABLE device (
@@ -31,6 +41,7 @@ CREATE TABLE measurements(
     air_humidity float NOT NULL,
     light_level float NOT NULL,
     smoke_level float NOT NULL,
+    radiation_level float NOT NULL,
     FOREIGN KEY (id_device) REFERENCES device(id) ON DELETE CASCADE
 );
 

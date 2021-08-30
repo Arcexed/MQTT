@@ -11,14 +11,14 @@ namespace MQTTWebApi.Models.ForReport
     {
         public Guid Id { get; set; }
         [JsonIgnore]
-        public DateTime _date { get; set; }
-        public string Date => _date.ToString("G");
+        public DateTime Date { get; set; }
         public float AtmosphericPressure { get; set; }
         public float Temperature { get; set; }
         public float AirHumidity { get; set; }
         public float LightLevel { get; set; }
         public float SmokeLevel { get; set; }
-        
+        [JsonIgnore]
+        public virtual Device Device { get; set; }
 
     }
 }
