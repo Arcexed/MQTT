@@ -11,7 +11,7 @@ namespace MQTTWebApi.Models.Profiles
     {
         public EventDeviceProfile()
         {
-            CreateMap<EventDevice, EventDeviceViewModel>()
+            CreateMap<EventsDevice, EventDeviceViewModel>()
                 .ForMember(dest =>dest.Id,opt=>opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Date,opt=>opt.MapFrom(src => src.Date))
                 .ForMember(dest => dest.Message,opt=>opt.MapFrom(src=>src.Message))

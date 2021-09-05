@@ -21,9 +21,8 @@ namespace MQTTWebApi.Models
                 .ForMember(dest=> dest.EditDate, opt=>opt.MapFrom(src=>src.EditingDate))
                 .ForMember(dest => dest.Geo,opt=> opt.MapFrom(src=>src.Geo))
                 .ForMember(dest => dest.LastTenMeasurements,opt=>opt.MapFrom(src => src.Measurements.OrderByDescending(d => d.Date).Take(10)))
-                .ForMember(dest => dest.LastTenEvents, opt =>opt.MapFrom(scr=>scr.EventsDevice.OrderByDescending(d => d.Date).Take(10)))
-                .ForMember(dest => dest.User,opt=> opt.MapFrom(src=>src.User))
-
+                .ForMember(dest => dest.LastTenEvents, opt =>opt.MapFrom(scr=>scr.EventsDevices.OrderByDescending(d => d.Date).Take(10)))
+                .ForMember(dest => dest.User,opt=> opt.MapFrom(src=>src.IdUserNavigation))
                 .ReverseMap();
         }
     }

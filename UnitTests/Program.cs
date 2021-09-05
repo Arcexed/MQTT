@@ -11,7 +11,7 @@ namespace UnitTests
 {
     class Program
     {
-        public static async Task Main(string[] args)
+        public static void Main(string[] args)
         {
             for (int i = 0; i < 50000; i++)
             {

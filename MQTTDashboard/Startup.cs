@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using MQTTDashboard.Models.dbmodels;
+using MQTTDashboard.Models.DbModels;
 using MQTTDashboard.Models.Profiles;
 using MQTTWebApi.Models;
 using MQTTWebApi.Models.Profiles;
@@ -37,11 +38,15 @@ namespace MQTTDashboard
             services.AddControllersWithViews();
             string connection = Configuration.GetConnectionString("DefaultConnection");
             string reserveConnection = Configuration.GetConnectionString("ReserveConnection");
-            services.AddDbContext<Mqttdb_newContext>(options =>
+            services.AddDbContext<mqttdb_newContext>(options =>
             {
-                //options.UseSqlServer(connection);
-                options.UseSqlServer(reserveConnection);
-                options.LogTo(Console.WriteLine);
+                options.UseSqlServer(connection);
+                //options.UseSqlServer(reserveConnection);
+                options.LogTo(d =>
+                {
+                    File.AppendAllText("logs_dashboard.log",d);
+                });
+                options.EnableSensitiveDataLogging();
             });
             // automapper
             var mappingConfig = new MapperConfiguration(mc =>
@@ -54,7 +59,18 @@ namespace MQTTDashboard
             });
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
-            
+            services.AddAuthorization();
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            }).AddCookie(options =>
+            {
+                options.LoginPath = new PathString("/Account/Login/");
+              //  options.AccessDeniedPath = new PathString("/Account/Forbidden/");
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,8 +88,8 @@ namespace MQTTDashboard
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseAuthorization();
             app.UseAuthentication();
+            app.UseAuthorization();
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>

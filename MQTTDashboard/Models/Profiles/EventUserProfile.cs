@@ -12,9 +12,9 @@ namespace MQTTDashboard.Models.Profiles
     {
         public EventUserProfile()
         {
-            CreateMap<EventDevice, EventDeviceViewModel>()
+            CreateMap<EventsDevice, EventDeviceViewModel>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest._date, opt => opt.MapFrom(src => src.Date))
+                .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date))
                 .ForMember(dest => dest.Message, opt => opt.MapFrom(src => src.Message))
                 .ReverseMap();
         }

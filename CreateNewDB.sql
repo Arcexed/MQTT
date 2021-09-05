@@ -8,7 +8,7 @@ CREATE TABLE roles(
 
 CREATE TABLE users(
     id uniqueidentifier NOT NULL PRIMARY KEY DEFAULT newid(),
-    name varchar(64) NOT NULL,
+    username varchar(64) NOT NULL,
     password varchar(64) NOT NULL,
     email varchar(64) NOT NULL,
     ip varchar(21) NOT NULL,

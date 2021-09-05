@@ -1,34 +1,33 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using MQTTDashboard.Models.DbModels;
 
 #nullable disable
 
-namespace MQTTDashboard.Models.dbmodels
+namespace MQTTDashboard.Models.DbModels
 {
-    public partial class Mqttdb_newContext : DbContext
+    public partial class mqttdb_newContext : DbContext
     {
-        public Mqttdb_newContext()
+        public mqttdb_newContext()
         {
         }
 
-        public Mqttdb_newContext(DbContextOptions<Mqttdb_newContext> options)
+        public mqttdb_newContext(DbContextOptions<mqttdb_newContext> options)
             : base(options)
         {
         }
 
         public virtual DbSet<Device> Devices { get; set; }
-        public virtual DbSet<EventDevice> EventsDevices { get; set; }
-        public virtual DbSet<EventUser> EventsUsers { get; set; }
+        public virtual DbSet<EventsDevice> EventsDevices { get; set; }
+        public virtual DbSet<EventsUser> EventsUsers { get; set; }
         public virtual DbSet<Measurement> Measurements { get; set; }
-        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "Cyrillic_General_CI_AS");
+            modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
             modelBuilder.Entity<Device>(entity =>
             {
@@ -58,13 +57,13 @@ namespace MQTTDashboard.Models.dbmodels
                     .IsUnicode(false)
                     .HasColumnName("name");
 
-                entity.HasOne(d => d.User)
+                entity.HasOne(d => d.IdUserNavigation)
                     .WithMany(p => p.Devices)
                     .HasForeignKey(d => d.IdUser)
-                    .HasConstraintName("FK__device__id_user__2A4B4B5E");
+                    .HasConstraintName("FK__device__id_user__2E1BDC42");
             });
 
-            modelBuilder.Entity<EventDevice>(entity =>
+            modelBuilder.Entity<EventsDevice>(entity =>
             {
                 entity.ToTable("events_device");
 
@@ -81,13 +80,13 @@ namespace MQTTDashboard.Models.dbmodels
                     .HasColumnType("text")
                     .HasColumnName("message");
 
-                entity.HasOne(d => d.Device)
-                    .WithMany(p => p.EventsDevice)
+                entity.HasOne(d => d.IdDeviceNavigation)
+                    .WithMany(p => p.EventsDevices)
                     .HasForeignKey(d => d.IdDevice)
-                    .HasConstraintName("FK__events_de__id_de__35BCFE0A");
+                    .HasConstraintName("FK__events_de__id_de__398D8EEE");
             });
 
-            modelBuilder.Entity<EventUser>(entity =>
+            modelBuilder.Entity<EventsUser>(entity =>
             {
                 entity.ToTable("events_user");
 
@@ -104,10 +103,10 @@ namespace MQTTDashboard.Models.dbmodels
                     .HasColumnType("text")
                     .HasColumnName("message");
 
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.EventsUser)
+                entity.HasOne(d => d.IdUserNavigation)
+                    .WithMany(p => p.EventsUsers)
                     .HasForeignKey(d => d.IdUser)
-                    .HasConstraintName("FK__events_us__id_us__31EC6D26");
+                    .HasConstraintName("FK__events_us__id_us__35BCFE0A");
             });
 
             modelBuilder.Entity<Measurement>(entity =>
@@ -128,14 +127,41 @@ namespace MQTTDashboard.Models.dbmodels
 
                 entity.Property(e => e.LightLevel).HasColumnName("light_level");
 
+                entity.Property(e => e.RadiationLevel).HasColumnName("radiation_level");
+
                 entity.Property(e => e.SmokeLevel).HasColumnName("smoke_level");
 
                 entity.Property(e => e.Temperature).HasColumnName("temperature");
 
-                entity.HasOne(d => d.Device)
+                entity.HasOne(d => d.IdDeviceNavigation)
                     .WithMany(p => p.Measurements)
                     .HasForeignKey(d => d.IdDevice)
-                    .HasConstraintName("FK__measureme__id_de__2E1BDC42");
+                    .HasConstraintName("FK__measureme__id_de__31EC6D26");
+            });
+
+            modelBuilder.Entity<Role>(entity =>
+            {
+                entity.ToTable("roles");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasDefaultValueSql("(newid())");
+
+                entity.Property(e => e.Descr)
+                    .HasColumnType("text")
+                    .HasColumnName("descr");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(25)
+                    .IsUnicode(false)
+                    .HasColumnName("name");
+                //entity.HasMany(d =>d.Users)
+                //    .WithOne(d=>d.IdRoleNavigation)
+                //    .HasForeignKey(d => d.IdRole)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK__users__id_role__29572725");
+
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -159,6 +185,8 @@ namespace MQTTDashboard.Models.dbmodels
                     .IsUnicode(false)
                     .HasColumnName("email");
 
+                entity.Property(e => e.IdRole).HasColumnName("id_role");
+
                 entity.Property(e => e.Ip)
                     .IsRequired()
                     .HasMaxLength(21)
@@ -167,44 +195,26 @@ namespace MQTTDashboard.Models.dbmodels
 
                 entity.Property(e => e.IsBlock).HasColumnName("is_block");
 
-                entity.Property(e => e.Username)
-                    .IsRequired()
-                    .HasMaxLength(64)
-                    .IsUnicode(false)
-                    .HasColumnName("name");
-
                 entity.Property(e => e.Password)
                     .IsRequired()
                     .HasMaxLength(64)
                     .IsUnicode(false)
                     .HasColumnName("password");
-                entity.HasOne(d => d.Role)
+
+                entity.Property(e => e.Username)
+                    .IsRequired()
+                    .HasMaxLength(64)
+                    .IsUnicode(false)
+                    .HasColumnName("username");
+
+                entity.HasOne(d => d.IdRoleNavigation)
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.IdRole)
-                    .HasConstraintName("PK__roles__3213E83F978B8A3E");
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__users__id_role__29572725");
 
             });
 
-            modelBuilder.Entity<Role>(entity =>
-            {
-                
-                    entity.ToTable("roles");
-
-                    entity.Property(e => e.Id)
-                        .HasColumnName("id")
-                        .HasDefaultValueSql("(newid())");
-
-                    entity.Property(e => e.Name)
-                        .IsRequired()
-                        .HasMaxLength(25)
-                        .IsUnicode(false)
-                        .HasColumnName("name")
-                        .IsFixedLength(true);
-
-                    entity.Property(e => e.Descr)
-                        .HasColumnType("text")
-                        .HasColumnName("descr");
-            });
             OnModelCreatingPartial(modelBuilder);
         }
 

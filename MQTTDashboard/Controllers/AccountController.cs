@@ -2,16 +2,18 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AutoMapper;
 using GeekForLess_TestTask_Forum.Static;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
 using MQTTDashboard.Models;
-using MQTTDashboard.Models.dbmodels;
 using MQTTDashboard.Models.DbModels;
 
 namespace MQTTDashboard.Controllers
@@ -19,10 +21,12 @@ namespace MQTTDashboard.Controllers
     public class AccountController : Controller
     {
         private readonly ILogger _logger;
-        private readonly Mqttdb_newContext _db;
-        public AccountController(Mqttdb_newContext db)
+        private readonly mqttdb_newContext _db;
+        private readonly IMapper _mapper;
+        public AccountController(mqttdb_newContext db,IMapper mapper)
         {
             _db = db;
+            _mapper = mapper;
         }
         [HttpGet]
         public ActionResult Login()
@@ -45,12 +49,14 @@ namespace MQTTDashboard.Controllers
             if (ModelState.IsValid)
             {
 
-                var users = _db.Users.Select(d => d).Take(10).ToArray();
-                var password = model.Password.ToSHA1();
+               
                 var
-                    user = _db.Users.Where(u => u.Email == model.Email && u.Password == model.Password.ToSHA1())
-                        .FirstOrDefault();
-                if (user != null)
+                    user = _db.Users.Include(d=>d.IdRoleNavigation).FirstOrDefault(u => (u.Email == model.Email && u.Password == model.Password.ToSHA1()));
+                user.IdRoleNavigation = _db.Roles.FirstOrDefault(d =>
+                    d.Users.FirstOrDefault(d => d.Username == user.Username && d.Password == model.Password.ToSHA1()).Username == user.Username);
+                
+                //var userViewModel = _mapper.Map<UserViewModel>(user);
+                if (user.Email == model.Email)
                 {
                     await Authenticate(user);
                     return RedirectToAction("Index", "Account");
@@ -58,7 +64,7 @@ namespace MQTTDashboard.Controllers
                 ModelState.AddModelError("", "Incorrect email or password");
 
             }
-            return View();
+            return View();  
         }
 
         [HttpPost]
@@ -88,6 +94,7 @@ namespace MQTTDashboard.Controllers
                         return View();
                     }
 
+                    Role role = _db.Roles.Where(d => d.Name == "User").FirstOrDefault();
                     User user = new User()
                     {
                         Username = model.Username,
@@ -95,10 +102,11 @@ namespace MQTTDashboard.Controllers
                         Password = model.Password.ToSHA1(),
                         Ip = this.HttpContext.Connection.RemoteIpAddress.ToString(),
                         IsBlock = false,
-                        AccessToken = Guid.NewGuid().ToString("N")
+                        AccessToken = Guid.NewGuid().ToString("N"),
+                        IdRoleNavigation = role
                     };
-                    _db.Users.Add(user);
-                    _db.SaveChanges();
+                    await _db.Users.AddAsync(user);
+                    await _db.SaveChangesAsync();
                     ViewBag.Message = "Success";
                     ViewBag.isError = false;
 
@@ -122,9 +130,11 @@ namespace MQTTDashboard.Controllers
 
 
         }
-
+        [Authorize]
         public ActionResult Index()
         {
+            string role = User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value;
+            return Content($"ваша роль: {role}");
             return View();
         }
 
@@ -138,9 +148,9 @@ namespace MQTTDashboard.Controllers
         {
             IList<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Sid, user.Id.ToString()),
+                new Claim(ClaimTypes.Sid, user.Id.ToString()), 
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role,ClaimsIdentity.DefaultRoleClaimType),
+                new Claim(ClaimTypes.Role,user.IdRoleNavigation.Name),
             };
             // создаем объект ClaimsIdentity
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);

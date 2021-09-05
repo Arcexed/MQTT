@@ -10,6 +10,7 @@ namespace MQTTWebApi.Models.ForReport
     public class DeviceViewModel
     {
         public Guid Id { get; set; }
+
         public string Name { get; set; }
         public string Geo { get; set; }
         public string Descr { get; set; }
@@ -19,13 +20,7 @@ namespace MQTTWebApi.Models.ForReport
         public IEnumerable<EventDeviceViewModel> LastTenEvents { get; set; }
         [JsonIgnore]
         public virtual User User { get; set; }
-        private DateTime? _lastMeasurement {
-            get
-            {
-                return LastTenMeasurements.Select(d => d.Date).OrderByDescending(d => d.Date).FirstOrDefault();
-            }
-        }
+        
 
-        public string LastMeasurement => _lastMeasurement.Value.ToString("G");
     }
 }

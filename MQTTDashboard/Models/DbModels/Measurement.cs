@@ -15,7 +15,8 @@ namespace MQTTDashboard.Models.DbModels
         public double AirHumidity { get; set; }
         public double LightLevel { get; set; }
         public double SmokeLevel { get; set; }
+        public double RadiationLevel { get; set; }
 
-        public virtual Device Device { get; set; }
+        public virtual Device IdDeviceNavigation { get; set; }
     }
 }
