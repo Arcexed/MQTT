@@ -1,17 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.Internal;
-using Microsoft.Extensions.Logging;
-using MQTTWebApi.Models;
-using MQTTWebApi.Models.ForReport;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Authorization;
+using Models.DbModels;
+using Models.DBO;
+
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MQTTWebApi.Controllers
@@ -21,33 +18,34 @@ namespace MQTTWebApi.Controllers
     public class DeviceController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly MqttdbContext _db;
+        private readonly mqttdb_newContext _db;
         private readonly ILogger<DeviceController> _logger;
 
-        public DeviceController(ILogger<DeviceController> logger,MqttdbContext db, IMapper mapper)
+        public DeviceController(ILogger<DeviceController> logger, mqttdb_newContext db, IMapper mapper)
         {
             _logger = logger;
             _db = db;
             _mapper = mapper;
         }
-        // GET: <DeviceController>  
+        // GET: <DeviceController>
+        [Authorize]
         [HttpGet]
         public IEnumerable<DeviceViewModel> AllDevicesGET()
         {
-            IEnumerable<Device> devices = _db.Devices.Include(d => d.Measurements.Take(3)).Include(d => d.Events.Take(3)).AsSingleQuery();
+
+            IEnumerable<Device> devices = _db.Devices.Include(d => d.Measurements.Take(3)).Include(d => d.EventsDevices.Take(3)).AsSingleQuery();
             IEnumerable<DeviceViewModel> deviceView =
                 _mapper.Map<IEnumerable<Device>, IEnumerable<DeviceViewModel>>(devices);
                // string response = JsonSerializer.Serialize(deviceView);
  //           _logger.LogInformation($"Proccessing {Request.} {Request.Path}");
             return deviceView;
-
         }
 
         // GET <DeviceController>/5
         [HttpGet("{name}")]
         public DeviceViewModel Get(string name)
         {
-            DeviceViewModel deviceViewModel = _mapper.Map<Device, DeviceViewModel>(_db.Devices.Where(d => d.Name.Equals(name)).Include(d => d.Measurements.Take(3)).Include(d => d.Events.Take(3)).AsSingleQuery().FirstOrDefault());
+            DeviceViewModel deviceViewModel = _mapper.Map<Device, DeviceViewModel>(_db.Devices.Where(d => d.Name.Equals(name)).Include(d => d.Measurements.Take(3)).Include(d => d.EventsDevices.Take(3)).AsSingleQuery().FirstOrDefault());
                // string response = JsonSerializer.Serialize(deviceViewModel);
                if (deviceViewModel != null)
                {
@@ -60,11 +58,11 @@ namespace MQTTWebApi.Controllers
                }
         }
         [HttpGet("Add")]
-        public string AddDeviceGET(string name, string descr, string geo)
+        public IActionResult AddDeviceGET(string name, string descr, string geo)
         {
             try
             {
-                var isDuplicateItem = _db.Devices.Any(d => d.Name.ToUpper() == name);
+                var isDuplicateItem = _db.Devices.Any(d => d.Name == name);
 
                     if (!isDuplicateItem)
                     {
@@ -73,34 +71,34 @@ namespace MQTTWebApi.Controllers
                             Name=name,
                             Descr=descr,
                             Geo=geo,
-                            CreateDate = DateTime.Now,
-                            EditDate = null
+                            CreatingDate = DateTime.Now,
+                            EditingDate = null
                         };
                         _db.Devices.Add(device);
                         _db.SaveChanges();
-                        return "Success adding";
+                        return Ok("Success adding");
                     }
                     else
                     {
-                        return "This device is exists";
+                        return Conflict("This device is exists");
                     }
                 
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                return BadRequest(ex.Message);
             }
         }
 
 
         [HttpGet("Edit")]
-        public string EditDeviceGET(string name, string descr, string geo)
+        public IActionResult EditDeviceGET(string name, string descr, string geo)
         {
             if (!string.IsNullOrEmpty(name))
             {
                 try
                 {
-                    var device = _db.Devices.Where(d => d.Name.ToUpper() == name).FirstOrDefault();
+                    var device = _db.Devices.FirstOrDefault(d => d.Name == name);
 
                     if (device != null)
                     {
@@ -113,58 +111,57 @@ namespace MQTTWebApi.Controllers
                         {
                             device.Geo = geo;
                         }
-                        device.EditDate=DateTime.Now;
+                        device.EditingDate=DateTime.Now;
                         _db.SaveChanges();
-                        return "Success editing";
+                        return Ok("Success editing");
                     }
                     else
                     {
-                        Response.StatusCode = 404;
-                        return "This device is not exists";
+                        return NotFound("This device is not exists");
                     }
                 }
                 catch (Exception ex)
                 {
-                    return ex.Message;
+                    _logger.LogError($"{ex.Message} {Request.QueryString.Value}");
+                    return BadRequest(ex.Message);
                 }
             }
             else
             {
-                Response.StatusCode = 404;
-                return "Name is null or empty";
+                return NotFound("Name is null or empty");
             }
         }
         [HttpGet("Delete")]
-        public string DeleteDeviceGET(string name)
+        public IActionResult DeleteDeviceGET(string name)
         {
 
             if (!string.IsNullOrEmpty(name))
             {
                 try
                 {
-                    var ExistsItem = _db.Devices.Where(d => d.Name.ToUpper() == name).FirstOrDefault();
+                    var ExistsItem = _db.Devices.FirstOrDefault(d => d.Name == name);
                     if (ExistsItem != null)
                     {
                         _db.Devices.Remove(ExistsItem);
 
                         _db.SaveChanges();
-                        return "Success delete";
+                        return Ok("Success delete");
                     }
                     else
                     {
-                        Response.StatusCode = 404;
-                        return "This device is not exists";
+
+                        return NotFound("This device is not exists");
                     }
                 }
                 catch (Exception ex)
                 {
-                    return ex.Message;
+                    
+                    return BadRequest(ex.Message);
                 }
             }
             else
             {
-                Response.StatusCode = 404;
-                return "Name is null or empty";
+                return NotFound("Name is null or empty");
             }
         }
     }

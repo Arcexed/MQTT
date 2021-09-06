@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Models.DbModels;
+using Models.DBO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using MQTTWebApi.Models;
-using MQTTWebApi.Models.ForReport;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,8 +19,8 @@ namespace MQTTWebApi.Controllers
     {
         private readonly IMapper _mapper;
         private readonly ILogger<MeasurementsController> _logger;
-        private readonly MqttdbContext _db;
-        public MeasurementsController(ILogger<MeasurementsController> logger, MqttdbContext db,IMapper mapper)
+        private readonly mqttdb_newContext _db;
+        public MeasurementsController(ILogger<MeasurementsController> logger, mqttdb_newContext db,IMapper mapper)
         {
             _logger = logger;
             _db = db;
@@ -28,7 +28,7 @@ namespace MQTTWebApi.Controllers
         }
         // GET api/<MeasurementsController>/5
         [HttpGet("{deviceName}/Add")]
-        public async Task<string> AddMeasurements(string deviceName, float atmosphericPressure, float temperature, float airHumidity, float lightLevel, float smokeLevel)
+        public async Task<IActionResult> AddMeasurements(string deviceName, float atmosphericPressure, float temperature, float airHumidity, float lightLevel, float smokeLevel)
         {
             
                 var device = _db.Devices.Where(d => d.Name == deviceName).AsSingleQuery().FirstOrDefault();
@@ -36,7 +36,7 @@ namespace MQTTWebApi.Controllers
                 {
                     var measurement = new Measurement()
                     {
-                        Device = device,
+                        IdDeviceNavigation = device,
                         AtmosphericPressure = atmosphericPressure,
                         Temperature = temperature,
                         AirHumidity = airHumidity,
@@ -46,12 +46,12 @@ namespace MQTTWebApi.Controllers
                     };
                     await _db.Measurements.AddAsync(measurement);
                     await _db.SaveChangesAsync();
-                    return "Success";
+                    return Ok("Success");
                 }
                 else
                 {
                     Response.StatusCode = 404;
-                    return "Device does not exists";
+                    return NotFound("Device does not exists");
                 }
         }
 
@@ -63,9 +63,9 @@ namespace MQTTWebApi.Controllers
             {
                 IEnumerable<MeasurementViewModel> measurementViewModels =
                     _mapper.Map<IEnumerable<Measurement>, IEnumerable<MeasurementViewModel>>(await _db.Measurements
-                        .Where(m => m.Device.Name == deviceName).ToArrayAsync());
+                        .Where(m => m.IdDeviceNavigation.Name == deviceName).ToArrayAsync());
 
-                //IEnumerable<MeasurementViewModel> measurementViewModels =
+                //IEnumerable<MeasurementViewModel> measurementViewModels = 
                 //    _mapper.Map<IEnumerable<Measurement>, IEnumerable<MeasurementViewModel>>(_db.Measurements
                 //        .Where(m => m.Device.Name == deviceName).Take(limit != 0 ? (limit < 1000 ? limit : 1000) : 10));
                 return measurementViewModels;
@@ -74,7 +74,7 @@ namespace MQTTWebApi.Controllers
             {
                 Response.StatusCode = 404;
                 return null;
-            }
+            }   
         }
     }
 }

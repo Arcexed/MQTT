@@ -1,14 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MQTTWebApi.Models;
-using MQTTWebApi.Models.ForReport;
+using Microsoft.Extensions.Logging;
+using Models.DbModels;
+using Models.DBO;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MQTTWebApi.Controllers
 {
@@ -17,10 +15,10 @@ namespace MQTTWebApi.Controllers
     public class ReportController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly MqttdbContext _db;
+        private readonly mqttdb_newContext _db;
         private readonly ILogger<ReportController> _logger;
 
-        public ReportController(ILogger<ReportController> logger, MqttdbContext db,IMapper mapper)
+        public ReportController(ILogger<ReportController> logger, mqttdb_newContext db,IMapper mapper)
         {
             _logger = logger;
             _db = db;

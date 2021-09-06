@@ -62,7 +62,6 @@ namespace MQTTDashboard
             services.AddAuthorization();
             services.AddAuthentication(options =>
             {
-                options.DefaultAuthenticateScheme
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             }).AddCookie(options =>

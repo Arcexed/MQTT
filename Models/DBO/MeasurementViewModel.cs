@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
+using Models.DbModels;
 
-#nullable disable
-
-namespace MQTTWebApi.Models
+namespace Models.DBO
 {
-    public partial class Measurement
+    public class MeasurementViewModel
     {
         public Guid Id { get; set; }
+        [JsonIgnore]
         public Guid IdDevice { get; set; }
         public DateTime Date { get; set; }
         public double AtmosphericPressure { get; set; }
@@ -16,6 +15,8 @@ namespace MQTTWebApi.Models
         public double AirHumidity { get; set; }
         public double LightLevel { get; set; }
         public double SmokeLevel { get; set; }
+        public double RadiationLevel { get; set; }
+        [JsonIgnore]
         public virtual Device Device { get; set; }
     }
 }

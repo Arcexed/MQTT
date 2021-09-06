@@ -1,23 +1,20 @@
+using System;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using MQTTWebApi.Models;
-using MQTTWebApi.Models.Profiles;
+using System.Web.Http;
+using Microsoft.Owin.Security.OAuth;
+using Models.Profile;
+using Models.DbModels;
+using MQTTWebApi.Auth;
+using MQTTWebApi.Controllers;
 
 namespace MQTTWebApi
 {
@@ -37,19 +34,21 @@ namespace MQTTWebApi
             services.AddControllers();
             // ef core
             string connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<MqttdbContext>(options =>
+            services.AddDbContext<mqttdb_newContext>(options =>
             {
                 options.UseSqlServer(connection);
-            });
+
+            }, ServiceLifetime.Transient);
             // automapper
             var mappingConfig = new MapperConfiguration(mc => {
                 mc.AddProfile(new DeviceProfile());
-                mc.AddProfile(new EventProfile());
+                mc.AddProfile(new EventDeviceProfile());
+                mc.AddProfile(new EventUserProfile());
+                mc.AddProfile(new UserProfile());
                 mc.AddProfile(new MeasurementProfile());
             });
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
-
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
@@ -60,6 +59,19 @@ namespace MQTTWebApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
+            var myProvider = new APIAuthorizationServerProvider();
+            OAuthAuthorizationServerOptions options = new OAuthAuthorizationServerOptions
+            {
+                AllowInsecureHttp = true,
+                TokenEndpointPath = new PathString("/token"),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
+                Provider = myProvider
+            };
+            app.UseOAuthAuthorizationServer(options);
+            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
+            HttpConfiguration config = new HttpConfiguration();
+            WebApiConfig.Register(config);
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -72,8 +84,6 @@ namespace MQTTWebApi
             });
             app.UseHttpsRedirection();
             app.UseRouting();
-
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
