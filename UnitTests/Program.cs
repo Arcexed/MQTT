@@ -11,13 +11,13 @@ namespace UnitTests
 {
     class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             for (int i = 0; i < 50000; i++)
             {
-                
-                    Task.Run(() => Generate());
-                    counter++;
+
+                await Generate();
+                counter++;
                 
             }
             
@@ -39,8 +39,8 @@ namespace UnitTests
                 float smokeLevel = rnd.Next(15, 50);
                 try
                 {
-                     //var builder = new UriBuilder($"http://178.54.86.113/Measurements/{deviceName}/Add");
-                    var builder = new UriBuilder($"http://192.168.3.160/Measurements/{deviceName}/Add");
+                    var builder = new UriBuilder($"http://178.54.86.113/Measurements/{deviceName}/Add");
+                    //var builder = new UriBuilder($"http://192.168.3.160/Measurements/{deviceName}/Add");
                     var query = HttpUtility.ParseQueryString(builder.Query);
                     query["atmosphericPressure"] = atmosphericPressure.ToString();
                     query["temperature"] = temperature.ToString();

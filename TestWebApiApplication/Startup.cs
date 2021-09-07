@@ -13,7 +13,6 @@ using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
 using Models.Profile;
 using Models.DbModels;
-using MQTTWebApi.Auth;
 using MQTTWebApi.Controllers;
 
 namespace MQTTWebApi
@@ -59,19 +58,19 @@ namespace MQTTWebApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
-            var myProvider = new APIAuthorizationServerProvider();
-            OAuthAuthorizationServerOptions options = new OAuthAuthorizationServerOptions
-            {
-                AllowInsecureHttp = true,
-                TokenEndpointPath = new PathString("/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
-                Provider = myProvider
-            };
-            app.UseOAuthAuthorizationServer(options);
-            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
-            HttpConfiguration config = new HttpConfiguration();
-            WebApiConfig.Register(config);
+            //app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
+            //var myProvider = new APIAuthorizationServerProvider();
+            //OAuthAuthorizationServerOptions options = new OAuthAuthorizationServerOptions
+            //{
+            //    AllowInsecureHttp = true,
+            //    TokenEndpointPath = new PathString("/token"),
+            //    AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
+            //    Provider = myProvider
+            //};
+            //app.UseOAuthAuthorizationServer(options);
+            //app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
+            //HttpConfiguration config = new HttpConfiguration();
+            //WebApiConfig.Register(config);
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

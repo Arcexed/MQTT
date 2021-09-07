@@ -28,7 +28,8 @@ namespace MQTTWebApi.Controllers
             _mapper = mapper;
         }
         // GET: <DeviceController>
-        [Authorize]
+        //[Authorize] 
+
         [HttpGet]
         public IEnumerable<DeviceViewModel> AllDevicesGET()
         {

@@ -5,6 +5,8 @@
     <StartupObject>MQTTWebApi.Program</StartupObject>
     <UserSecretsId>76671f45-5d8b-42bf-bc53-6ecff09c4395</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <Version>1.0.2</Version>
+    <Authors>Arcex</Authors>
   </PropertyGroup>
 
   <ItemGroup>
@@ -36,6 +38,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Attributes\" />
+    <Folder Include="Middleware\" />
   </ItemGroup>
 
 </Project>
