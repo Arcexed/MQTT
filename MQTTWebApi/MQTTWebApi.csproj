@@ -5,8 +5,9 @@
     <StartupObject>MQTTWebApi.Program</StartupObject>
     <UserSecretsId>76671f45-5d8b-42bf-bc53-6ecff09c4395</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <Version>1.0.2</Version>
+    <Version>1.2</Version>
     <Authors>Arcex</Authors>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
