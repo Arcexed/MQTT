@@ -13,7 +13,7 @@ using Models.DBO;
 
 namespace MQTTWebApi.Controllers
 {
-    [Route("[controller]")]
+    [Route("/api/[controller]")]
     [ApiController]
     public class DeviceController : ControllerBase
     {
@@ -29,12 +29,23 @@ namespace MQTTWebApi.Controllers
         }
         // GET: <DeviceController>
         //[Authorize] 
+        //[Authorize(Roles="Admin, Root")]
+        //[HttpGet]
+        //public IEnumerable<DeviceViewModel> AllDevicesGet()
+        //{
 
+        //    IEnumerable<Device> devices = _db.Devices.Include(d => d.Measurements.Take(3)).Include(d => d.EventsDevices.Take(3));
+        //    IEnumerable<DeviceViewModel> deviceView =
+        //        _mapper.Map<IEnumerable<Device>, IEnumerable<DeviceViewModel>>(devices);
+            
+        //    return deviceView;
+        //}
+        [Authorize]
         [HttpGet]
-        public IEnumerable<DeviceViewModel> AllDevicesGET()
+        public IEnumerable<DeviceViewModel> AllDevicesForUserGet()
         {
 
-            IEnumerable<Device> devices = _db.Devices.Include(d => d.Measurements.Take(3)).Include(d => d.EventsDevices.Take(3)).AsSingleQuery();
+            IEnumerable<Device> devices = _db.Devices.Include(d => d.Measurements.Take(3)).Include(d => d.EventsDevices.Take(3)).Where(d=>d.IdUserNavigation.Username==User.Identity.Name);
             IEnumerable<DeviceViewModel> deviceView =
                 _mapper.Map<IEnumerable<Device>, IEnumerable<DeviceViewModel>>(devices);
                // string response = JsonSerializer.Serialize(deviceView);
@@ -43,10 +54,16 @@ namespace MQTTWebApi.Controllers
         }
 
         // GET <DeviceController>/5
+        [Authorize]
         [HttpGet("{name}")]
-        public DeviceViewModel Get(string name)
+        public DeviceViewModel? Get(string name)
         {
-            DeviceViewModel deviceViewModel = _mapper.Map<Device, DeviceViewModel>(_db.Devices.Where(d => d.Name.Equals(name)).Include(d => d.Measurements.Take(3)).Include(d => d.EventsDevices.Take(3)).AsSingleQuery().FirstOrDefault());
+            string username = User.Identity.Name;
+            DeviceViewModel deviceViewModel = 
+                _mapper.Map<Device?, DeviceViewModel>(_db.Devices
+                    .Include(d => d.Measurements.Take(3))
+                    .Include(d => d.EventsDevices.Take(3))
+                    .FirstOrDefault(d => d.Name.Equals(name) && d.IdUserNavigation.Username==username));
                // string response = JsonSerializer.Serialize(deviceViewModel);
                if (deviceViewModel != null)
                {
@@ -58,11 +75,15 @@ namespace MQTTWebApi.Controllers
                    return null;
                }
         }
+
+        [Authorize]
         [HttpGet("Add")]
-        public IActionResult AddDeviceGET(string name, string descr, string geo)
+        public IActionResult AddDeviceGet(string name, string descr, string geo)
         {
             try
             {
+                var username = User.Identity.Name;
+                var user = _db.Users.FirstOrDefault(d => d.Username == username);
                 var isDuplicateItem = _db.Devices.Any(d => d.Name == name);
 
                     if (!isDuplicateItem)
@@ -73,7 +94,8 @@ namespace MQTTWebApi.Controllers
                             Descr=descr,
                             Geo=geo,
                             CreatingDate = DateTime.Now,
-                            EditingDate = null
+                            EditingDate = null,
+                            IdUserNavigation = user
                         };
                         _db.Devices.Add(device);
                         _db.SaveChanges();
@@ -92,6 +114,7 @@ namespace MQTTWebApi.Controllers
         }
 
 
+        [Authorize]
         [HttpGet("Edit")]
         public IActionResult EditDeviceGET(string name, string descr, string geo)
         {
@@ -99,16 +122,16 @@ namespace MQTTWebApi.Controllers
             {
                 try
                 {
-                    var device = _db.Devices.FirstOrDefault(d => d.Name == name);
+                    var username = User.Identity.Name;
+                    var device = _db.Devices.FirstOrDefault(d => d.Name == name && d.IdUserNavigation.Username==username);
 
                     if (device != null)
                     {
-                        if (descr != null)
+                        if (descr != "")
                         {
                             device.Descr = descr;
                         }
-
-                        if (geo != null)
+                        if (geo != "")
                         {
                             device.Geo = geo;
                         }
@@ -132,6 +155,7 @@ namespace MQTTWebApi.Controllers
                 return NotFound("Name is null or empty");
             }
         }
+        [Authorize]
         [HttpGet("Delete")]
         public IActionResult DeleteDeviceGET(string name)
         {
@@ -140,11 +164,12 @@ namespace MQTTWebApi.Controllers
             {
                 try
                 {
-                    var ExistsItem = _db.Devices.FirstOrDefault(d => d.Name == name);
+                    var username = User.Identity.Name;
+                    var ExistsItem = _db.Devices.FirstOrDefault(d => d.Name == name && d.IdUserNavigation.Username == username);
                     if (ExistsItem != null)
                     {
-                        _db.Devices.Remove(ExistsItem);
 
+                        _db.Devices.Remove(ExistsItem);
                         _db.SaveChanges();
                         return Ok("Success delete");
                     }

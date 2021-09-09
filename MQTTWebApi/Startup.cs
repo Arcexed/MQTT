@@ -1,5 +1,5 @@
-using System;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -7,13 +7,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.IO;
-using System.Web.Http;
-using Microsoft.Owin.Security.OAuth;
-using Models.Profile;
 using Models.DbModels;
-using MQTTWebApi.Controllers;
+using Models.Profile;
+using MQTTWebApi.Auth;
+using Swashbuckle.AspNetCore.Filters;
+using System;
+using System.IO;
 
 namespace MQTTWebApi
 {
@@ -31,11 +32,38 @@ namespace MQTTWebApi
         {
            
             services.AddControllers();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        // укзывает, будет ли валидироваться издатель при валидации токена
+                        ValidateIssuer = true,
+                        // строка, представляющая издателя
+                        ValidIssuer = AuthOptions.ISSUER,
+
+                        // будет ли валидироваться потребитель токена
+                        ValidateAudience = true,
+                        // установка потребителя токена
+                        ValidAudience = AuthOptions.AUDIENCE,
+                        // будет ли валидироваться время существования
+                        ValidateLifetime = true,
+
+                        // установка ключа безопасности
+                        IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+                        // валидация ключа безопасности
+                        ValidateIssuerSigningKey = true,
+                    };
+                });
             // ef core
-            string connection = Configuration.GetConnectionString("DefaultConnection");
+
+            string DefaultConnection = Configuration.GetConnectionString("DefaultConnection");
+            string ProductionConnection = Configuration.GetConnectionString("ProductionConnection");
             services.AddDbContext<mqttdb_newContext>(options =>
             {
-                options.UseSqlServer(connection);
+                options.UseSqlServer(DefaultConnection);
+         //       options.UseSqlServer(ProductionConnection);
 
             }, ServiceLifetime.Transient);
             // automapper
@@ -51,26 +79,40 @@ namespace MQTTWebApi
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
-                
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme (Example: '{token}')",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "Bearer"
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        Array.Empty<string>()
+                    }
+                });
+
             });
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            //app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
-            //var myProvider = new APIAuthorizationServerProvider();
-            //OAuthAuthorizationServerOptions options = new OAuthAuthorizationServerOptions
-            //{
-            //    AllowInsecureHttp = true,
-            //    TokenEndpointPath = new PathString("/token"),
-            //    AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
-            //    Provider = myProvider
-            //};
-            //app.UseOAuthAuthorizationServer(options);
-            //app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
-            //HttpConfiguration config = new HttpConfiguration();
-            //WebApiConfig.Register(config);
+            app.UseAuthentication();
+            app.UseRouting();   
+            app.UseAuthorization();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -82,7 +124,6 @@ namespace MQTTWebApi
                 c.RoutePrefix = string.Empty;
             });
             app.UseHttpsRedirection();
-            app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

@@ -37,9 +37,11 @@ namespace UnitTests
                 float airHumidity = rnd.Next(15, 80);
                 float lightLevel = rnd.Next(15, 30);
                 float smokeLevel = rnd.Next(15, 50);
+                float radiationLevel = rnd.Next(5, 30);
                 try
                 {
-                    var builder = new UriBuilder($"http://178.54.86.113/Measurements/{deviceName}/Add");
+                    var builder = new UriBuilder($"https://localhost:44395/Measurements/{deviceName}/Add");
+                    //var builder = new UriBuilder($"http://178.54.86.113/Measurements/{deviceName}/Add");
                     //var builder = new UriBuilder($"http://192.168.3.160/Measurements/{deviceName}/Add");
                     var query = HttpUtility.ParseQueryString(builder.Query);
                     query["atmosphericPressure"] = atmosphericPressure.ToString();

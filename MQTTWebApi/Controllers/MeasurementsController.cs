@@ -8,12 +8,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MQTTWebApi.Controllers
 {
-    [Route("[controller]")]
+    [Route("/api/[controller]")]
     [ApiController]
     public class MeasurementsController : ControllerBase
     {
@@ -28,10 +29,10 @@ namespace MQTTWebApi.Controllers
         }
         // GET api/<MeasurementsController>/5
         [HttpGet("{deviceName}/Add")]
-        public async Task<IActionResult> AddMeasurements(string deviceName, float atmosphericPressure, float temperature, float airHumidity, float lightLevel, float smokeLevel)
+        public async Task<IActionResult> AddMeasurements(string deviceName, float atmosphericPressure, float temperature, float airHumidity, float lightLevel, float smokeLevel,float radiationLevel)
         {
             
-                var device = _db.Devices.Where(d => d.Name == deviceName).AsSingleQuery().FirstOrDefault();
+                var device = _db.Devices.FirstOrDefault(d => d.Name == deviceName);
                 if (device != null)
                 {
                     var measurement = new Measurement()
@@ -42,6 +43,7 @@ namespace MQTTWebApi.Controllers
                         AirHumidity = airHumidity,
                         LightLevel = lightLevel,
                         SmokeLevel = smokeLevel,
+                        RadiationLevel = radiationLevel,
                         Date = DateTime.Now
                     };
                     await _db.Measurements.AddAsync(measurement);
@@ -55,8 +57,9 @@ namespace MQTTWebApi.Controllers
                 }
         }
 
+        [Authorize(Roles = "Root, Admin")]
         [HttpGet("{deviceName}/Get")]
-        public async Task<IEnumerable<MeasurementViewModel>> GetMeasurements(string deviceName)
+        public async Task<IEnumerable<MeasurementViewModel>?> GetMeasurements(string deviceName)
         {
             Device device = await _db.Devices.Where(d => d.Name == deviceName).FirstOrDefaultAsync();
             if (device != null)

@@ -4,7 +4,7 @@ using Models.DbModels;
 
 namespace MQTTWebApi.Controllers
 {
-    [Route("[controller]")]
+    [Route("/api/[controller]")]
     [ApiController]
     public class HealthyController : Controller
     {

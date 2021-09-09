@@ -7,10 +7,11 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["TestWebApiApplication/MQTTWebApi.csproj", "TestWebApiApplication/"]
-RUN dotnet restore "TestWebApiApplication/MQTTWebApi.csproj"
+COPY ["MQTTWebApi/MQTTWebApi.csproj", "MQTTWebApi/"]
+COPY ["Models/Models.csproj", "Models/"]
+RUN dotnet restore "MQTTWebApi/MQTTWebApi.csproj"
 COPY . .
-WORKDIR "/src/TestWebApiApplication"
+WORKDIR "/src/MQTTWebApi"
 RUN dotnet build "MQTTWebApi.csproj" -c Release -o /app/build
 
 FROM build AS publish
