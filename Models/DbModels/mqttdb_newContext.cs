@@ -155,6 +155,11 @@ namespace Models.DbModels
                     .HasMaxLength(25)
                     .IsUnicode(false)
                     .HasColumnName("name");
+                entity.HasMany(d => d.Users)
+                    .WithOne(p => p.IdRoleNavigation)
+                    .HasForeignKey(d => d.IdRole)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__users__id_role__3B75D760");
             });
 
             modelBuilder.Entity<User>(entity =>

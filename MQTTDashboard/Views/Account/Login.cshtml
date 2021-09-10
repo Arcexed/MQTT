@@ -8,7 +8,7 @@
         <div class="validation" asp-validation-summary="All">
 
         </div>
-        <form method="post">
+        <form method="post" asp-controller="Account" asp-action="Login">
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()

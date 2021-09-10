@@ -1,25 +1,15 @@
+using AutoMapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
+using Models.DbModels;
+using Models.Profile;
 using System.IO;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using MQTTDashboard.Models.DbModels;
-using MQTTDashboard.Models.Profiles;
-using MQTTWebApi.Models;
-using MQTTWebApi.Models.Profiles;
 
 namespace MQTTDashboard
 {
@@ -42,11 +32,11 @@ namespace MQTTDashboard
             {
                 options.UseSqlServer(connection);
                 //options.UseSqlServer(reserveConnection);
-                options.LogTo(d =>
-                {
-                    File.AppendAllText("logs_dashboard.log",d);
-                });
-                options.EnableSensitiveDataLogging();
+             //   options.LogTo(d =>
+             //   {
+             ////       File.AppendAllText("logs_dashboard.log",d);
+             //   });
+             //   options.EnableSensitiveDataLogging();
             });
             // automapper
             var mappingConfig = new MapperConfiguration(mc =>
@@ -88,8 +78,8 @@ namespace MQTTDashboard
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
-            app.UseAuthorization();
             app.UseRouting();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

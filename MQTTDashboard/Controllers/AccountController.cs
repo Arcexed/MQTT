@@ -1,20 +1,20 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using GeekForLess_TestTask_Forum.Static;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Models.DbModels;
+using MQTTDashboard.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using AutoMapper;
-using GeekForLess_TestTask_Forum.Static;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.Extensions.Logging;
-using MQTTDashboard.Models;
-using MQTTDashboard.Models.DbModels;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace MQTTDashboard.Controllers
 {
@@ -44,21 +44,17 @@ namespace MQTTDashboard.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model)
+        public IActionResult Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
-
-               
-                var
-                    user = _db.Users.Include(d=>d.IdRoleNavigation).FirstOrDefault(u => (u.Email == model.Email && u.Password == model.Password.ToSHA1()));
-                user.IdRoleNavigation = _db.Roles.FirstOrDefault(d =>
-                    d.Users.FirstOrDefault(d => d.Username == user.Username && d.Password == model.Password.ToSHA1()).Username == user.Username);
-                
-                //var userViewModel = _mapper.Map<UserViewModel>(user);
+                var hashedPassword = model.Password.ToSHA1();   
+                var user = _db.Users.Include(d=>d.IdRoleNavigation).FirstOrDefault(u => u.Email == model.Email && u.Password == model.Password.ToSHA1());
+                var roleName = _db.Roles.FirstOrDefault(d=>d.Users.FirstOrDefault(d=>d.Email==model.Email).Email==model.Email);
+                //var userViewModel = _mapper.Map<UserViewModel >(user);
                 if (user.Email == model.Email)
                 {
-                    await Authenticate(user);
+                    Authenticate(user);
                     return RedirectToAction("Index", "Account");
                 }
                 ModelState.AddModelError("", "Incorrect email or password");
@@ -69,7 +65,7 @@ namespace MQTTDashboard.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public IActionResult Register(RegisterViewModel model)
         {
 
             if (User.Identity.IsAuthenticated)
@@ -105,8 +101,8 @@ namespace MQTTDashboard.Controllers
                         AccessToken = Guid.NewGuid().ToString("N"),
                         IdRoleNavigation = role
                     };
-                    await _db.Users.AddAsync(user);
-                    await _db.SaveChangesAsync();
+                    _db.Users.Add(user); 
+                    _db.SaveChangesAsync();
                     ViewBag.Message = "Success";
                     ViewBag.isError = false;
 
@@ -134,28 +130,59 @@ namespace MQTTDashboard.Controllers
         public ActionResult Index()
         {
             string role = User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value;
-            return Content($"ваша роль: {role}");
+            string name = ClaimsIdentity.DefaultNameClaimType;
+            //string name = ClaimsIdentity.;
+            return Content($"ваша роль: {role}\nName: {name}");
             return View();
         }
 
+        [Authorize]
+        public IActionResult Profile()
+        {
+            string username = User.Identity.Name;
+            var user = _db.Users.FirstOrDefault(d => d.Username == username);
+            return View(user);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult Profile(User usr)
+        {
+            //update student in DB using EntityFramework in real-life application
+            
+            //update list by removing old student and adding updated student for demo purpose
+            var user = _db.Users.First(s => s.Id == usr.Id);
+
+            if (_db.Users.Any(d => d.AccessToken == usr.AccessToken))
+            {
+                return View(user);
+            }
+            if (_db.Users.Any(d => d.Username == usr.Username))
+            {
+                return View(user);
+            }
+            //if (_db.Users.Any(d => d.Email == usr.Email))
+            //{
+            //    return View(user);
+            //}
 
 
-
-
-
-
-        private async Task Authenticate(User user)
+            _db.SaveChanges();
+            return RedirectToAction("Profile");
+        }
+        private void Authenticate(User user)
         {
             IList<Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Sid, user.Id.ToString()), 
+                new Claim(ClaimsIdentity.DefaultNameClaimType,user.Username),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role,user.IdRoleNavigation.Name),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType,user.IdRoleNavigation.Name),
             };
             // создаем объект ClaimsIdentity
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
             // установка аутентификационных куки
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
+            HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
         public async Task<IActionResult> Logout()
         {

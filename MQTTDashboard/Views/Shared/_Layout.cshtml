@@ -35,7 +35,17 @@
                         }
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <p>Hello @User.Identity.Name</p>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Dashboard</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Profile">Hello @User.Identity.Name</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
+                            </li>
 
                         }
                     </ul>
