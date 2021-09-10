@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace Models.DbModels
+namespace Models.Models
 {
     public partial class EventsDevice
     {

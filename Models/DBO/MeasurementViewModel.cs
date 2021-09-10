@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Text.Json.Serialization;
-using Models.DbModels;
+using Models.Models;
 
 namespace Models.DBO
 {

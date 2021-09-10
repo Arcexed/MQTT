@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
-using Models.DbModels;
+using Models.Models;
 
 namespace MQTTWebApi.Auth
 {

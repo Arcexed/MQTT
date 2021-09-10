@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Models.DbModels;
+using Models.Models;
 
 namespace MQTTWebApi.Controllers
 {

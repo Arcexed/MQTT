@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Models.DbModels;
+using Models.Models;
 using Models.DBO;
 
 namespace Models.Profile

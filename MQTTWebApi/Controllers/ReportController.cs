@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Models.DbModels;
+using Models.Models;
 using Models.DBO;
 using System;
 using System.Linq;

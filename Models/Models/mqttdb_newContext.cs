@@ -1,10 +1,12 @@
 ﻿using System;
+using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Configuration;
 
 #nullable disable
 
-namespace Models.DbModels
+namespace Models.Models
 {
     public partial class mqttdb_newContext : DbContext
     {
@@ -15,6 +17,11 @@ namespace Models.DbModels
         public mqttdb_newContext(DbContextOptions<mqttdb_newContext> options)
             : base(options)
         {
+
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Data Source=178.54.86.113, 14330;Initial Catalog=mqttdb_new;User ID=SA;Password=19Andrei19");
         }
 
         public virtual DbSet<Device> Devices { get; set; }
@@ -155,11 +162,12 @@ namespace Models.DbModels
                     .HasMaxLength(25)
                     .IsUnicode(false)
                     .HasColumnName("name");
-                entity.HasMany(d => d.Users)
-                    .WithOne(p => p.IdRoleNavigation)
-                    .HasForeignKey(d => d.IdRole)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__users__id_role__3B75D760");
+
+                //entity.HasMany(d => d.Users)
+                //    .WithOne(p => p.IdRoleNavigation)
+                //    .HasForeignKey(d => d.IdRole)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK__users__id_role__3B75D760");
             });
 
             modelBuilder.Entity<User>(entity =>

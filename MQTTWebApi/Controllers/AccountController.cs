@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-using Models.DbModels;
+using Models.Models;
 using MQTTWebApi.Auth;
 
 namespace MQTTWebApi.Controllers

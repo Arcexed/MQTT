@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Models.DbModels;
+using Models.Models;
 using Models.Profile;
 using System.IO;
 
@@ -30,7 +30,7 @@ namespace MQTTDashboard
             string reserveConnection = Configuration.GetConnectionString("ReserveConnection");
             services.AddDbContext<mqttdb_newContext>(options =>
             {
-                options.UseSqlServer(connection);
+               // options.UseSqlServer(connection);
                 //options.UseSqlServer(reserveConnection);
              //   options.LogTo(d =>
              //   {
