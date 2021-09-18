@@ -19,8 +19,8 @@ namespace MQTTWebApi.Controllers
     public class AccountController : Controller
     {
         private readonly ILogger<AccountController> _logger;
-        private readonly mqttdb_newContext _db;
-        public AccountController(ILogger<AccountController> logger,mqttdb_newContext db)
+        private readonly MqttdbContext _db;
+        public AccountController(ILogger<AccountController> logger,MqttdbContext db)
         {
             _logger = logger;
             _db = db;
@@ -31,7 +31,7 @@ namespace MQTTWebApi.Controllers
         {
             var identity = GetIdentity(accessToken);
             if (identity == null)
-            {
+            {   
                 return BadRequest(new { errorText = "Invalid token." });
             }
 
@@ -59,18 +59,21 @@ namespace MQTTWebApi.Controllers
 
         private ClaimsIdentity? GetIdentity(string accessToken)
         {
-            User? user = _db.Users.Include(d=>d.IdRoleNavigation).FirstOrDefault(x => x.AccessToken == accessToken);
+            User? user = _db.Users.Include(d=>d.Role).FirstOrDefault(x => x.AccessToken == accessToken);
             if (user != null)
             {
-                var claims = new List<Claim>
+                if (!user.IsBlock)
                 {
-                    new Claim(ClaimsIdentity.DefaultNameClaimType, user.Username),
-                    new Claim(ClaimsIdentity.DefaultRoleClaimType, user.IdRoleNavigation.Name)
-                };
-                ClaimsIdentity claimsIdentity =
-                new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
-                    ClaimsIdentity.DefaultRoleClaimType);
-                return claimsIdentity;
+                    var claims = new List<Claim>
+                    {
+                        new Claim(ClaimsIdentity.DefaultNameClaimType, user.Username),
+                        new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role.Name)
+                    };
+                    ClaimsIdentity claimsIdentity =
+                        new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
+                            ClaimsIdentity.DefaultRoleClaimType);
+                    return claimsIdentity;
+                }
             }
 
             // если пользователя не найдено

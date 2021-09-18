@@ -17,8 +17,8 @@ namespace Models.Profile
                 .ForMember(dest => dest.AtmosphericPressure, opt => opt.MapFrom(src => src.AtmosphericPressure))
                 .ForMember(dest => dest.SmokeLevel, opt => opt.MapFrom(src => src.SmokeLevel))
                 .ForMember(dest => dest.RadiationLevel, opt => opt.MapFrom(src => src.RadiationLevel))
-                .ForMember(dest => dest.IdDevice, opt => opt.MapFrom(src => src.IdDevice))
-                .ForMember(dest => dest.Device, opt => opt.MapFrom(src => src.IdDeviceNavigation))
+                .ForMember(dest => dest.IdDevice, opt => opt.MapFrom(src => src.DeviceId))
+                .ForMember(dest => dest.Device, opt => opt.MapFrom(src => src.Device))
                 .ReverseMap();
         }
     }

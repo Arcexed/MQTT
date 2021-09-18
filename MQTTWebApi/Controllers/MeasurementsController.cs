@@ -20,8 +20,8 @@ namespace MQTTWebApi.Controllers
     {
         private readonly IMapper _mapper;
         private readonly ILogger<MeasurementsController> _logger;
-        private readonly mqttdb_newContext _db;
-        public MeasurementsController(ILogger<MeasurementsController> logger, mqttdb_newContext db,IMapper mapper)
+        private readonly MqttdbContext _db;
+        public MeasurementsController(ILogger<MeasurementsController> logger, MqttdbContext db,IMapper mapper)
         {
             _logger = logger;
             _db = db;
@@ -37,7 +37,7 @@ namespace MQTTWebApi.Controllers
                 {
                     var measurement = new Measurement()
                     {
-                        IdDeviceNavigation = device,
+                        Device = device,
                         AtmosphericPressure = atmosphericPressure,
                         Temperature = temperature,
                         AirHumidity = airHumidity,
@@ -66,7 +66,7 @@ namespace MQTTWebApi.Controllers
             {
                 IEnumerable<MeasurementViewModel> measurementViewModels =
                     _mapper.Map<IEnumerable<Measurement>, IEnumerable<MeasurementViewModel>>(await _db.Measurements
-                        .Where(m => m.IdDeviceNavigation.Name == deviceName).ToArrayAsync());
+                        .Where(m => m.Device.Name == deviceName).ToArrayAsync());
 
                 //IEnumerable<MeasurementViewModel> measurementViewModels = 
                 //    _mapper.Map<IEnumerable<Measurement>, IEnumerable<MeasurementViewModel>>(_db.Measurements

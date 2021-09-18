@@ -16,10 +16,10 @@ namespace MQTTWebApi.Controllers
     public class ReportController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly mqttdb_newContext _db;
+        private readonly MqttdbContext _db;
         private readonly ILogger<ReportController> _logger;
 
-        public ReportController(ILogger<ReportController> logger, mqttdb_newContext db,IMapper mapper)
+        public ReportController(ILogger<ReportController> logger, MqttdbContext db,IMapper mapper)
         {
             _logger = logger;
             _db = db;
@@ -29,7 +29,7 @@ namespace MQTTWebApi.Controllers
         private DeviceViewModel? FindUserAsync(string deviceName)
         {
             var username = User.Identity.Name;
-            var device = _db.Devices.FirstOrDefault(d => d.Name == deviceName && d.IdUserNavigation.Username == username);
+            var device = _db.Devices.FirstOrDefault(d => d.Name == deviceName && d.User.Username == username);
             return _mapper.Map<DeviceViewModel>(device);
         }
         [Authorize]

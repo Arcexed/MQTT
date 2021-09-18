@@ -8,10 +8,10 @@ namespace Models.Models
     public partial class EventsDevice
     {
         public Guid Id { get; set; }
-        public Guid IdDevice { get; set; }
+        public Guid DeviceId { get; set; }
         public DateTime Date { get; set; }
         public string Message { get; set; }
-
-        public virtual Device IdDeviceNavigation { get; set; }
+        public bool isSeen { get; set; } = false;
+        public Device Device { get; set; }
     }
 }

@@ -17,8 +17,8 @@ namespace Models.Profile
                 .ForMember(dest => dest.Geo,opt=> opt.MapFrom(src=>src.Geo))
                 .ForMember(dest => dest.LastThreeMeasurements,opt=>opt.MapFrom(src => src.Measurements.OrderByDescending(d => d.Date).Take(3)))
                 .ForMember(dest => dest.LastThreeEvents, opt =>opt.MapFrom(scr=>scr.EventsDevices.OrderByDescending(d => d.Date).Take(3)))
-                .ForMember(dest => dest.User,opt=> opt.MapFrom(src=>src.IdUserNavigation))
-                .ForMember(dest => dest.IdUser,opt=> opt.MapFrom(src=>src.IdUser))
+                .ForMember(dest => dest.User,opt=> opt.MapFrom(src=>src.User))
+                .ForMember(dest => dest.IdUser,opt=> opt.MapFrom(src=>src.UserId))
                 .ReverseMap();
         }
     }

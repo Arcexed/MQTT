@@ -8,10 +8,11 @@ namespace Models.Models
     public partial class EventsUser
     {
         public Guid Id { get; set; }
-        public Guid IdUser { get; set; }
+        public Guid UserId { get; set; }
         public DateTime Date { get; set; }
         public string Message { get; set; }
+        public bool isSeen { get; set; } = false;
 
-        public virtual User IdUserNavigation { get; set; }
+        public User User { get; set; }
     }
 }

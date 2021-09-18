@@ -20,12 +20,10 @@ namespace MQTTWebApi
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup()
         {
-            Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -58,14 +56,7 @@ namespace MQTTWebApi
                 });
             // ef core
 
-            string DefaultConnection = Configuration.GetConnectionString("DefaultConnection");
-            string ProductionConnection = Configuration.GetConnectionString("ProductionConnection");
-            services.AddDbContext<mqttdb_newContext>(options =>
-            {
-                options.UseSqlServer(DefaultConnection);
-         //       options.UseSqlServer(ProductionConnection);
-
-            }, ServiceLifetime.Transient);
+            services.AddDbContext<MqttdbContext>(ServiceLifetime.Transient);
             // automapper
             var mappingConfig = new MapperConfiguration(mc => {
                 mc.AddProfile(new DeviceProfile());

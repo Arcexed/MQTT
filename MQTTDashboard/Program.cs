@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MQTTDashboard
+namespace Models
 {
     public class Program
     {

@@ -8,7 +8,7 @@ namespace Models.Models
     public partial class Measurement
     {
         public Guid Id { get; set; }
-        public Guid IdDevice { get; set; }
+        public Guid DeviceId { get; set; }
         public DateTime Date { get; set; }
         public double AtmosphericPressure { get; set; }
         public double Temperature { get; set; }
@@ -17,6 +17,6 @@ namespace Models.Models
         public double SmokeLevel { get; set; }
         public double RadiationLevel { get; set; }
 
-        public virtual Device IdDeviceNavigation { get; set; }
+        public Device Device { get; set; }
     }
 }

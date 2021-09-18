@@ -11,33 +11,21 @@ using Models.Models;
 using Models.Profile;
 using System.IO;
 
-namespace MQTTDashboard
+namespace Models
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup()
         {
-            Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // services.AddCors();
             services.AddControllersWithViews();
-            string connection = Configuration.GetConnectionString("DefaultConnection");
-            string reserveConnection = Configuration.GetConnectionString("ReserveConnection");
-            services.AddDbContext<mqttdb_newContext>(options =>
-            {
-               // options.UseSqlServer(connection);
-                //options.UseSqlServer(reserveConnection);
-             //   options.LogTo(d =>
-             //   {
-             ////       File.AppendAllText("logs_dashboard.log",d);
-             //   });
-             //   options.EnableSensitiveDataLogging();
-            });
+            services.AddDbContext<MqttdbContext>();
             // automapper
             var mappingConfig = new MapperConfiguration(mc =>
             {
@@ -75,6 +63,11 @@ namespace MQTTDashboard
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            // app.UseCors(x => x
+            //     .WithOrigins("https://localhost:3000") // путь к нашему SPA клиенту
+            //     .AllowCredentials()
+            //     .AllowAnyMethod()
+            //     .AllowAnyHeader());
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();

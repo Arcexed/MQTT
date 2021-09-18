@@ -64,7 +64,7 @@ namespace Models.DBO
 
         }
 
-        public static async Task<ReportViewModel> GenerateReportMeasurements(DeviceViewModel device, mqttdb_newContext _db, DateTime startDate, IMapper mapper)
+        public static async Task<ReportViewModel> GenerateReportMeasurements(DeviceViewModel device, MqttdbContext _db, DateTime startDate, IMapper mapper)
         {
             if (device != null )
             {
@@ -74,54 +74,54 @@ namespace Models.DBO
                 //temp
                 report.MinTemp = mapper.Map<Measurement, MeasurementViewModel>(
                     await _db.Measurements.FirstOrDefaultAsync(x =>
-                        x.Temperature == _db.Measurements.Where(d=>d.IdDeviceNavigation.Name.Equals(device.Name)).Min(y => y.Temperature) && x.IdDeviceNavigation.Name.Equals(device.Name)));
+                        x.Temperature == _db.Measurements.Where(d=>d.Device.Name.Equals(device.Name)).Min(y => y.Temperature) && x.Device.Name.Equals(device.Name)));
 
-                report.AvgTemp = (float?)await _db.Measurements.Where(d => d.Date >= startDate && d.IdDeviceNavigation.Name.Equals(device.Name)).AverageAsync(y => y.Temperature);
+                report.AvgTemp = (float?)await _db.Measurements.Where(d => d.Date >= startDate && d.Device.Name.Equals(device.Name)).AverageAsync(y => y.Temperature);
                 
                 report.MaxTemp = mapper.Map<Measurement, MeasurementViewModel>(
                     await _db.Measurements.FirstOrDefaultAsync(x =>
-                        x.Temperature == _db.Measurements.Where(d => d.IdDeviceNavigation.Name.Equals(device.Name)).Max(y => y.Temperature) && x.IdDeviceNavigation.Name.Equals(device.Name)));
+                        x.Temperature == _db.Measurements.Where(d => d.Device.Name.Equals(device.Name)).Max(y => y.Temperature) && x.Device.Name.Equals(device.Name)));
                 ////atmospheric pressure
                 report.MinAtmosphericPressure = mapper.Map<Measurement, MeasurementViewModel>(
                     await _db.Measurements.FirstOrDefaultAsync(x =>
-                        x.AtmosphericPressure == _db.Measurements.Where(d => d.IdDeviceNavigation.Name.Equals(device.Name)).Min(y => y.AtmosphericPressure) && x.IdDeviceNavigation.Name.Equals(device.Name)));
+                        x.AtmosphericPressure == _db.Measurements.Where(d => d.Device.Name.Equals(device.Name)).Min(y => y.AtmosphericPressure) && x.Device.Name.Equals(device.Name)));
 
-                report.AvgAtmosphericPressure = (float?)await _db.Measurements.Where(d => d.Date >= startDate && d.IdDeviceNavigation.Name.Equals(device.Name)).AverageAsync(y => y.AtmosphericPressure);
+                report.AvgAtmosphericPressure = (float?)await _db.Measurements.Where(d => d.Date >= startDate && d.Device.Name.Equals(device.Name)).AverageAsync(y => y.AtmosphericPressure);
                 report.MaxAtmosphericPressure = mapper.Map<Measurement, MeasurementViewModel>(
                     await _db.Measurements.FirstOrDefaultAsync(x =>
-                        x.AtmosphericPressure == _db.Measurements.Where(d => d.IdDeviceNavigation.Name.Equals(device.Name)).Max(y => y.AtmosphericPressure) && x.IdDeviceNavigation.Name.Equals(device.Name)));
+                        x.AtmosphericPressure == _db.Measurements.Where(d => d.Device.Name.Equals(device.Name)).Max(y => y.AtmosphericPressure) && x.Device.Name.Equals(device.Name)));
 
                 //air humidity
 
                 report.MinAirHumidity = mapper.Map<Measurement, MeasurementViewModel>(
                     await _db.Measurements.FirstOrDefaultAsync(x =>
-                        x.AirHumidity == _db.Measurements.Where(d => d.IdDeviceNavigation.Name.Equals(device.Name)).Min(y => y.AirHumidity) && x.IdDeviceNavigation.Name.Equals(device.Name)));
-                report.AvgAirHumidity = (float?)await _db.Measurements.Where(d => d.Date >= startDate && d.IdDeviceNavigation.Name.Equals(device.Name)).AverageAsync(y => y.AirHumidity);
+                        x.AirHumidity == _db.Measurements.Where(d => d.Device.Name.Equals(device.Name)).Min(y => y.AirHumidity) && x.Device.Name.Equals(device.Name)));
+                report.AvgAirHumidity = (float?)await _db.Measurements.Where(d => d.Date >= startDate && d.Device.Name.Equals(device.Name)).AverageAsync(y => y.AirHumidity);
 
                 report.MaxAirHumidity = mapper.Map<Measurement, MeasurementViewModel>(
                     await _db.Measurements.FirstOrDefaultAsync(x =>
-                        x.AirHumidity == _db.Measurements.Where(d => d.IdDeviceNavigation.Name.Equals(device.Name)).Max(y => y.AirHumidity) && x.IdDeviceNavigation.Name.Equals(device.Name)));
+                        x.AirHumidity == _db.Measurements.Where(d => d.Device.Name.Equals(device.Name)).Max(y => y.AirHumidity) && x.Device.Name.Equals(device.Name)));
                 ////light level
                 report.MinLightLevel = mapper.Map<Measurement, MeasurementViewModel>(
                     await _db.Measurements.FirstOrDefaultAsync(x =>
-                        x.LightLevel == _db.Measurements.Where(d => d.IdDeviceNavigation.Name.Equals(device.Name))
-                            .Min(y => y.LightLevel) && x.IdDeviceNavigation.Name.Equals(device.Name)));
-                report.AvgLightLevel = (float?)await _db.Measurements.Where(d => d.Date >= startDate && d.IdDeviceNavigation.Name.Equals(device.Name)).AverageAsync(y => y.LightLevel);
+                        x.LightLevel == _db.Measurements.Where(d => d.Device.Name.Equals(device.Name))
+                            .Min(y => y.LightLevel) && x.Device.Name.Equals(device.Name)));
+                report.AvgLightLevel = (float?)await _db.Measurements.Where(d => d.Date >= startDate && d.Device.Name.Equals(device.Name)).AverageAsync(y => y.LightLevel);
                 report.MaxLightLevel = mapper.Map<Measurement, MeasurementViewModel>(
                     await _db.Measurements.FirstOrDefaultAsync(x =>
-                        x.LightLevel == _db.Measurements.Where(d => d.IdDeviceNavigation.Name.Equals(device.Name))
-                            .Max(y => y.LightLevel) && x.IdDeviceNavigation.Name.Equals(device.Name)));
+                        x.LightLevel == _db.Measurements.Where(d => d.Device.Name.Equals(device.Name))
+                            .Max(y => y.LightLevel) && x.Device.Name.Equals(device.Name)));
                 ////smoke level
 
                 report.MinSmokeLevel = mapper.Map<Measurement, MeasurementViewModel>(
                     await _db.Measurements.FirstOrDefaultAsync(x =>
-                        x.SmokeLevel == _db.Measurements.Where(d => d.IdDeviceNavigation.Name.Equals(device.Name))
-                            .Min(y => y.SmokeLevel) && x.IdDeviceNavigation.Name.Equals(device.Name)));
-                report.AvgSmokeLevel = (float?)await _db.Measurements.Where(d => d.Date >= startDate && d.IdDeviceNavigation.Name.Equals(device.Name)).AverageAsync(y => y.SmokeLevel);
+                        x.SmokeLevel == _db.Measurements.Where(d => d.Device.Name.Equals(device.Name))
+                            .Min(y => y.SmokeLevel) && x.Device.Name.Equals(device.Name)));
+                report.AvgSmokeLevel = (float?)await _db.Measurements.Where(d => d.Date >= startDate && d.Device.Name.Equals(device.Name)).AverageAsync(y => y.SmokeLevel);
                 report.MaxSmokeLevel = mapper.Map<Measurement, MeasurementViewModel>(
                     await _db.Measurements.FirstOrDefaultAsync(x =>
-                        x.SmokeLevel == _db.Measurements.Where(d => d.IdDeviceNavigation.Name.Equals(device.Name))
-                            .Max(y => y.SmokeLevel) && x.IdDeviceNavigation.Name.Equals(device.Name)));
+                        x.SmokeLevel == _db.Measurements.Where(d => d.Device.Name.Equals(device.Name))
+                            .Max(y => y.SmokeLevel) && x.Device.Name.Equals(device.Name)));
                 return report;
             }
             else

@@ -18,10 +18,10 @@ namespace MQTTWebApi.Controllers
     public class DeviceController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly mqttdb_newContext _db;
+        private readonly MqttdbContext _db;
         private readonly ILogger<DeviceController> _logger;
 
-        public DeviceController(ILogger<DeviceController> logger, mqttdb_newContext db, IMapper mapper)
+        public DeviceController(ILogger<DeviceController> logger, MqttdbContext db, IMapper mapper)
         {
             _logger = logger;
             _db = db;
@@ -45,7 +45,7 @@ namespace MQTTWebApi.Controllers
         public IEnumerable<DeviceViewModel> AllDevicesForUserGet()
         {
 
-            IEnumerable<Device> devices = _db.Devices.Include(d => d.Measurements.Take(3)).Include(d => d.EventsDevices.Take(3)).Where(d=>d.IdUserNavigation.Username==User.Identity.Name);
+            IEnumerable<Device> devices = _db.Devices.Include(d => d.Measurements.Take(3)).Include(d => d.EventsDevices.Take(3)).Where(d=>d.User.Username==User.Identity.Name);
             IEnumerable<DeviceViewModel> deviceView =
                 _mapper.Map<IEnumerable<Device>, IEnumerable<DeviceViewModel>>(devices);
                // string response = JsonSerializer.Serialize(deviceView);
@@ -63,7 +63,7 @@ namespace MQTTWebApi.Controllers
                 _mapper.Map<Device?, DeviceViewModel>(_db.Devices
                     .Include(d => d.Measurements.Take(3))
                     .Include(d => d.EventsDevices.Take(3))
-                    .FirstOrDefault(d => d.Name.Equals(name) && d.IdUserNavigation.Username==username));
+                    .FirstOrDefault(d => d.Name.Equals(name) && d.User.Username==username));
                // string response = JsonSerializer.Serialize(deviceViewModel);
                if (deviceViewModel != null)
                {
@@ -95,7 +95,7 @@ namespace MQTTWebApi.Controllers
                             Geo=geo,
                             CreatingDate = DateTime.Now,
                             EditingDate = null,
-                            IdUserNavigation = user
+                            User = user
                         };
                         _db.Devices.Add(device);
                         _db.SaveChanges();
@@ -123,7 +123,7 @@ namespace MQTTWebApi.Controllers
                 try
                 {
                     var username = User.Identity.Name;
-                    var device = _db.Devices.FirstOrDefault(d => d.Name == name && d.IdUserNavigation.Username==username);
+                    var device = _db.Devices.FirstOrDefault(d => d.Name == name && d.User.Username==username);
 
                     if (device != null)
                     {
@@ -165,7 +165,7 @@ namespace MQTTWebApi.Controllers
                 try
                 {
                     var username = User.Identity.Name;
-                    var ExistsItem = _db.Devices.FirstOrDefault(d => d.Name == name && d.IdUserNavigation.Username == username);
+                    var ExistsItem = _db.Devices.FirstOrDefault(d => d.Name == name && d.User.Username == username);
                     if (ExistsItem != null)
                     {
 

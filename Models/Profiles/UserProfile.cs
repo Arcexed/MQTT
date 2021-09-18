@@ -13,7 +13,7 @@ namespace Models.Profile
                 .ForMember(dest => dest.Ip, opt => opt.MapFrom(src => src.Ip))
                 .ForMember(dest => dest.IsBlock, opt => opt.MapFrom(src => src.IsBlock))
                 .ForMember(dest => dest.AccessToken, opt => opt.MapFrom(src => src.AccessToken))
-                .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.IdRoleNavigation))
+                .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role))
                 .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Password))
                 .ForMember(dest => dest.Devices, opt => opt.MapFrom(src => src.Devices))
                 .ReverseMap();
