@@ -1,0 +1,83 @@
+Index: MQTT.Dashboard/Controllers/DashboardController.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>using System;\r\nusing System.Data.Entity;\r\nusing System.Linq;\r\nusing Microsoft.AspNetCore.Authorization;\r\nusing Microsoft.AspNetCore.Mvc;\r\nusing Microsoft.Extensions.Logging;\r\nusing Models.Models;\r\n\r\nnamespace MQTTDashboard.Controllers\r\n{\r\n    [Route(\"{controller}\")]\r\n    public class DashboardController : Controller\r\n    {\r\n        private readonly MqttdbContext _db;\r\n        private readonly ILogger<DashboardController> _logger;\r\n        public DashboardController(MqttdbContext db,ILogger<DashboardController> logger)\r\n        {\r\n            _db = db;\r\n            _logger = logger;\r\n        }\r\n\r\n        [Authorize]\r\n        [Route(\"Index\")]\r\n\r\n        public IActionResult Index()\r\n        {\r\n            string username = User.Identity.Name;\r\n            var eventsDevices = _db.EventsDevices.Where(d => d.Device.User.Username == username);   \r\n            return View(_db);\r\n        }\r\n\r\n\r\n        [Authorize]\r\n        [Route(\"Device\")]\r\n        public IActionResult Device()\r\n        {\r\n            //.Include(d=>d.Devices)\r\n            //.Include(d=>d.IdUserNavigation)\r\n            //.Include(d=>d.EventsDevices)\r\n\r\n            string username = User.Identity.Name;\r\n            //var devices = _db.Measurements.Where(d => d.Device.User.Username == username).Select(d => d.Device).ToList();\r\n            //var devices = _db.Devices.Where(d => d.User.Username == username).Include(d=>d.Measurements.Where(d=>d.Device.User.Username==username).Select(d=>d)).Select(s=> new {s, s.Measurements}).ToList();\r\n            //var devices = _db.Devices\r\n            //    .Include(d => d.Measurements).Where(d => d.User.Username == username).ToList();\r\n            //      var deviceByUser = _db.Users.Include(d => d.Devices).Where(d => d.Username == username).ToList();\r\n            //       var measurements = _db.Measurements.Include(d=>d.Device).Where(d => d.Device.User.Username == username);\r\n            var devices = _db.Devices!.Where(x => x.User.Username == username).Include(d=>d.Measurements.LastOrDefault()).Select(new\r\n            {\r\n                \r\n            });\r\n            \r\n            \r\n            \r\n            \r\n            //\r\n            // for (var i = 0; i < devices.Count; i++)\r\n            // {\r\n            //     devices[i].Measurements = new[]\r\n            //     {\r\n            //         _db.Measurements!.Where(x => x.Device == devices[i])\r\n            //             .OrderBy(x => x.Date).Last()\r\n            //     };\r\n            // }\r\n            //       var devices = _db.Devices.Include(d=>d.Measurements).FirstOrDefault(d => d.User.Username == username);\r\n            //var devices = _db.Measurements.Where(d => d.Device.User.Username == username).OrderBy(d => d.Date).Last();\r\n            return View(devices);\r\n        }\r\n        \r\n\r\n        [Authorize]\r\n        [Route(\"Device/{DeviceName}\")]\r\n        public IActionResult Show(string DeviceName,string span)\r\n        {\r\n            if (DeviceName != \"\" && span != \"1\")\r\n            {\r\n                string username = User.Identity.Name;\r\n                var device = _db.Devices.Include(d => d.Measurements.Where(d => DateTime.Now.Subtract(d.Date) < TimeSpan.FromHours(5)))\r\n                    .FirstOrDefault(d => d.Name == DeviceName && d.User.Username == username);\r\n                return View(device);\r\n            }\r\n            return NotFound();\r\n        }\r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/MQTT.Dashboard/Controllers/DashboardController.cs b/MQTT.Dashboard/Controllers/DashboardController.cs
+--- a/MQTT.Dashboard/Controllers/DashboardController.cs	(revision 30bc0bfd4b9f9d2a4b5f841a9462fe932dbfc5e7)
++++ b/MQTT.Dashboard/Controllers/DashboardController.cs	(date 1632051543158)
+@@ -21,7 +21,6 @@
+ 
+         [Authorize]
+         [Route("Index")]
+-
+         public IActionResult Index()
+         {
+             string username = User.Identity.Name;
+@@ -30,43 +29,15 @@
+         }
+ 
+ 
+-        [Authorize]
+         [Route("Device")]
+         public IActionResult Device()
+         {
+-            //.Include(d=>d.Devices)
+-            //.Include(d=>d.IdUserNavigation)
+-            //.Include(d=>d.EventsDevices)
+-
+             string username = User.Identity.Name;
+-            //var devices = _db.Measurements.Where(d => d.Device.User.Username == username).Select(d => d.Device).ToList();
+-            //var devices = _db.Devices.Where(d => d.User.Username == username).Include(d=>d.Measurements.Where(d=>d.Device.User.Username==username).Select(d=>d)).Select(s=> new {s, s.Measurements}).ToList();
+-            //var devices = _db.Devices
+-            //    .Include(d => d.Measurements).Where(d => d.User.Username == username).ToList();
+-            //      var deviceByUser = _db.Users.Include(d => d.Devices).Where(d => d.Username == username).ToList();
+-            //       var measurements = _db.Measurements.Include(d=>d.Device).Where(d => d.Device.User.Username == username);
+-            var devices = _db.Devices!.Where(x => x.User.Username == username).Include(d=>d.Measurements.LastOrDefault()).Select(new
+-            {
+-                
+-            });
+-            
+-            
+-            
+-            
+-            //
+-            // for (var i = 0; i < devices.Count; i++)
+-            // {
+-            //     devices[i].Measurements = new[]
+-            //     {
+-            //         _db.Measurements!.Where(x => x.Device == devices[i])
+-            //             .OrderBy(x => x.Date).Last()
+-            //     };
+-            // }
+-            //       var devices = _db.Devices.Include(d=>d.Measurements).FirstOrDefault(d => d.User.Username == username);
+-            //var devices = _db.Measurements.Where(d => d.Device.User.Username == username).OrderBy(d => d.Date).Last();
++            var devices = _db.Devices!.Where(x => x.User.Username == username).ToList();
+             return View(devices);
+         }
+-        
++
++        public string Blablabla() => "5";
+ 
+         [Authorize]
+         [Route("Device/{DeviceName}")]
+Index: MQTT.Dashboard/Controllers/AccountController.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>using System;\r\nusing System.Collections.Generic;\r\nusing System.Data.Entity;\r\nusing System.Linq;\r\nusing System.Security.Claims;\r\nusing System.Threading.Tasks;\r\nusing AutoMapper;\r\nusing Microsoft.AspNetCore.Authentication;\r\nusing Microsoft.AspNetCore.Authentication.Cookies;\r\nusing Microsoft.AspNetCore.Authorization;\r\nusing Microsoft.AspNetCore.Mvc;\r\nusing Microsoft.Extensions.Logging;\r\nusing Models.Models;\r\nusing MQTTDashboard.Models;\r\n\r\nnamespace MQTTDashboard.Controllers\r\n{\r\n    [Route(\"Account\")]\r\n    public class AccountController : Controller\r\n    {\r\n        private readonly ILogger _logger;\r\n        private readonly MqttdbContext _db;\r\n        private readonly IMapper _mapper;\r\n        public AccountController(MqttdbContext db,IMapper mapper)\r\n        {\r\n            _db = db;\r\n            _mapper = mapper;\r\n        }\r\n\r\n        [HttpGet]\r\n        [Route(\"Login\")]\r\n        public ActionResult Login()\r\n        {\r\n            if (User.Identity.IsAuthenticated)\r\n                return RedirectToAction(\"Index\", \"Account\");\r\n            return View();\r\n        }\r\n        [HttpGet]\r\n        [Route(\"Register\")]\r\n        public ActionResult Register()\r\n        {\r\n            if (User.Identity.IsAuthenticated)\r\n                return RedirectToAction(\"Index\", \"Account\");\r\n            return View();\r\n        }\r\n\r\n        [HttpPost]\r\n        [ValidateAntiForgeryToken]\r\n        [Route(\"Login\")]\r\n        public IActionResult Login(LoginViewModel model)\r\n        {\r\n            if (ModelState.IsValid)\r\n            {\r\n                var hashedPassword = model.Password.ToSHA1();   \r\n                var user = _db.Users.Include(d=>d.Role).FirstOrDefault(u => u.Email == model.Email && u.Password == model.Password.ToSHA1());\r\n                var roleName = _db.Roles.FirstOrDefault(d=>d.Users.FirstOrDefault(d=>d.Email==model.Email).Email==model.Email);\r\n                //var userViewModel = _mapper.Map<UserViewModel >(user);\r\n                if (user.Email != null )\r\n                {\r\n                    Authenticate(user);\r\n                    return RedirectToAction(\"Index\", \"Dashboard\");\r\n                }\r\n                ModelState.AddModelError(\"\", \"Incorrect email or password\");\r\n\r\n            }\r\n            return View();  \r\n        }\r\n\r\n        [HttpPost]\r\n        [ValidateAntiForgeryToken]\r\n        [Route(\"Register\")]\r\n        public IActionResult Register(RegisterViewModel model)\r\n        {\r\n\r\n            if (User.Identity.IsAuthenticated)\r\n            {\r\n                return RedirectToAction(\"Index\", \"Dashboard\");\r\n            }\r\n            if (ModelState.IsValid)\r\n            {\r\n                if (model.Password == model.ConfirmPassword)\r\n                {\r\n                    if (_db.Users.Select(u => u.Username.ToLower() == model.Username.ToLower()).Any())\r\n                    {\r\n                        ViewBag.Message = \"Username is busy. Try another\";\r\n                        ViewBag.isError = true;\r\n                        return View();\r\n                    }\r\n\r\n                    if (_db.Users.Select(u => u.Email.ToLower() == model.Email.ToLower()).Any())\r\n                    {\r\n                        ViewBag.Message = \"Email is busy. Try another\";\r\n                        ViewBag.isError = true;\r\n                        return View();\r\n                    }\r\n\r\n                    Role role = _db.Roles.Where(d => d.Name == \"User\").FirstOrDefault();\r\n                    User user = new User()\r\n                    {\r\n                        Username = model.Username,\r\n                        Email = model.Email,\r\n                        Password = model.Password.ToSHA1(),\r\n                        Ip = this.HttpContext.Connection.RemoteIpAddress.ToString(),\r\n                        IsBlock = false,\r\n                        AccessToken = Guid.NewGuid().ToString(\"N\"),\r\n                        Role = role\r\n                    };\r\n                    _db.Users.Add(user); \r\n                    _db.SaveChangesAsync();\r\n                    ViewBag.Message = \"Success\";\r\n                    ViewBag.isError = false;\r\n\r\n                }\r\n                else\r\n                {\r\n                    ViewBag.Message = \"Password and confirm password does not match\";\r\n                    ViewBag.isError = true;\r\n                }\r\n\r\n            }\r\n            else\r\n            {\r\n                ViewBag.Message = \"One or more credentials is empty\";\r\n                ViewBag.isError = true;\r\n            }\r\n\r\n\r\n            return View();\r\n\r\n\r\n\r\n        }\r\n        [Authorize]\r\n        [Route(\"Index\")]\r\n        public IActionResult Index()\r\n        {\r\n            string role = User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value;\r\n            string name = ClaimsIdentity.DefaultNameClaimType;\r\n            //string name = ClaimsIdentity.;\r\n            return Content($\"ваша роль: {role}\\nName: {name}\");\r\n            //return View();\r\n        }\r\n\r\n        [Authorize]\r\n        [Route(\"Profile\")]\r\n        public IActionResult Profile()\r\n        {\r\n            string username = User.Identity.Name;\r\n            var user = _db.Users.FirstOrDefault(d => d.Username == username);\r\n            return View(user);\r\n        }\r\n\r\n        [Authorize]\r\n        [Route(\"Logout\")]\r\n        public async Task<IActionResult> Logout()\r\n        {\r\n            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);\r\n            return RedirectToAction(\"Login\", \"Account\");\r\n        }\r\n\r\n        [Authorize]\r\n        [HttpPost]\r\n        [Route(\"Profile\")]\r\n        public IActionResult Profile(User usr)\r\n        {\r\n            //update student in DB using EntityFramework in real-life application\r\n            \r\n            //update list by removing old student and adding updated student for demo purpose\r\n            var user = _db.Users.First(s => s.Id == usr.Id);\r\n\r\n            if (_db.Users.Any(d => d.AccessToken == usr.AccessToken))\r\n            {\r\n                return View(user);\r\n            }\r\n            if (_db.Users.Any(d => d.Username == usr.Username))\r\n            {\r\n                return View(user);\r\n            }\r\n            //if (_db.Users.Any(d => d.Email == usr.Email))\r\n            //{\r\n            //    return View(user);\r\n            //}\r\n\r\n\r\n            _db.SaveChanges();\r\n            return RedirectToAction(\"Profile\");\r\n        }\r\n        private void Authenticate(User user)\r\n        {\r\n            IList<Claim> claims = new List<Claim>\r\n            {\r\n                new Claim(ClaimTypes.Sid, user.Id.ToString()), \r\n                new Claim(ClaimsIdentity.DefaultNameClaimType,user.Username),\r\n                new Claim(ClaimTypes.Email, user.Email),\r\n                new Claim(ClaimsIdentity.DefaultRoleClaimType,user.Role.Name),\r\n            };\r\n            // создаем объект ClaimsIdentity\r\n            ClaimsIdentity id = new ClaimsIdentity(claims, \"ApplicationCookie\", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);\r\n            // установка аутентификационных куки\r\n            HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));\r\n        }\r\n        \r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/MQTT.Dashboard/Controllers/AccountController.cs b/MQTT.Dashboard/Controllers/AccountController.cs
+--- a/MQTT.Dashboard/Controllers/AccountController.cs	(revision 30bc0bfd4b9f9d2a4b5f841a9462fe932dbfc5e7)
++++ b/MQTT.Dashboard/Controllers/AccountController.cs	(date 1631989985067)
+@@ -12,6 +12,7 @@
+ using Microsoft.Extensions.Logging;
+ using Models.Models;
+ using MQTTDashboard.Models;
++using MQTTDashboard.Static;
+ 
+ namespace MQTTDashboard.Controllers
+ {
