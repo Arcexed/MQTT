@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -57,7 +58,8 @@ namespace MQTT.Api.Controllers
 
         private async Task<ClaimsIdentity?> GetIdentity(string accessToken)
         {
-            var user = await _db.Users.FirstOrDefaultAsync(x => x.AccessToken == accessToken);
+            
+            var user = await _db.Users.Include(d=>d.Role).FirstOrDefaultAsync(d=>d.AccessToken==accessToken);
             if (user is { IsBlock: false })
             {
                 var claims = new List<Claim>
@@ -70,7 +72,7 @@ namespace MQTT.Api.Controllers
                         ClaimsIdentity.DefaultRoleClaimType);
                 return claimsIdentity;
             }
-
+            
             return null;
         }
     }
