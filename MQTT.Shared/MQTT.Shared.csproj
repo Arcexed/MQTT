@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <RootNamespace>MQTT.Shared</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AutoMapper" Version="10.1.1"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Models\Api"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\MQTT.Data\MQTT.Data.csproj"/>
+    </ItemGroup>
+
+</Project>
