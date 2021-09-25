@@ -29,7 +29,7 @@ namespace MQTT.Dashboard
         {
             services.AddControllersWithViews();
             services.AddDbContext<MQTTDbContext>(x =>
-                x.UseNpgsql(Configuration.GetConnectionString("Mr05-je")));
+                x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             var mappingConfig = new MapperConfiguration(mc =>
             {
