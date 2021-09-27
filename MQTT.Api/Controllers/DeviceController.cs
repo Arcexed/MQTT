@@ -89,13 +89,14 @@ namespace MQTT.Api.Controllers
 
                 Device device = new()
                 {
-                    Id=new Guid(),
+                    Id= Guid.NewGuid(),
                     Name = name,
                     Description = desc,
                     Geo = geo,
                     CreatingDate = DateTime.Now,
                     EditingDate = null,
-                    IsPublic = false    
+                    IsPublic = false,
+                    MqttToken = Guid.NewGuid().ToString("N")
                 };
                 _db.Devices.Add(device);
                 _db.SaveChanges();

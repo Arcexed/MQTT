@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 #pragma warning disable 8618
 // ReSharper disable PropertyCanBeMadeInitOnly.Global
@@ -13,19 +14,19 @@ namespace MQTT.Data.Entities
 {
     public class User : IEntity<Guid>
     {
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string Email { get; set; }
+        [Required] public string Username { get; set; }
+        [Required] public string Password { get; set; }
+        [Required] public string Email { get; set; }
         public string Ip { get; set; }
-        public bool IsBlock { get; set; }
+        [Required] public bool IsBlock { get; set; }
 
-        public string AccessToken { get; set; }
+        [Required] public string AccessToken { get; set; }
 
         //   public Image Avatar { get; set; } 
 
-        public Role Role { get; set; }
+        [Required] public Role Role { get; set; }
         public ICollection<Device> Devices { get; set; }
         public ICollection<EventsUser> EventsUsers { get; set; }
-        public Guid Id { get; set; }
+        [Required] public Guid Id { get; set; }
     }
 }

@@ -13,16 +13,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="270971bf-fb7d-43d6-a151-d45eb6540566" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/MQTT.Broker/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dockerignore" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Broker/.dockerignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.MQTT/.idea/.name" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.MQTT/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MQTT/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Api/Controllers/DeviceController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Controllers/DeviceController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/MQTT.Api.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/MQTT.Api.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Api/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Properties/launchSettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Data/Entities/Device.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/Entities/Device.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Data/Entities/EventsDevice.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/Entities/EventsDevice.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.sln" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Data/Entities/EventsUser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/Entities/EventsUser.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Data/Entities/Measurement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/Entities/Measurement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Data/Entities/Role.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/Entities/Role.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Data/Entities/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/Entities/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Data/Migrations/MQTTDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/Migrations/MQTTDbContextModelSnapshot.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,8 +40,11 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/ae604afeb6574617a94df2a743c6288e46000/61/PrimitiveHelper.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2da2f94e7f544efd90e6ebff8984fc5c1bae00/11A/ControllerActionInvoker.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d35e65ae27424452840ac79e8e239a673a00/4/SwaggerMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/dee9da8f6d714c8999375532b393e2778d8400/1D2/ValueTask.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c301744ba1554c0e985a5693d836144a5a000/11/DeveloperExceptionPageMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2da2f94e7f544efd90e6ebff8984fc5c1bae00/10F/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="1yMGjc0k9xjXxgG1jIMR8SD6S0e" />
   <component name="ProjectViewState">
@@ -48,11 +52,13 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.35014006" />
+    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.3501355" />
     <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.0" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
@@ -178,6 +184,7 @@
       <updated>1632054186220</updated>
       <workItem from="1632054206804" duration="8820000" />
       <workItem from="1632069710034" duration="1171000" />
+      <workItem from="1632735060911" duration="10985000" />
     </task>
     <task id="LOCAL-00001" summary="Testing functionality and initial migration.">
       <created>1632068867120</created>
@@ -427,6 +434,19 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/MQTT.Api/Controllers/DeviceController.cs</url>
+          <line>89</line>
+          <properties documentPath="$PROJECT_DIR$/MQTT.Api/Controllers/DeviceController.cs" initialLine="89" containingFunctionPresentation="method 'AddDeviceGet'">
+            <startOffsets>
+              <option value="2913" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3303" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

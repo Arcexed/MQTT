@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.ComponentModel.DataAnnotations;
 
 #pragma warning disable 8618
 // ReSharper disable ClassNeverInstantiated.Global
@@ -12,7 +13,7 @@ namespace MQTT.Data.Entities
 {
     public class Role : IEntity<Guid>
     {
-        public string Name { get; set; }
-        public Guid Id { get; set; }
+        [Required] public string Name { get; set; }
+        [Required] public Guid Id { get; set; }
     }
 }
