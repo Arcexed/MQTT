@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using Npgsql.PostgresTypes;
 
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable UnusedAutoPropertyAccessor.Global
