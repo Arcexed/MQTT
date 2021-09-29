@@ -15,6 +15,8 @@ using Microsoft.OpenApi.Models;
 using MQTT.Api.Auth;
 using MQTT.Data;
 using MQTT.Shared.Profiles;
+using MQTTnet.AspNetCore;
+using MQTTnet.AspNetCore.Extensions;
 
 // ReSharper disable UnusedAutoPropertyAccessor.Local
 
@@ -34,6 +36,7 @@ namespace MQTT.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.AddControllers();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -111,7 +114,11 @@ namespace MQTT.Api
                 c.RoutePrefix = string.Empty;
             });
             app.UseHttpsRedirection();
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+       
             app.Run(async context => { await context.Response.WriteAsync("Unknown request"); });
         }
     }

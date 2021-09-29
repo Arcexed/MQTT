@@ -7,44 +7,71 @@
     <projectFile profileName="TestWebApiApplication">MQTT.Api/MQTT.Api.csproj</projectFile>
     <projectFile profileName="IIS Express">MQTT.Dashboard/MQTT.Dashboard.csproj</projectFile>
     <projectFile profileName="MQTTDashboard">MQTT.Dashboard/MQTT.Dashboard.csproj</projectFile>
+    <projectFile profileName="IIS Express">../../Downloads/mqtt-client-dotnet-core-master/Mqtt.Client.AspNetCore.csproj</projectFile>
+    <projectFile profileName="Mqtt.Client.AspNetCore">../../Downloads/mqtt-client-dotnet-core-master/Mqtt.Client.AspNetCore.csproj</projectFile>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="270971bf-fb7d-43d6-a151-d45eb6540566" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.MQTT/.idea/.name" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.MQTT/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MQTT/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/Auth/AuthOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Auth/AuthOptions.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Api/Controllers/DeviceController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Controllers/DeviceController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/MQTT.Api.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/MQTT.Api.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Api/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Properties/launchSettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Startup.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Data/Entities/Device.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/Entities/Device.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Data/Entities/EventsDevice.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/Entities/EventsDevice.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Data/Entities/EventsUser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/Entities/EventsUser.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Data/Entities/Measurement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/Entities/Measurement.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Data/Entities/Role.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/Entities/Role.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Data/Entities/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/Entities/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Data/Migrations/MQTTDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/Migrations/MQTTDbContextModelSnapshot.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DisabledMethodsStorage">
+    <option name="disabledMethods">
+      <set>
+        <option value="System.Linq : System.Linq.SystemCore_EnumerableDebugView&lt;T&gt; : get_Items ()" />
+      </set>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Refactored" />
+        <entry key="$PROJECT_DIR$" value="3d1a5d7fc719e042e7ba7016eda08a2abbc5e590" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/ae604afeb6574617a94df2a743c6288e46000/61/PrimitiveHelper.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2da2f94e7f544efd90e6ebff8984fc5c1bae00/11A/ControllerActionInvoker.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d35e65ae27424452840ac79e8e239a673a00/4/SwaggerMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/dee9da8f6d714c8999375532b393e2778d8400/1D2/ValueTask.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/38694e13026c4ea988e762c0ebd1d10265400/c6/3efc74bd/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d7a3ca84869f48e0aa5c354ee22cb1ee18e00/9/LoggerMessage.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c301744ba1554c0e985a5693d836144a5a000/11/DeveloperExceptionPageMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d7a3ca84869f48e0aa5c354ee22cb1ee18e00/A/LoggerT.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/eeae490c3300468da793a39c7791ea0212000/6/Logger.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/eeae490c3300468da793a39c7791ea0212000/C/LoggerInformation.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2da2f94e7f544efd90e6ebff8984fc5c1bae00/11A/ControllerActionInvoker.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/dee9da8f6d714c8999375532b393e2778d8400/1D2/ValueTask.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1ef29d187bb64d4b8e4e1410f3589d541bd400/C4/HttpProtocol.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/dee9da8f6d714c8999375532b393e2778d8400/2AC/AsyncTaskMethodBuilderT.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/Downloads/mqtt-client-dotnet-core-master/Startup.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/dee9da8f6d714c8999375532b393e2778d8400/1A7/ExecutionContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/dee9da8f6d714c8999375532b393e2778d8400/197/ThreadPool.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/dee9da8f6d714c8999375532b393e2778d8400/196/ThreadPool.CoreCLR.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/Downloads/mqtt-client-dotnet-core-master/Program.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/dee9da8f6d714c8999375532b393e2778d8400/228/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/Downloads/mqtt-client-dotnet-core-master/Extensions/ServiceCollectionExtension.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/Downloads/mqtt-client-dotnet-core-master/Options/AspCoreMqttClientOptionBuilder.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/Downloads/mqtt-client-dotnet-core-master/Services/ExtarnalService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/Downloads/mqtt-client-dotnet-core-master/Services/IMqttClientService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/Downloads/mqtt-client-dotnet-core-master/Services/MqttClientService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/Downloads/mqtt-client-dotnet-core-master/Settings/AppSettingsProvider.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/Downloads/mqtt-client-dotnet-core-master/Settings/BrokerHostSettings.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2da2f94e7f544efd90e6ebff8984fc5c1bae00/10F/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/Downloads/mqtt-client-dotnet-core-master/Settings/ClientSettings.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="1yMGjc0k9xjXxgG1jIMR8SD6S0e" />
   <component name="ProjectViewState">
@@ -52,15 +79,18 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.3501355" />
+    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.35014006" />
     <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.0" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/mqtt-client-dotnet-core-master/Mqtt.Client.AspNetCore.csproj" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="project.propDebugger" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected=".NET Launch Settings Profile.MQTT.Api: TestWebApiApplication">
@@ -160,16 +190,51 @@
         <option name="Build" />
       </method>
     </configuration>
+    <configuration name="Mqtt.Client.AspNetCore" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
+      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$USER_HOME$/Downloads/mqtt-client-dotnet-core-master/Mqtt.Client.AspNetCore.csproj" />
+      <option name="LAUNCH_PROFILE_TFM" value=".NETCoreApp,Version=v3.1" />
+      <option name="LAUNCH_PROFILE_NAME" value="Mqtt.Client.AspNetCore" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
+      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
+      <option name="SEND_DEBUG_REQUEST" value="1" />
+      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
+      <method v="2">
+        <option name="Build" />
+      </method>
+    </configuration>
+    <configuration name="Mqtt.Client.AspNetCore: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
+      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$USER_HOME$/Downloads/mqtt-client-dotnet-core-master/Mqtt.Client.AspNetCore.csproj" />
+      <option name="LAUNCH_PROFILE_TFM" value=".NETCoreApp,Version=v3.1" />
+      <option name="LAUNCH_PROFILE_NAME" value="Mqtt.Client.AspNetCore" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
+      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
+      <option name="SEND_DEBUG_REQUEST" value="1" />
+      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
+      <method v="2">
+        <option name="Build" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue=".NET Launch Settings Profile.MQTT.Api: TestWebApiApplication" />
       <item itemvalue=".NET Launch Settings Profile.MQTT.Dashboard: IIS Express" />
       <item itemvalue=".NET Launch Settings Profile.MQTT.Dashboard: MQTTDashboard" />
       <item itemvalue=".NET Launch Settings Profile.MQTT.Api: IIS Express" />
+      <item itemvalue=".NET Launch Settings Profile.Mqtt.Client.AspNetCore: IIS Express" />
+      <item itemvalue=".NET Launch Settings Profile.Mqtt.Client.AspNetCore" />
       <item itemvalue=".NET Project.MQTT.Client" />
       <item itemvalue=".NET Project.MQTT.Broker" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue=".NET Project.MQTT.Broker" />
+        <item itemvalue=".NET Project.MQTT.Broker" />
+        <item itemvalue=".NET Project.MQTT.Broker" />
         <item itemvalue=".NET Project.MQTT.Broker" />
       </list>
     </recent_temporary>
@@ -184,7 +249,10 @@
       <updated>1632054186220</updated>
       <workItem from="1632054206804" duration="8820000" />
       <workItem from="1632069710034" duration="1171000" />
-      <workItem from="1632735060911" duration="10985000" />
+      <workItem from="1632735060911" duration="29037000" />
+      <workItem from="1632835934038" duration="1900000" />
+      <workItem from="1632861526499" duration="3647000" />
+      <workItem from="1632914571347" duration="1246000" />
     </task>
     <task id="LOCAL-00001" summary="Testing functionality and initial migration.">
       <created>1632068867120</created>
@@ -200,7 +268,14 @@
       <option name="project" value="LOCAL" />
       <updated>1632069044587</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Some changes / Add MqttToken for devices / Fixed Web Api Device add bug">
+      <created>1632751836593</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1632751836593</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -393,7 +468,34 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="dev" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="dev" />
+                </option>
+              </RecentGroup>
+            </list>
           </value>
         </entry>
       </map>
@@ -404,51 +506,15 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="Testing functionality and initial migration." />
     <MESSAGE value="Add files migration" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add files migration" />
+    <MESSAGE value="Some changes / Add MqttToken for devices / Fixed Web Api Device add bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="Some changes / Add MqttToken for devices / Fixed Web Api Device add bug" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/MQTT.Api/Controllers/DeviceController.cs</url>
-          <line>51</line>
-          <properties documentPath="$PROJECT_DIR$/MQTT.Api/Controllers/DeviceController.cs" initialLine="51" containingFunctionPresentation="method 'AllDevicesForUserGet'">
-            <startOffsets>
-              <option value="1616" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1741" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/MQTT.Api/Controllers/DeviceController.cs</url>
-          <line>52</line>
-          <properties documentPath="$PROJECT_DIR$/MQTT.Api/Controllers/DeviceController.cs" initialLine="52" containingFunctionPresentation="lambda expression inside method 'AllDevicesForUserGet'">
-            <startOffsets>
-              <option value="1676" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1709" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/MQTT.Api/Controllers/DeviceController.cs</url>
-          <line>89</line>
-          <properties documentPath="$PROJECT_DIR$/MQTT.Api/Controllers/DeviceController.cs" initialLine="89" containingFunctionPresentation="method 'AddDeviceGet'">
-            <startOffsets>
-              <option value="2913" />
-            </startOffsets>
-            <endOffsets>
-              <option value="3303" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="Frame#MQTT.Data.Entities.Device.TakeMeasurements" memberName="this" />
+        <PinnedItemInfo parentTag="Type#MQTT.Data.Entities.User" memberName="Devices" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
 </project>

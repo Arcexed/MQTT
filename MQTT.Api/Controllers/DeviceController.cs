@@ -30,33 +30,20 @@ namespace MQTT.Api.Controllers
             _db = db;
             _mapper = mapper;
         }
-
-        // GET: <DeviceController>
-        //[Authorize] 
-        //[Authorize(Roles="Admin, Root")]
-        //[HttpGet]
-        //public IEnumerable<DeviceViewModel> AllDevicesGet()
-        //{
-
-        //    IEnumerable<Device> devices = _db.Devices.Include(d => d.Measurements.Take(3)).Include(d => d.EventsDevices.Take(3));
-        //    IEnumerable<DeviceViewModel> deviceView =
-        //        _mapper.Map<IEnumerable<Device>, IEnumerable<DeviceViewModel>>(devices);
-
-        //    return deviceView;
-        //}
-
         [Authorize]
         [HttpGet]
-        public IEnumerable<DeviceViewModel> AllDevicesForUserGet()
+        public IActionResult AllDevicesForUserGet()
         {
-            var devices =
-                _db.Users.FirstOrDefault(x => x.Username == User.Identity!.Name)
-                    ?.Devices;
-            devices.ForAll(x => x.TakeMeasurements(3).TakeEvents(3));
+            var user = _db.Users.Include(d=>d.Devices).First(x => x.Username == User.Identity!.Name);
+            var devices = user.Devices;
+            // var devices =
+            //     _db.Users.FirstOrDefault(x => x.Username == User.Identity!.Name)?.Devices;
+                devices.ForAll(x => x.TakeMeasurements(3).TakeEvents(3));
+                var deviceView =
+                    _mapper.Map<IEnumerable<Device>, IEnumerable<DeviceViewModel>>(devices!);
+                return Ok(deviceView);
 
-            var deviceView =
-                _mapper.Map<IEnumerable<Device>, IEnumerable<DeviceViewModel>>(devices!);
-            return deviceView;
+            
         }
 
 
@@ -73,7 +60,6 @@ namespace MQTT.Api.Controllers
             if (deviceViewModel != null)
                 return Ok(deviceViewModel);
 
-            Response.StatusCode = 404;
             return BadRequest();
         }
 
@@ -86,21 +72,28 @@ namespace MQTT.Api.Controllers
                 var isDuplicateItem = _db.Devices.Any(d => d.Name == name);
 
                 if (isDuplicateItem) return Conflict("This device is exists");
-
-                Device device = new()
+                var user = _db.Users.FirstOrDefault(d => d.Username == User.Identity!.Name);
+                if (user != null)
                 {
-                    Id= Guid.NewGuid(),
-                    Name = name,
-                    Description = desc,
-                    Geo = geo,
-                    CreatingDate = DateTime.Now,
-                    EditingDate = null,
-                    IsPublic = false,
-                    MqttToken = Guid.NewGuid().ToString("N")
-                };
-                _db.Devices.Add(device);
-                _db.SaveChanges();
-                return Ok("Success adding");
+                    Device device = new()
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = name,
+                        Description = desc,
+                        Geo = geo,
+                        CreatingDate = DateTime.Now,
+                        EditingDate = null,
+                        IsPublic = false,
+                        MqttToken = Guid.NewGuid().ToString("N")
+                    };
+                    user.Devices.Add(device);
+                    _db.SaveChanges();
+                    return Ok("Success adding");
+                }
+                else
+                {
+                    return BadRequest("User not found");
+                }
             }
             catch (Exception ex)
             {

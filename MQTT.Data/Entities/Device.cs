@@ -32,8 +32,8 @@ namespace MQTT.Data.Entities
 
         [Required] public string MqttToken { get; set; }
         [Required] public bool IsPublic { get; set; }
-        public ICollection<EventsDevice> EventsDevices { get; set; }
-        public ICollection<Measurement> Measurements { get; set; }
+        public ICollection<EventsDevice> EventsDevices { get; set; } = new List<EventsDevice>();
+        public ICollection<Measurement> Measurements { get; set; } = new List<Measurement>();
 
         public string Visible =>
             IsPublic ? "Public" : "Private";
@@ -49,13 +49,13 @@ namespace MQTT.Data.Entities
 
         public Device TakeMeasurements(int count)
         {
-            Measurements = Measurements.Take(count).ToList();
+            Measurements = Measurements.Take(Measurements.Count >= count ? count : Measurements.Count).ToList();
             return this;
         }
 
         public Device TakeEvents(int count)
         {
-            EventsDevices = EventsDevices.Take(count).ToList();
+            EventsDevices = EventsDevices.Take(EventsDevices.Count >= count ? count : EventsDevices.Count).ToList();
             return this;
         }
     }
