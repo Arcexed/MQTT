@@ -14,13 +14,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1aef981b-882b-4864-b7b7-5e45bf597cf4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/Extensions/ConfigureExtensions.cs" afterDir="false" />
+    <list default="true" id="1aef981b-882b-4864-b7b7-5e45bf597cf4" name="Changes" comment="Refactoring Startup class">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.MQTT/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MQTT/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Startup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Broker/.dockerignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Broker/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.sln" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Controllers/AccountController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/Controllers/DeviceController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Controllers/DeviceController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Shared/MQTT.Shared.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Shared/MQTT.Shared.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +43,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/MQTT.Api/Startup.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/MQTT.Api/appsettings.json" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/MQTT.Api/Controllers/AccountController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MQTT.Api/Controllers/AccountController.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="1yMGjc0k9xjXxgG1jIMR8SD6S0e" />
   <component name="ProjectLevelVcsManager">
@@ -72,7 +70,7 @@
   </component>
   <component name="RunManager" selected=".NET Launch Settings Profile.MQTT.Api: TestWebApiApplication">
     <configuration name="MQTT.Broker" type="DotNetProject" factoryName=".NET Project" temporary="true">
-      <option name="EXE_PATH" value="$PROJECT_DIR$/MQTT.Broker/bin/Debug/net5.0/MQTT.Broker" />
+      <option name="EXE_PATH" value="$PROJECT_DIR$/MQTT.Broker/bin/Debug/net5.0/MQTT.Broker.exe" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/MQTT.Broker/bin/Debug/net5.0" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -85,24 +83,6 @@
       <option name="PROJECT_WORKING_DIRECTORY_TRACKING" value="1" />
       <option name="PROJECT_KIND" value="DotNetCore" />
       <option name="PROJECT_TFM" value="net5.0" />
-      <method v="2">
-        <option name="Build" />
-      </method>
-    </configuration>
-    <configuration name="MQTT.Client" type="DotNetProject" factoryName=".NET Project">
-      <option name="EXE_PATH" value="" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="PASS_PARENT_ENVS" value="1" />
-      <option name="USE_EXTERNAL_CONSOLE" value="0" />
-      <option name="USE_MONO" value="0" />
-      <option name="RUNTIME_ARGUMENTS" value="" />
-      <option name="PROJECT_PATH" value="$PROJECT_DIR$/MQTT.Client/MQTT.Client.csproj" />
-      <option name="PROJECT_EXE_PATH_TRACKING" value="1" />
-      <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
-      <option name="PROJECT_WORKING_DIRECTORY_TRACKING" value="1" />
-      <option name="PROJECT_KIND" value="DotNetCore" />
-      <option name="PROJECT_TFM" value="" />
       <method v="2">
         <option name="Build" />
       </method>
@@ -167,44 +147,11 @@
         <option name="Build" />
       </method>
     </configuration>
-    <configuration name="Mqtt.Client.AspNetCore" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
-      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$USER_HOME$/Downloads/mqtt-client-dotnet-core-master/Mqtt.Client.AspNetCore.csproj" />
-      <option name="LAUNCH_PROFILE_TFM" value=".NETCoreApp,Version=v3.1" />
-      <option name="LAUNCH_PROFILE_NAME" value="Mqtt.Client.AspNetCore" />
-      <option name="USE_EXTERNAL_CONSOLE" value="0" />
-      <option name="USE_MONO" value="0" />
-      <option name="RUNTIME_ARGUMENTS" value="" />
-      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
-      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
-      <option name="SEND_DEBUG_REQUEST" value="1" />
-      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
-      <method v="2">
-        <option name="Build" />
-      </method>
-    </configuration>
-    <configuration name="Mqtt.Client.AspNetCore: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
-      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$USER_HOME$/Downloads/mqtt-client-dotnet-core-master/Mqtt.Client.AspNetCore.csproj" />
-      <option name="LAUNCH_PROFILE_TFM" value=".NETCoreApp,Version=v3.1" />
-      <option name="LAUNCH_PROFILE_NAME" value="Mqtt.Client.AspNetCore" />
-      <option name="USE_EXTERNAL_CONSOLE" value="0" />
-      <option name="USE_MONO" value="0" />
-      <option name="RUNTIME_ARGUMENTS" value="" />
-      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
-      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
-      <option name="SEND_DEBUG_REQUEST" value="1" />
-      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
-      <method v="2">
-        <option name="Build" />
-      </method>
-    </configuration>
     <list>
       <item itemvalue=".NET Launch Settings Profile.MQTT.Api: TestWebApiApplication" />
       <item itemvalue=".NET Launch Settings Profile.MQTT.Dashboard: IIS Express" />
       <item itemvalue=".NET Launch Settings Profile.MQTT.Dashboard: MQTTDashboard" />
       <item itemvalue=".NET Launch Settings Profile.MQTT.Api: IIS Express" />
-      <item itemvalue=".NET Launch Settings Profile.Mqtt.Client.AspNetCore: IIS Express" />
-      <item itemvalue=".NET Launch Settings Profile.Mqtt.Client.AspNetCore" />
-      <item itemvalue=".NET Project.MQTT.Client" />
       <item itemvalue=".NET Project.MQTT.Broker" />
     </list>
     <recent_temporary>
@@ -231,7 +178,7 @@
       <workItem from="1632861526499" duration="3647000" />
       <workItem from="1632914571347" duration="1246000" />
       <workItem from="1633546411250" duration="4000" />
-      <workItem from="1633546429821" duration="2398000" />
+      <workItem from="1633546429821" duration="5352000" />
     </task>
     <task id="LOCAL-00001" summary="Testing functionality and initial migration.">
       <created>1632068867120</created>
@@ -254,7 +201,14 @@
       <option name="project" value="LOCAL" />
       <updated>1632751836593</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Refactoring Startup class">
+      <created>1633550109102</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1633550109102</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -486,7 +440,8 @@
     <MESSAGE value="Testing functionality and initial migration." />
     <MESSAGE value="Add files migration" />
     <MESSAGE value="Some changes / Add MqttToken for devices / Fixed Web Api Device add bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="Some changes / Add MqttToken for devices / Fixed Web Api Device add bug" />
+    <MESSAGE value="Refactoring Startup class" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactoring Startup class" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using MQTT.Api.Auth;
 using MQTT.Data;
@@ -15,13 +16,13 @@ namespace MQTT.Api.Controllers
     [Route("/api/[controller]")]
     [ApiController]
     public class AccountController : Controller
-    {
-        // private readonly ILogger<AccountController> _logger;
+    { 
+        private readonly ILogger<AccountController> _logger;
         private readonly MQTTDbContext _db;
 
-        public AccountController( /*ILogger<AccountController> logger,*/ MQTTDbContext db)
+        public AccountController(ILogger<AccountController> logger, MQTTDbContext db)
         {
-            // _logger = logger;
+             _logger = logger;
             _db = db;
         }
 
@@ -31,7 +32,10 @@ namespace MQTT.Api.Controllers
             var identity = await GetIdentity(accessToken);
 
             if (identity == null)
+            {
+                _logger.Log(LogLevel.Information,$"{DateTime.Now.ToString("O")} Invalid token ({accessToken}) IP:{HttpContext.Request.Host.Host}");
                 return BadRequest("Invalid token.");
+            }
 
             var now = DateTime.UtcNow;
 
@@ -52,7 +56,7 @@ namespace MQTT.Api.Controllers
                 nowBefore = DateTime.Now,
                 expires = now.Add(TimeSpan.FromMinutes(AuthOptions.Lifetime))
             };
-
+            _logger.Log(LogLevel.Information,$"{DateTime.Now.ToString("O")} Success authentication ({accessToken}) IP:{HttpContext.Request.Host.Host}");
             return Ok(response);
         }
 
