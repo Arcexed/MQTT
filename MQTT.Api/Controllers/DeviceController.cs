@@ -30,8 +30,10 @@ namespace MQTT.Api.Controllers
             _db = db;
             _mapper = mapper;
         }
+        
         [Authorize]
         [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<DeviceViewModel>), 200)]
         public IActionResult AllDevicesForUserGet()
         {
             var user = _db.Users.Include(d=>d.Devices).First(x => x.Username == User.Identity!.Name);
@@ -50,6 +52,7 @@ namespace MQTT.Api.Controllers
 
         [Authorize]
         [HttpGet("{name}")]
+        [ProducesResponseType(typeof(DeviceViewModel), 200)]
         public IActionResult GetDeviceForUser(string name)
         {
             var username = User.Identity?.Name;
@@ -66,14 +69,15 @@ namespace MQTT.Api.Controllers
 
         [Authorize]
         [HttpPut("Add")]
-        public IActionResult AddDeviceGet(string name, string desc, string geo)
+        public async Task<IActionResult> AddDeviceGet(string name, string desc, string geo)
         {
             try
             {
                 var isDuplicateItem = _db.Devices.Any(d => d.Name == name);
 
-                if (isDuplicateItem) return Conflict("This device is exists");
-                var user = _db.Users.FirstOrDefault(d => d.Username == User.Identity!.Name);
+                if (isDuplicateItem) 
+                    return Conflict("This device is exists");
+                var user = await _db.Users.FirstOrDefaultAsync(d => d.Username == User.Identity!.Name);
                 if (user != null)
                 {
                     Device device = new()
@@ -86,9 +90,9 @@ namespace MQTT.Api.Controllers
                         EditingDate = null,
                         IsPublic = false,
                         MqttToken = Guid.NewGuid().ToString("N")
-                    };
+                    }; 
                     user.Devices.Add(device);
-                    _db.SaveChanges();
+                    await _db.SaveChangesAsync();
                     _logger.Log(LogLevel.Information,$"{DateTime.Now.ToString("O")} User {User.Identity?.Name} added device (name:{name}\tdesc:{desc}\tgeo:{geo}) ({Request.Query}) IP:{HttpContext.Request.Host.Host}");
                     return Ok("Success adding");
                 }
@@ -163,14 +167,13 @@ namespace MQTT.Api.Controllers
                         return Ok("Success delete");
                     }
                     _logger.Log(LogLevel.Information,$"{DateTime.Now.ToString("O")} User {User.Identity?.Name} fail (device is not exists) delete device {name}  ({Request.Query}) IP:{HttpContext.Request.Host.Host}");
-                    return NotFound("This device is not exists");
+                    return NotFound("This device is not exists");   
                 }
                 catch (Exception ex)
                 {
                     return BadRequest(ex.Message);
                 }
             _logger.Log(LogLevel.Information,$"{DateTime.Now.ToString("O")} User {User.Identity?.Name} fail (device name is null or empty) delete device  ({Request.Query}) IP:{HttpContext.Request.Host.Host}");
-
             return NotFound("Name is null or empty");
         }
     }

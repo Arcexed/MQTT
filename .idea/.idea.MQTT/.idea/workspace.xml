@@ -14,11 +14,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1aef981b-882b-4864-b7b7-5e45bf597cf4" name="Changes" comment="Refactoring Startup class">
+    <list default="true" id="1aef981b-882b-4864-b7b7-5e45bf597cf4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.MQTT/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MQTT/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Controllers/AccountController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/config/applicationhost.config" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/config/applicationhost.config" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Api/Controllers/DeviceController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Controllers/DeviceController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Shared/MQTT.Shared.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Shared/MQTT.Shared.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/Controllers/HealthyController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/Controllers/MeasurementsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Controllers/MeasurementsController.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +69,7 @@
     <property name="settings.editor.selected.configurable" value="project.propDebugger" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager" selected=".NET Launch Settings Profile.MQTT.Api: TestWebApiApplication">
+  <component name="RunManager" selected=".NET Launch Settings Profile.MQTT.Api: IIS Express">
     <configuration name="MQTT.Broker" type="DotNetProject" factoryName=".NET Project" temporary="true">
       <option name="EXE_PATH" value="$PROJECT_DIR$/MQTT.Broker/bin/Debug/net5.0/MQTT.Broker.exe" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -178,7 +179,9 @@
       <workItem from="1632861526499" duration="3647000" />
       <workItem from="1632914571347" duration="1246000" />
       <workItem from="1633546411250" duration="4000" />
-      <workItem from="1633546429821" duration="5352000" />
+      <workItem from="1633546429821" duration="9882000" />
+      <workItem from="1633610948676" duration="3956000" />
+      <workItem from="1633634191943" duration="145000" />
     </task>
     <task id="LOCAL-00001" summary="Testing functionality and initial migration.">
       <created>1632068867120</created>
@@ -208,7 +211,14 @@
       <option name="project" value="LOCAL" />
       <updated>1633550109102</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Adding logging requests / Backup">
+      <created>1633554724620</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1633554724620</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -441,7 +451,8 @@
     <MESSAGE value="Add files migration" />
     <MESSAGE value="Some changes / Add MqttToken for devices / Fixed Web Api Device add bug" />
     <MESSAGE value="Refactoring Startup class" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactoring Startup class" />
+    <MESSAGE value="Adding logging requests / Backup" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding logging requests / Backup" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

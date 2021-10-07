@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -36,10 +37,10 @@ namespace MQTT.Api.Controllers
 
         // GET api/<MeasurementsController>/5
         [HttpGet("{deviceName}/Add")]
-        public async Task<IActionResult> AddMeasurements(string deviceName, float atmosphericPressure,
+        public async Task<IActionResult> AddMeasurements(string deviceName,string mqttToken, float atmosphericPressure,
             float temperature, float airHumidity, float lightLevel, float smokeLevel, float radiationLevel)
         {
-            var device = _db.Devices.FirstOrDefault(d => d.Name == deviceName);
+            var device = _db.Devices.FirstOrDefault(d => d.Name == deviceName && d.MqttToken==mqttToken);
             if (device != null)
             {
                 var measurement = new Measurement
@@ -54,10 +55,19 @@ namespace MQTT.Api.Controllers
                 };
                 await _db.Measurements.AddAsync(measurement);
                 await _db.SaveChangesAsync();
+                StringBuilder sb = new StringBuilder();
+                sb.Append($"{DateTime.Now.ToString("O")} Device {deviceName} {mqttToken} add record ");
+                sb.Append( $"AP={atmosphericPressure.ToString("")}");
+                sb.Append($"T={temperature}");
+                sb.Append($"AH={airHumidity.ToString("F")}");
+                sb.Append($"LL={lightLevel.ToString("F")}");
+                sb.Append($"SL={smokeLevel.ToString("F")}");
+                sb.Append($"RL={radiationLevel.ToString("F")}");
+                sb.Append($"({Request.Query}) IP:{HttpContext.Request.Host.Host}");
+                _logger.Log(LogLevel.Information,sb.ToString());
                 return Ok("Success");
             }
-
-            Response.StatusCode = 404;
+            _logger.Log(LogLevel.Information,$"{DateTime.Now.ToString("O")} Device {deviceName} {mqttToken} fail (device does not find) ({Request.Query}) IP:{HttpContext.Request.Host.Host}");
             return NotFound("Device does not exists");
         }
 
