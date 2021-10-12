@@ -54,7 +54,7 @@ namespace MQTT.Dashboard.Controllers
             var username = User.Identity?.Name;
             var device = (await _db.Users.FirstOrDefaultAsync(x => x.Username == username))?
                 .Devices.FirstOrDefault(x => x.Name == deviceName);
-            return View(new List<Device> { device });
+            return View(new List<Device> {device});
         }
     }
 }

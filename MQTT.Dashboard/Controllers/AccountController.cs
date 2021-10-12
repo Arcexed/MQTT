@@ -6,14 +6,14 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
-using GeekForLess_TestTask_Forum.Static;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Models.Models;
+using MQTT.Dashboard.Models;
+using MQTT.Dashboard.Static;
 using MQTT.Data;
 using MQTT.Data.Entities;
 
@@ -41,7 +41,7 @@ namespace MQTT.Dashboard.Controllers
         [Route("Login")]
         public ActionResult Login()
         {
-            return User.Identity is { IsAuthenticated: true }
+            return User.Identity is {IsAuthenticated: true}
                 ? RedirectToAction("Index", "Account")
                 : View();
         }
@@ -50,7 +50,7 @@ namespace MQTT.Dashboard.Controllers
         [Route("Register")]
         public ActionResult Register()
         {
-            return User.Identity is { IsAuthenticated: true } ? RedirectToAction("Index", "Account") : View();
+            return User.Identity is {IsAuthenticated: true} ? RedirectToAction("Index", "Account") : View();
         }
 
         [HttpPost]
@@ -61,7 +61,7 @@ namespace MQTT.Dashboard.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _db.Users.FirstOrDefaultAsync(u =>
-                    u.Email == model.Email && u.Password == model.Password.ToSHA1());
+                    u.Email == model.Email && u.Password == model.Password.ToSha1());
 
                 if (user?.Email != null)
                 {
@@ -80,7 +80,7 @@ namespace MQTT.Dashboard.Controllers
         [Route("Register")]
         public IActionResult Register(RegisterViewModel model)
         {
-            if (User.Identity is { IsAuthenticated: true })
+            if (User.Identity is {IsAuthenticated: true})
                 return RedirectToAction("Index", "Dashboard");
 
             if (ModelState.IsValid)
@@ -104,7 +104,7 @@ namespace MQTT.Dashboard.Controllers
                         {
                             Username = model.Username,
                             Email = model.Email,
-                            Password = model.Password.ToSHA1(),
+                            Password = model.Password.ToSha1(),
                             Ip = HttpContext.Connection.RemoteIpAddress?.ToString() ?? string.Empty,
                             IsBlock = false,
                             AccessToken = Guid.NewGuid().ToString("N"),

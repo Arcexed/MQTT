@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -13,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using MQTT.Data;
 using MQTT.Data.Entities;
 using MQTT.Shared.DBO;
+using Swashbuckle.AspNetCore.Annotations;
 
 // ReSharper disable NotAccessedField.Local
 
@@ -34,13 +36,18 @@ namespace MQTT.Api.Controllers
             _db = db;
             _mapper = mapper;
         }
-
-        // GET api/<MeasurementsController>/5
-        [HttpGet("{deviceName}/Add")]
-        public async Task<IActionResult> AddMeasurements(string deviceName,string mqttToken, float atmosphericPressure,
+        
+        
+        [HttpPost]
+        [AllowAnonymous]
+        [SwaggerResponse((int) HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(string), 200)]
+        [SwaggerOperation("Authentication user")]
+        [Route("{deviceName}/Add")]
+        public async Task<IActionResult> AddMeasurements(string deviceName, string mqttToken, float atmosphericPressure,
             float temperature, float airHumidity, float lightLevel, float smokeLevel, float radiationLevel)
         {
-            var device = _db.Devices.FirstOrDefault(d => d.Name == deviceName && d.MqttToken==mqttToken);
+            var device = _db.Devices.FirstOrDefault(d => d.Name == deviceName && d.MqttToken == mqttToken);
             if (device != null)
             {
                 var measurement = new Measurement
@@ -55,19 +62,21 @@ namespace MQTT.Api.Controllers
                 };
                 await _db.Measurements.AddAsync(measurement);
                 await _db.SaveChangesAsync();
-                StringBuilder sb = new StringBuilder();
+                StringBuilder sb = new();
                 sb.Append($"{DateTime.Now.ToString("O")} Device {deviceName} {mqttToken} add record ");
-                sb.Append( $"AP={atmosphericPressure.ToString("")}");
+                sb.Append($"AP={atmosphericPressure}");
                 sb.Append($"T={temperature}");
-                sb.Append($"AH={airHumidity.ToString("F")}");
-                sb.Append($"LL={lightLevel.ToString("F")}");
-                sb.Append($"SL={smokeLevel.ToString("F")}");
-                sb.Append($"RL={radiationLevel.ToString("F")}");
+                sb.Append($"AH={airHumidity}");
+                sb.Append($"LL={lightLevel}");
+                sb.Append($"SL={smokeLevel}");
+                sb.Append($"RL={radiationLevel}");
                 sb.Append($"({Request.Query}) IP:{HttpContext.Request.Host.Host}");
-                _logger.Log(LogLevel.Information,sb.ToString());
+                _logger.Log(LogLevel.Information, sb.ToString());
                 return Ok("Success");
             }
-            _logger.Log(LogLevel.Information,$"{DateTime.Now.ToString("O")} Device {deviceName} {mqttToken} fail (device does not find) ({Request.Query}) IP:{HttpContext.Request.Host.Host}");
+
+            _logger.Log(LogLevel.Information,
+                $"{DateTime.Now.ToString("O")} Device {deviceName} {mqttToken} fail (device does not find) ({Request.Query}) IP:{HttpContext.Request.Host.Host}");
             return NotFound("Device does not exists");
         }
 

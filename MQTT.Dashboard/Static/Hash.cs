@@ -2,11 +2,11 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace GeekForLess_TestTask_Forum.Static
+namespace MQTT.Dashboard.Static
 {
     public static class Hash
     {
-        public static string ToSHA1(this string input)
+        public static string ToSha1(this string input)
         {
             using (var sha1 = new SHA1Managed())
             {

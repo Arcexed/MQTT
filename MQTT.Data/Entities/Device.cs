@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 
@@ -22,13 +21,13 @@ namespace MQTT.Data.Entities
     public class Device : IEntity<Guid>
     {
         [Required] public string Name { get; set; }
-        
+
         [Required] public DateTime CreatingDate { get; set; }
         public DateTime? EditingDate { get; set; }
         public string Geo { get; set; }
         public string Description { get; set; }
         public string? PublicIp { get; set; }
-        public string? PrivateIp { get; set; } 
+        public string? PrivateIp { get; set; }
 
         [Required] public string MqttToken { get; set; }
         [Required] public bool IsPublic { get; set; }
@@ -45,7 +44,7 @@ namespace MQTT.Data.Entities
         public string TimespanStringLastMeasurement =>
             Measurements == null ? "Unknown" : Measurements.Last().Date.ToString(CultureInfo.CurrentCulture);
 
-        [Required] public Guid Id { get; set; } 
+        [Required] public Guid Id { get; set; }
 
         public Device TakeMeasurements(int count)
         {

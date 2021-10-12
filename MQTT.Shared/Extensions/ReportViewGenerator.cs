@@ -1,9 +1,10 @@
 ﻿using MQTT.Data;
 
-namespace Models.Extensions
+namespace MQTT.Shared.Extensions
 {
     public class ReportViewGenerator
     {
+        //TODO Must write generator
         public ReportViewGenerator(MQTTDbContext dbContext)
         {
         }

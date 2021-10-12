@@ -35,7 +35,7 @@ namespace MQTT.Api.Extensions
                 });
         }
 
-        public static void DatabaseConfiguration(this IServiceCollection services,IConfiguration configuration)
+        public static void DatabaseConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<MQTTDbContext>(options =>
             {
@@ -61,7 +61,7 @@ namespace MQTT.Api.Extensions
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo {Title = "API", Version = "v1"});
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description = "JWT Authorization header using the Bearer scheme (Example: '{token}')",

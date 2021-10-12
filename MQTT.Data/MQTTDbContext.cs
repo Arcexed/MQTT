@@ -14,7 +14,6 @@ namespace MQTT.Data
     {
         public MQTTDbContext(DbContextOptions<MQTTDbContext> options) : base(options)
         {
-            
         }
 
         public DbSet<Device> Devices { get; set; }

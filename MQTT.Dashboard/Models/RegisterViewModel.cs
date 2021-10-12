@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Models.Models
+namespace MQTT.Dashboard.Models
 {
     public class RegisterViewModel
     {

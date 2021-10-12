@@ -1,39 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using MQTT.Api.Auth;
 using MQTT.Data;
+using MQTT.Shared.DBO;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace MQTT.Api.Controllers
 {
     [Route("/api/[controller]")]
     [ApiController]
     public class AccountController : Controller
-    { 
-        private readonly ILogger<AccountController> _logger;
+    {
         private readonly MQTTDbContext _db;
+        private readonly ILogger<AccountController> _logger;
 
         public AccountController(ILogger<AccountController> logger, MQTTDbContext db)
         {
-             _logger = logger;
+            _logger = logger;
             _db = db;
         }
 
-        [HttpGet("/token")]
+        [HttpPost]
+        [AllowAnonymous]
+        [SwaggerResponse((int) HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(JsonResult), 200)]
+        [SwaggerOperation("Authentication user")]
+        [Route("token")]
         public async Task<IActionResult> Token(string accessToken)
         {
             var identity = await GetIdentity(accessToken);
 
             if (identity == null)
             {
-                _logger.Log(LogLevel.Information,$"{DateTime.Now.ToString("O")} Invalid token ({accessToken}) IP:{HttpContext.Request.Host.Host}");
+                _logger.Log(LogLevel.Information,
+                    $"{DateTime.Now.ToString("O")} Invalid token ({accessToken}) IP:{HttpContext.Request.Host.Host}");
                 return BadRequest("Invalid token.");
             }
 
@@ -56,15 +65,15 @@ namespace MQTT.Api.Controllers
                 nowBefore = DateTime.Now,
                 expires = now.Add(TimeSpan.FromMinutes(AuthOptions.Lifetime))
             };
-            _logger.Log(LogLevel.Information,$"{DateTime.Now.ToString("O")} Success authentication ({accessToken}) IP:{HttpContext.Request.Host.Host}");
+            _logger.Log(LogLevel.Information,
+                $"{DateTime.Now.ToString("O")} Success authentication ({accessToken}) IP:{HttpContext.Request.Host.Host}");
             return Ok(response);
         }
 
         private async Task<ClaimsIdentity?> GetIdentity(string accessToken)
         {
-            
-            var user = await _db.Users.Include(d=>d.Role).FirstOrDefaultAsync(d=>d.AccessToken==accessToken);
-            if (user is { IsBlock: false })
+            var user = await _db.Users.Include(d => d.Role).FirstOrDefaultAsync(d => d.AccessToken == accessToken);
+            if (user is {IsBlock: false})
             {
                 var claims = new List<Claim>
                 {
@@ -76,7 +85,7 @@ namespace MQTT.Api.Controllers
                         ClaimsIdentity.DefaultRoleClaimType);
                 return claimsIdentity;
             }
-            
+
             return null;
         }
     }

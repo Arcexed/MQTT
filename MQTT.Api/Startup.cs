@@ -1,23 +1,12 @@
 #region
 
-using System;
-using AutoMapper;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using MQTT.Api.Auth;
 using MQTT.Api.Extensions;
-using MQTT.Data;
-using MQTT.Shared.Profiles;
-using MQTTnet.AspNetCore;
-using MQTTnet.AspNetCore.Extensions;
 
 // ReSharper disable UnusedAutoPropertyAccessor.Local
 
@@ -37,13 +26,11 @@ namespace MQTT.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
             services.AddControllers();
             services.AuthenticationConfiguration();
             services.DatabaseConfiguration(Configuration);
-            services.AutoMapperConfiguration(); 
-            services.SwaggerConfiguration(); 
-           
+            services.AutoMapperConfiguration();
+            services.SwaggerConfiguration();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,11 +47,8 @@ namespace MQTT.Api
                 c.RoutePrefix = string.Empty;
             });
             app.UseHttpsRedirection();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-       
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+
             app.Run(async context => { await context.Response.WriteAsync("Unknown request"); });
         }
     }

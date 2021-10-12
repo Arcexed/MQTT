@@ -16,10 +16,29 @@
   <component name="ChangeListManager">
     <list default="true" id="1aef981b-882b-4864-b7b7-5e45bf597cf4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.MQTT/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MQTT/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/config/applicationhost.config" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/config/applicationhost.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/Auth/AuthOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Auth/AuthOptions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Controllers/AccountController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Api/Controllers/DeviceController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Controllers/DeviceController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/Controllers/HealthyController.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Api/Controllers/MeasurementsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Controllers/MeasurementsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/Extensions/ConfigureExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Extensions/ConfigureExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/MQTT.Api.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/MQTT.Api.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Startup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Broker/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Broker/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Dashboard/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Dashboard/Controllers/AccountController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Dashboard/Controllers/DashboardController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Dashboard/Controllers/DashboardController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Dashboard/Models/LoginViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Dashboard/Models/LoginViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Dashboard/Models/RegisterViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Dashboard/Models/RegisterViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Dashboard/Static/Hash.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Dashboard/Static/Hash.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Dashboard/Views/Account/Login.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Dashboard/Views/Account/Login.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Dashboard/Views/_ViewImports.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Dashboard/Views/_ViewImports.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Data/Entities/Device.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/Entities/Device.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Data/Entities/EventsDevice.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/Entities/EventsDevice.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Data/MQTT.Data.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/MQTT.Data.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Data/MQTTContextFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/MQTTContextFactory.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Data/MQTTDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/MQTTDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Shared/Extensions/ReportViewGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Shared/Extensions/ReportViewGenerator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Shared/MQTT.Shared.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Shared/MQTT.Shared.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +74,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.35014006" />
+    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.3502052" />
     <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.0" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
@@ -182,6 +201,8 @@
       <workItem from="1633546429821" duration="9882000" />
       <workItem from="1633610948676" duration="3956000" />
       <workItem from="1633634191943" duration="145000" />
+      <workItem from="1633641590946" duration="718000" />
+      <workItem from="1633986467197" duration="2743000" />
     </task>
     <task id="LOCAL-00001" summary="Testing functionality and initial migration.">
       <created>1632068867120</created>
@@ -218,7 +239,14 @@
       <option name="project" value="LOCAL" />
       <updated>1633554724620</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Some Changes with controllers / Refactoring">
+      <created>1633641611350</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1633641611350</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -452,7 +480,8 @@
     <MESSAGE value="Some changes / Add MqttToken for devices / Fixed Web Api Device add bug" />
     <MESSAGE value="Refactoring Startup class" />
     <MESSAGE value="Adding logging requests / Backup" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding logging requests / Backup" />
+    <MESSAGE value="Some Changes with controllers / Refactoring" />
+    <option name="LAST_COMMIT_MESSAGE" value="Some Changes with controllers / Refactoring" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>
