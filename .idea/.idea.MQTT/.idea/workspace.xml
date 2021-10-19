@@ -9,36 +9,35 @@
     <projectFile profileName="MQTTDashboard">MQTT.Dashboard/MQTT.Dashboard.csproj</projectFile>
     <projectFile profileName="IIS Express">../../Downloads/mqtt-client-dotnet-core-master/Mqtt.Client.AspNetCore.csproj</projectFile>
     <projectFile profileName="Mqtt.Client.AspNetCore">../../Downloads/mqtt-client-dotnet-core-master/Mqtt.Client.AspNetCore.csproj</projectFile>
+    <projectFile profileName="IIS Express">MQTT.BrokerWeb/MQTT.BrokerWeb.csproj</projectFile>
+    <projectFile profileName="MQTT.BrokerWeb">MQTT.BrokerWeb/MQTT.BrokerWeb.csproj</projectFile>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
+  <component name="BuildServerSettings">
+    <treeState key="project">
+      <selectedPath>
+        <pathElement>
+          <option name="myNodeId" value="helperText" />
+          <option name="myNodeType" value="jetbrains.buildServer.tree.descriptors.LinkedTextDescriptor" />
+        </pathElement>
+      </selectedPath>
+    </treeState>
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="1aef981b-882b-4864-b7b7-5e45bf597cf4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/MQTT.Api/.dockerignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MQTT.Api/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MQTT.BrokerWeb/Controllers/MeasurementsController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.MQTT/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MQTT/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/Auth/AuthOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Auth/AuthOptions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/config/applicationhost.config" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/config/applicationhost.config" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Api/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Controllers/AccountController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Api/Controllers/DeviceController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Controllers/DeviceController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Api/Controllers/MeasurementsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Controllers/MeasurementsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/Extensions/ConfigureExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Extensions/ConfigureExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/Controllers/ReportController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Controllers/ReportController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Api/MQTT.Api.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/MQTT.Api.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Startup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Broker/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Broker/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Dashboard/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Dashboard/Controllers/AccountController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Dashboard/Controllers/DashboardController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Dashboard/Controllers/DashboardController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Dashboard/Models/LoginViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Dashboard/Models/LoginViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Dashboard/Models/RegisterViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Dashboard/Models/RegisterViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Dashboard/Static/Hash.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Dashboard/Static/Hash.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Dashboard/Views/Account/Login.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Dashboard/Views/Account/Login.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Dashboard/Views/_ViewImports.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Dashboard/Views/_ViewImports.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Data/Entities/Device.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/Entities/Device.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Data/Entities/EventsDevice.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/Entities/EventsDevice.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Data/MQTT.Data.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/MQTT.Data.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Data/MQTTContextFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/MQTTContextFactory.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Data/MQTTDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/MQTTDbContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Shared/Extensions/ReportViewGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Shared/Extensions/ReportViewGenerator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Shared/MQTT.Shared.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Shared/MQTT.Shared.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.sln" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.sln" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,8 +60,11 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bc3d7024e97f4f818de53bc3c23872b48f5790/233/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/619de5eaceea499387688c8799556b809600/76/88ddd55c/MqttRouteAttribute.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/MQTT.Api/Startup.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/MQTT.Api/appsettings.json" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/619de5eaceea499387688c8799556b809600/9a/15bb667a/TemplateParser.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/MQTT.Api/Controllers/AccountController.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="1yMGjc0k9xjXxgG1jIMR8SD6S0e" />
@@ -84,11 +86,10 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="project.propDebugger" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager" selected=".NET Launch Settings Profile.MQTT.Api: IIS Express">
+  <component name="RunManager" selected=".NET Launch Settings Profile.MQTT.BrokerWeb">
     <configuration name="MQTT.Broker" type="DotNetProject" factoryName=".NET Project" temporary="true">
       <option name="EXE_PATH" value="$PROJECT_DIR$/MQTT.Broker/bin/Debug/net5.0/MQTT.Broker.exe" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -137,6 +138,36 @@
         <option name="Build" />
       </method>
     </configuration>
+    <configuration name="MQTT.BrokerWeb" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
+      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/MQTT.BrokerWeb/MQTT.BrokerWeb.csproj" />
+      <option name="LAUNCH_PROFILE_TFM" value="net5.0" />
+      <option name="LAUNCH_PROFILE_NAME" value="MQTT.BrokerWeb" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
+      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
+      <option name="SEND_DEBUG_REQUEST" value="1" />
+      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
+      <method v="2">
+        <option name="Build" />
+      </method>
+    </configuration>
+    <configuration name="MQTT.BrokerWeb: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
+      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/MQTT.BrokerWeb/MQTT.BrokerWeb.csproj" />
+      <option name="LAUNCH_PROFILE_TFM" value="net5.0" />
+      <option name="LAUNCH_PROFILE_NAME" value="IIS Express" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
+      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
+      <option name="SEND_DEBUG_REQUEST" value="1" />
+      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
+      <method v="2">
+        <option name="Build" />
+      </method>
+    </configuration>
     <configuration name="MQTT.Dashboard: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/MQTT.Dashboard/MQTT.Dashboard.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value="net5.0" />
@@ -173,6 +204,8 @@
       <item itemvalue=".NET Launch Settings Profile.MQTT.Dashboard: MQTTDashboard" />
       <item itemvalue=".NET Launch Settings Profile.MQTT.Api: IIS Express" />
       <item itemvalue=".NET Project.MQTT.Broker" />
+      <item itemvalue=".NET Launch Settings Profile.MQTT.BrokerWeb: IIS Express" />
+      <item itemvalue=".NET Launch Settings Profile.MQTT.BrokerWeb" />
     </list>
     <recent_temporary>
       <list>
@@ -202,7 +235,9 @@
       <workItem from="1633610948676" duration="3956000" />
       <workItem from="1633634191943" duration="145000" />
       <workItem from="1633641590946" duration="718000" />
-      <workItem from="1633986467197" duration="2743000" />
+      <workItem from="1633986467197" duration="4378000" />
+      <workItem from="1634593293723" duration="725000" />
+      <workItem from="1634594277501" duration="14367000" />
     </task>
     <task id="LOCAL-00001" summary="Testing functionality and initial migration.">
       <created>1632068867120</created>
@@ -246,7 +281,14 @@
       <option name="project" value="LOCAL" />
       <updated>1633641611350</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Refactoring">
+      <created>1634036663368</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1634036663368</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -481,11 +523,69 @@
     <MESSAGE value="Refactoring Startup class" />
     <MESSAGE value="Adding logging requests / Backup" />
     <MESSAGE value="Some Changes with controllers / Refactoring" />
-    <option name="LAST_COMMIT_MESSAGE" value="Some Changes with controllers / Refactoring" />
+    <MESSAGE value="Refactoring" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactoring" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/MQTT.BrokerWeb/Controllers/MeasurementsController.cs</url>
+          <line>20</line>
+          <properties documentPath="C:\Users\la046\RiderProjects\MQTT\MQTT.BrokerWeb\Controllers\MeasurementsController.cs" initialLine="19" containingFunctionPresentation="method 'WeatherReport'">
+            <startOffsets>
+              <option value="643" />
+            </startOffsets>
+            <endOffsets>
+              <option value="644" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/MQTT.BrokerWeb/Controllers/MeasurementsController.cs</url>
+          <line>22</line>
+          <properties documentPath="C:\Users\la046\RiderProjects\MQTT\MQTT.BrokerWeb\Controllers\MeasurementsController.cs" initialLine="20" containingFunctionPresentation="method 'WeatherReport'">
+            <startOffsets>
+              <option value="670" />
+            </startOffsets>
+            <endOffsets>
+              <option value="723" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/MQTT.BrokerWeb/Startup.cs</url>
+          <line>80</line>
+          <properties documentPath="C:\Users\la046\RiderProjects\MQTT\MQTT.BrokerWeb\Startup.cs" initialLine="79" containingFunctionPresentation="lambda expression inside method 'Configure'">
+            <startOffsets>
+              <option value="3336" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3418" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/MQTT.BrokerWeb/Startup.cs</url>
+          <line>76</line>
+          <properties documentPath="C:\Users\la046\RiderProjects\MQTT\MQTT.BrokerWeb\Startup.cs" initialLine="75" containingFunctionPresentation="lambda expression inside method 'Configure'">
+            <startOffsets>
+              <option value="3065" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3163" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
+        <PinnedItemInfo parentTag="Type#System.EventArgs" memberName="Empty" />
         <PinnedItemInfo parentTag="Frame#MQTT.Data.Entities.Device.TakeMeasurements" memberName="this" />
         <PinnedItemInfo parentTag="Type#MQTT.Data.Entities.User" memberName="Devices" />
       </pinned-members>

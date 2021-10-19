@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -41,7 +42,7 @@ namespace MQTT.Api.Controllers
 
         [Authorize]
         [HttpGet("{deviceName}/Minutely")]
-        public async Task<ReportViewModel?> MinutelyInfoGet(string deviceName)
+        public async Task<ReportViewModel?> MinutelyInfoGet([Required]string deviceName)
         {
             var device = FindUserAsync(deviceName);
             if (device != null)
@@ -56,7 +57,7 @@ namespace MQTT.Api.Controllers
 
         [Authorize]
         [HttpGet("{deviceName}/Hourly")]
-        public async Task<ReportViewModel?> HourlyInfoGet(string deviceName)
+        public async Task<ReportViewModel?> HourlyInfoGet([Required] string deviceName)
         {
             var device = FindUserAsync(deviceName);
             if (device != null)
@@ -71,7 +72,7 @@ namespace MQTT.Api.Controllers
 
         [Authorize]
         [HttpGet("{deviceName}/Daily")]
-        public async Task<ReportViewModel?> DailyInfoGet(string deviceName)
+        public async Task<ReportViewModel?> DailyInfoGet([Required] string deviceName)
         {
             var device = FindUserAsync(deviceName);
             if (device != null)
@@ -86,7 +87,7 @@ namespace MQTT.Api.Controllers
 
         [Authorize]
         [HttpGet("{deviceName}/Monthly")]
-        public async Task<ReportViewModel?> MonthlyInfoGet(string deviceName)
+        public async Task<ReportViewModel?> MonthlyInfoGet([Required] string deviceName)
         {
             var device = FindUserAsync(deviceName);
             if (device != null)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
@@ -35,7 +36,7 @@ namespace MQTT.Api.Controllers
         [ProducesResponseType(typeof(JsonResult), 200)]
         [SwaggerOperation("Authentication user")]
         [Route("token")]
-        public async Task<IActionResult> Token(string accessToken)
+        public async Task<IActionResult> Token([Required] string accessToken)
         {
             var identity = await GetIdentity(accessToken);
 

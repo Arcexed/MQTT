@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -44,7 +45,7 @@ namespace MQTT.Api.Controllers
         [ProducesResponseType(typeof(string), 200)]
         [SwaggerOperation("Authentication user")]
         [Route("{deviceName}/Add")]
-        public async Task<IActionResult> AddMeasurements(string deviceName, string mqttToken, float atmosphericPressure,
+        public async Task<IActionResult> AddMeasurements([Required] string deviceName,[Required] string mqttToken, float atmosphericPressure,
             float temperature, float airHumidity, float lightLevel, float smokeLevel, float radiationLevel)
         {
             var device = _db.Devices.FirstOrDefault(d => d.Name == deviceName && d.MqttToken == mqttToken);
@@ -82,7 +83,7 @@ namespace MQTT.Api.Controllers
 
         [Authorize(Roles = "Root, Admin")]
         [HttpGet("{deviceName}/Get")]
-        public async Task<IEnumerable<MeasurementViewModel>?> GetMeasurements(string deviceName)
+        public async Task<IEnumerable<MeasurementViewModel>?> GetMeasurements([Required] string deviceName)
         {
             Device device = await _db.Devices.Where(d => d.Name == deviceName).FirstOrDefaultAsync();
             if (device != null)

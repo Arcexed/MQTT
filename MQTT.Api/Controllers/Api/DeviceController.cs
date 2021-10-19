@@ -59,7 +59,7 @@ namespace MQTT.Api.Controllers
         [ProducesResponseType(typeof(DeviceViewModel), 200)]
         [SwaggerOperation("Get Device For User")]
         [Route("{name}")]
-        public IActionResult GetDeviceForUser(string name)
+        public IActionResult GetDeviceForUser([Required] string name)
         {
             var username = User.Identity?.Name;
             DeviceViewModel deviceViewModel =
@@ -80,7 +80,7 @@ namespace MQTT.Api.Controllers
         [ProducesResponseType(typeof(string), 200)]
         [SwaggerOperation("Add Device For User")]
         [Route("Add")]
-        public async Task<IActionResult> AddDeviceGet(string name, string desc, string geo)
+        public async Task<IActionResult> AddDeviceGet([Required] string name, string desc, string geo)
         {
             try
             {
@@ -174,7 +174,7 @@ namespace MQTT.Api.Controllers
         [ProducesResponseType(typeof(string), 200)]
         [SwaggerOperation("Delete Device For User")]
         [Route("Delete")]
-        public IActionResult DeleteDevice(string name)
+        public IActionResult DeleteDevice([Required] string name)
         {
             if (!string.IsNullOrEmpty(name))
                 try
