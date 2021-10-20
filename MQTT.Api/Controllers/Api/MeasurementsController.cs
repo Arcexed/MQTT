@@ -21,7 +21,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 #endregion
 
-namespace MQTT.Api.Controllers
+namespace MQTT.Api.Controllers.Api
 {
     [Route("/api/[controller]")]
     [ApiController]
@@ -59,9 +59,10 @@ namespace MQTT.Api.Controllers
                     LightLevel = lightLevel,
                     SmokeLevel = smokeLevel,
                     RadiationLevel = radiationLevel,
-                    Date = DateTime.Now
+                    Date = DateTime.Now,
+                    Device = device
                 };
-                await _db.Measurements.AddAsync(measurement);
+                _db.Measurements.Add(measurement);
                 await _db.SaveChangesAsync();
                 StringBuilder sb = new();
                 sb.Append($"{DateTime.Now.ToString("O")} Device {deviceName} {mqttToken} add record ");

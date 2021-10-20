@@ -7,8 +7,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MQTT.Api.Auth;
+using MQTT.Api.Controllers.Mqtt;
+using MQTT.Api.Services;
 using MQTT.Data;
 using MQTT.Shared.Profiles;
+using MQTTnet.AspNetCore.AttributeRouting;
+using MQTTnet.AspNetCore.Extensions;
 
 namespace MQTT.Api.Extensions
 {
@@ -40,7 +44,10 @@ namespace MQTT.Api.Extensions
             services.AddDbContext<MQTTDbContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-            });
+                options.EnableDetailedErrors();
+                options.LogTo(Console.WriteLine);
+                options.EnableSensitiveDataLogging();
+            },ServiceLifetime.Singleton);
         }
 
         public static void AutoMapperConfiguration(this IServiceCollection services)
@@ -86,5 +93,33 @@ namespace MQTT.Api.Extensions
                 });
             });
         }
+
+
+        public static void MqttConfiguration(this IServiceCollection services)
+        {
+            services.AddCors();
+
+            // Add Singleton MQTT Server object
+            services.AddSingleton<MqttService>();
+
+            // Add the MQTT Controllers
+            services.AddMqttControllers();
+
+            // Add the MQTT Service
+            services
+                .AddHostedMqttServerWithServices(aspNetMqttServerOptionsBuilder =>
+                {
+                    var mqttService = aspNetMqttServerOptionsBuilder.ServiceProvider.GetRequiredService<MqttService>();
+                    mqttService.ConfigureMqttServerOptions(aspNetMqttServerOptionsBuilder);
+                    aspNetMqttServerOptionsBuilder.Build();
+                })
+                .AddMqttConnectionHandler()
+                .AddConnections()
+                .AddMqttWebSocketServerAdapter();
+            // Add Scoped Services
+            services.AddScoped<MqttBaseController, MeasurementsController>();
+        }
+
+        
     }
 }

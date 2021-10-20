@@ -12,14 +12,13 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using MQTT.Api.Auth;
 using MQTT.Data;
-using MQTT.Shared.DBO;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace MQTT.Api.Controllers
+namespace MQTT.Api.Controllers.Api
 {
     [Route("/api/[controller]")]
     [ApiController]
-    public class AccountController : Controller
+    public class AccountController : ControllerBase
     {
         private readonly MQTTDbContext _db;
         private readonly ILogger<AccountController> _logger;

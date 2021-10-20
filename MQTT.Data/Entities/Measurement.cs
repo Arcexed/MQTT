@@ -2,6 +2,7 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable UnusedAutoPropertyAccessor.Global
@@ -21,5 +22,7 @@ namespace MQTT.Data.Entities
         public double LightLevel { get; set; }
         public double SmokeLevel { get; set; }
         public double RadiationLevel { get; set; }
+        
+        [Required] public Device Device { get; set; }
     }
 }

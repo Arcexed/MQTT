@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using MQTT.Api.Models;
+using MQTT.Api.Services;
 using MQTT.Data;
 using MQTT.Data.Entities;
 using MQTT.Shared.DBO;
@@ -17,7 +19,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace MQTT.Api.Controllers
+namespace MQTT.Api.Controllers.Api
 {
     [Route("/api/[controller]")]
     [ApiController]
@@ -26,12 +28,13 @@ namespace MQTT.Api.Controllers
         private readonly MQTTDbContext _db;
         private readonly ILogger<DeviceController> _logger;
         private readonly IMapper _mapper;
-
-        public DeviceController(ILogger<DeviceController> logger, MQTTDbContext db, IMapper mapper)
+        private readonly MqttService _mqttService;
+        public DeviceController(ILogger<DeviceController> logger, MQTTDbContext db, IMapper mapper, MqttService mqttService)
         {
             _logger = logger;
             _db = db;
             _mapper = mapper;
+            _mqttService = mqttService;
         }
 
         [Authorize]
@@ -204,6 +207,16 @@ namespace MQTT.Api.Controllers
             _logger.Log(LogLevel.Information,
                 $"{DateTime.Now.ToString("O")} User {User.Identity?.Name} fail (device name is null or empty) delete device  ({Request.Query}) IP:{HttpContext.Request.Host.Host}");
             return NotFound("Name is null or empty");
+        }
+
+        [HttpGet]
+        [SwaggerResponse((int) HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(List<Client>), 200)]
+        [SwaggerOperation("Get All MQTT Devices")]
+        [Route("Mqtt")]
+        public IActionResult GetAllMqttDevices()
+        {
+            return Ok(_mqttService.ConnectedClients);
         }
     }
 }

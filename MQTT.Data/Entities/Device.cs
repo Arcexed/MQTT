@@ -31,8 +31,8 @@ namespace MQTT.Data.Entities
 
         [Required] public string MqttToken { get; set; }
         [Required] public bool IsPublic { get; set; }
-        public ICollection<EventsDevice> EventsDevices { get; set; } = new List<EventsDevice>();
-        public ICollection<Measurement> Measurements { get; set; } = new List<Measurement>();
+        public ICollection<EventsDevice> EventsDevices { get; set; }
+        public ICollection<Measurement> Measurements { get; set; } 
 
         public string Visible =>
             IsPublic ? "Public" : "Private";

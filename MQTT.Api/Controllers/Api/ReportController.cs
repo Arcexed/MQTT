@@ -15,7 +15,7 @@ using MQTT.Shared.DBO;
 
 #endregion
 
-namespace MQTT.Api.Controllers
+namespace MQTT.Api.Controllers.Api
 {
     [Route("/api/[controller]")]
     [ApiController]
@@ -31,7 +31,7 @@ namespace MQTT.Api.Controllers
             _db = db;
             _mapper = mapper;
         }
-
+        
         private DeviceViewModel? FindUserAsync(string deviceName)
         {
             var username = User.Identity?.Name;
