@@ -24,4 +24,21 @@ namespace MQTT.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Event> Events { get; set; }
     }
+
+    public static class Test
+    {
+        private static string cs;
+        public static  string CS 
+        {
+            get => cs;
+            set
+            {
+                cs = value;
+                Options = new DbContextOptionsBuilder<MQTTDbContext>()
+                    .UseSqlServer(value)
+                    .Options;
+            }
+        }
+        public static DbContextOptions<MQTTDbContext> Options { get; set; }
+    }
 }

@@ -26,11 +26,14 @@
     </treeState>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1aef981b-882b-4864-b7b7-5e45bf597cf4" name="Changes" comment="Add LoggerService, adding logging, but not working, because must fix dependency inj types">
+    <list default="true" id="1aef981b-882b-4864-b7b7-5e45bf597cf4" name="Changes" comment="Working version / Have bug with Transient and Singleton Services / Need Fix / Backup">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.MQTT/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MQTT/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Api/Extensions/ConfigureExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Extensions/ConfigureExtensions.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Api/Services/LoggerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Services/LoggerService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Api/Services/MqttService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Services/MqttService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Startup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Dashboard/Views/_ViewImports.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Dashboard/Views/_ViewImports.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Data/MQTTDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/MQTTDbContext.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,25 +62,31 @@
     <setting file="file://$PROJECT_DIR$/MQTT.BrokerWeb/Controllers/MeasurementsController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/MQTT.Broker/Program.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8f88dc2109e24122aeb72941f9e9f22d56778/7/SqlServerDbContextOptionsBuilderExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bdd96c5f630a45298dacc07d80deb23b29190/A/ServiceProvider.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/la046/RiderProjects/MQTT/MQTT.Api/Services/MqttService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bc0dac173c9c44d7ab6b9ebd266b859e66590/46/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/ed92340b5670447ab78a69a564a858d31bfb88/6B/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bdd96c5f630a45298dacc07d80deb23b29190/F/CallSiteValidator.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/la046/RiderProjects/MQTT/MQTT.Api/Services/MqttService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b938043d271c482fab2e70a6b8b5c181133178/150/SingleQueryingEnumerable.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/619de5eaceea499387688c8799556b809600/ab/e7d6e3cf/MqttRouter.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MQTT.Api/Controllers/Api/AccountController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/619de5eaceea499387688c8799556b809600/76/88ddd55c/MqttRouteAttribute.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d7a3ca84869f48e0aa5c354ee22cb1ee1b190/ef/d8840ed7/ILogger`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/MQTT.Api/Startup.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bdd96c5f630a45298dacc07d80deb23b29190/A/ServiceProvider.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/la046/RiderProjects/MQTT/MQTT.Api/Extensions/ConfigureExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/la046/RiderProjects/MQTT/MQTT.Api/Services/LoggerService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/MQTT.Api/appsettings.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/619de5eaceea499387688c8799556b809600/9a/15bb667a/TemplateParser.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f6c16478e39642568a8ee6c8b6db92a4d7590/70/JsonConverterOfT.ReadCore.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bc0dac173c9c44d7ab6b9ebd266b859e66590/46/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/la046/RiderProjects/MQTT/MQTT.Api/Controllers/Api/AccountController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/la046/RiderProjects/MQTT/MQTT.Api/Services/LoggerService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bc3d7024e97f4f818de53bc3c23872b48f5790/233/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/ed92340b5670447ab78a69a564a858d31bfb88/6B/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bdd96c5f630a45298dacc07d80deb23b29190/F/CallSiteValidator.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2b369d19768947fcba24b2d54b76014c1bbb78/170/ControllerFactoryProvider.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b938043d271c482fab2e70a6b8b5c181133178/150/SingleQueryingEnumerable.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bc3d7024e97f4f818de53bc3c23872b48f5790/1B2/ExecutionContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bc3d7024e97f4f818de53bc3c23872b48f5790/1D0/Task.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bc3d7024e97f4f818de53bc3c23872b48f5790/1A2/ThreadPool.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/619de5eaceea499387688c8799556b809600/ab/e7d6e3cf/MqttRouter.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/MQTT.Api/Controllers/Api/AccountController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/la046/RiderProjects/MQTT/MQTT.Api/Extensions/ConfigureExtensions.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="1yMGjc0k9xjXxgG1jIMR8SD6S0e" />
   <component name="ProjectLevelVcsManager">
@@ -216,7 +225,7 @@
       <workItem from="1634593293723" duration="725000" />
       <workItem from="1634594277501" duration="55031000" />
       <workItem from="1634802724258" duration="5022000" />
-      <workItem from="1634927759011" duration="39542000" />
+      <workItem from="1634927759011" duration="41809000" />
     </task>
     <task id="LOCAL-00001" summary="Testing functionality and initial migration.">
       <created>1632068867120</created>
@@ -288,7 +297,14 @@
       <option name="project" value="LOCAL" />
       <updated>1635004285107</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Working version / Have bug with Transient and Singleton Services / Need Fix / Backup">
+      <created>1635016676214</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1635016676214</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -527,7 +543,8 @@
     <MESSAGE value="Maybe working API :D / Before release new feature (mqtt server in WebApi)" />
     <MESSAGE value="Mqtt Server is working and some correction in API Controller / &#10;Fix Bug in Models and Api MeasurementsController.cs" />
     <MESSAGE value="Add LoggerService, adding logging, but not working, because must fix dependency inj types" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add LoggerService, adding logging, but not working, because must fix dependency inj types" />
+    <MESSAGE value="Working version / Have bug with Transient and Singleton Services / Need Fix / Backup" />
+    <option name="LAST_COMMIT_MESSAGE" value="Working version / Have bug with Transient and Singleton Services / Need Fix / Backup" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -573,13 +590,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/MQTT.Api/Services/LoggerService.cs</url>
-          <line>16</line>
+          <line>14</line>
           <properties documentPath="C:\Users\la046\RiderProjects\MQTT\MQTT.Api\Services\LoggerService.cs" initialLine="21" containingFunctionPresentation="method 'GetDbContext'">
             <startOffsets>
-              <option value="370" />
+              <option value="288" />
             </startOffsets>
             <endOffsets>
-              <option value="370" />
+              <option value="288" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="31" />

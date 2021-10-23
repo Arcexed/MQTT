@@ -32,12 +32,10 @@ namespace MQTT.Api.Services
         public IMqttServer Server;
         public List<Client> PreConnectedClients = new();
         public List<Client> ConnectedClients = new();
-        private readonly MQTTDbContext _db;
         
-        public MqttService(AppSettings appSettings,MQTTDbContext db, LoggerService loggerService)
+        public MqttService(AppSettings appSettings, LoggerService loggerService)
         {
             _appSettings = appSettings;
-            _db = db;
             _loggerService = loggerService;
         }
         
@@ -68,38 +66,45 @@ namespace MQTT.Api.Services
         {
             return Task.Run(() =>
             {
-                var deviceName = context.Username;
-                var mqttToken = context.Password;
-                
-                var device = _db.Devices.FirstOrDefault(d => d.Name == deviceName && d.MqttToken == mqttToken);
-                if (device != null)
+                // простая конструкция using как делали в wpf 
+
+                using (var _db = new MQTTDbContext(Test.Options))
                 {
-                    _loggerService.Log($"Validate success user id: {context.ClientId} username: {context.Username} password: {context.Password}");
+                    var deviceName = context.Username;
+                    var mqttToken = context.Password;
+                
+                    var device = _db.Devices.FirstOrDefault(d => d.Name == deviceName && d.MqttToken == mqttToken);
+                    if (device != null)
+                    {
+                        _loggerService.Log($"Validate success user id: {context.ClientId} username: {context.Username} password: {context.Password}");
                     
-                    _loggerService.LogEventDevice(device,$"Validate success user id: {context.ClientId} username: {context.Username} password: {context.Password}");
+                        _loggerService.LogEventDevice(device,$"Validate success user id: {context.ClientId} username: {context.Username} password: {context.Password}");
                     
 
-                    if (ConnectedClients.Any(d => d.Username == deviceName))
-                    {
-                        _loggerService.Log($"User id is contains in ConnectedClients: {context.ClientId} username: {context.Username} password: {context.Password}");
-                        _loggerService.LogEventDevice(device,$"User id is contains in ConnectedClients: {context.ClientId} username: {context.Username} password: {context.Password}");
+                        if (ConnectedClients.Any(d => d.Username == deviceName))
+                        {
+                            _loggerService.Log($"User id is contains in ConnectedClients: {context.ClientId} username: {context.Username} password: {context.Password}");
+                            _loggerService.LogEventDevice(device,$"User id is contains in ConnectedClients: {context.ClientId} username: {context.Username} password: {context.Password}");
+                        }
+                        var client = new Client()
+                        {
+                            Id = context.ClientId,
+                            Ip = context.Endpoint,
+                            Username = context.Username,
+                            MqttToken = context.Password
+                        };
+                        PreConnectedClients.Add(client);
+                        context.ReasonCode = MqttConnectReasonCode.Success;
+                        return;
                     }
-                    var client = new Client()
+                    else
                     {
-                        Id = context.ClientId,
-                        Ip = context.Endpoint,
-                        Username = context.Username,
-                        MqttToken = context.Password
-                    };
-                    PreConnectedClients.Add(client);
-                    context.ReasonCode = MqttConnectReasonCode.Success;
-                    return;
+                        _loggerService.Log($"Error validate (not found device in db) user id: {context.ClientId} username: {context.Username} password: {context.Password}");
+                        context.ReasonCode = MqttConnectReasonCode.NotAuthorized;
+                    }
                 }
-                else
-                {
-                    _loggerService.Log($"Error validate (not found device in db) user id: {context.ClientId} username: {context.Username} password: {context.Password}");
-                    context.ReasonCode = MqttConnectReasonCode.NotAuthorized;
-                }
+                
+               
             });
         }
 
