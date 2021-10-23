@@ -47,7 +47,7 @@ namespace MQTT.Api.Extensions
                 /*options.EnableDetailedErrors();
                 options.LogTo(Console.WriteLine);
                 options.EnableSensitiveDataLogging();*/
-            },ServiceLifetime.Transient);
+            },ServiceLifetime.Singleton);
         }
 
         public static void AutoMapperConfiguration(this IServiceCollection services)

@@ -33,6 +33,7 @@ namespace MQTT.Api.Services
         public List<Client> PreConnectedClients = new();
         public List<Client> ConnectedClients = new();
         private readonly MQTTDbContext _db;
+        
         public MqttService(AppSettings appSettings,MQTTDbContext db, LoggerService loggerService)
         {
             _appSettings = appSettings;

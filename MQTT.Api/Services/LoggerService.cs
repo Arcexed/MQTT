@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MQTT.Data;
 using MQTT.Data.Entities;
@@ -9,11 +10,9 @@ namespace MQTT.Api.Services
     public class LoggerService
     {
         private readonly MQTTDbContext _db;
-        private readonly ILogger<LoggerService> _logger;
-        public LoggerService(MQTTDbContext db, ILogger<LoggerService> logger)
+        public LoggerService(MQTTDbContext db)
         {
             _db = db;
-            _logger = logger;
         }
 
         public void LogEventDevice(Device device, string message)
