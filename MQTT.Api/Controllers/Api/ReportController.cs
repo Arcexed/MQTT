@@ -8,6 +8,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MQTT.Api.Services;
 using MQTT.Data;
 using MQTT.Shared.DBO;
 
@@ -22,14 +23,13 @@ namespace MQTT.Api.Controllers.Api
     public class ReportController : ControllerBase
     {
         private readonly MQTTDbContext _db;
-        private readonly ILogger<ReportController> _logger;
         private readonly IMapper _mapper;
-
-        public ReportController(ILogger<ReportController> logger, MQTTDbContext db, IMapper mapper)
+        private readonly LoggerService _loggerService;
+        public ReportController(MQTTDbContext db, IMapper mapper,LoggerService loggerService)
         {
-            _logger = logger;
             _db = db;
             _mapper = mapper;
+            _loggerService = loggerService;
         }
         
         private DeviceViewModel? FindUserAsync(string deviceName)

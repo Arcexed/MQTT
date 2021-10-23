@@ -44,10 +44,10 @@ namespace MQTT.Api.Extensions
             services.AddDbContext<MQTTDbContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-                options.EnableDetailedErrors();
+                /*options.EnableDetailedErrors();
                 options.LogTo(Console.WriteLine);
-                options.EnableSensitiveDataLogging();
-            },ServiceLifetime.Singleton);
+                options.EnableSensitiveDataLogging();*/
+            },ServiceLifetime.Transient);
         }
 
         public static void AutoMapperConfiguration(this IServiceCollection services)
@@ -120,6 +120,9 @@ namespace MQTT.Api.Extensions
             services.AddScoped<MqttBaseController, MeasurementsController>();
         }
 
-        
+        public static void LoggerServiceConfiguration(this IServiceCollection services)
+        {
+            services.AddSingleton<LoggerService>();
+        }
     }
 }

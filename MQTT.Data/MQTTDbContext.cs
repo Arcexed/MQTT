@@ -22,5 +22,6 @@ namespace MQTT.Data
         public DbSet<EventsDevice> EventsDevices { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Event> Events { get; set; }
     }
 }

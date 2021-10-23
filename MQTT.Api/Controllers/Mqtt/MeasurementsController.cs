@@ -25,7 +25,7 @@ namespace MQTT.Api.Controllers.Mqtt
 
         // Default Variable Initialization
         private readonly AppSettings _appSettings;
-        private readonly ILogger<MeasurementsController> _logger;
+        private readonly LoggerService _loggerService;
         private readonly MqttService _mqttService;
         private readonly MQTTDbContext _db;
         private const string Pub = "publish/";
@@ -33,10 +33,10 @@ namespace MQTT.Api.Controllers.Mqtt
         #endregion Variable Declarations
         
         // Initialize the MQTT Controller with full dependency injection support (Like normal AspNetCore controllers)
-        public MeasurementsController(AppSettings appSettings, ILogger<MeasurementsController> logger, MqttService mqttService, MQTTDbContext db)
+        public MeasurementsController(AppSettings appSettings, LoggerService loggerService, MqttService mqttService, MQTTDbContext db)
         {
             _appSettings = appSettings;
-            _logger = logger;
+            _loggerService = loggerService;
             _mqttService = mqttService;
             _db = db;
         }
@@ -45,39 +45,46 @@ namespace MQTT.Api.Controllers.Mqtt
         [MqttRoute(MqttNetPubWeatherReport)] // Generate MQTT Attribute Routing for this Topic
         public Task PublishWeatherReport(string deviceName)
         {
-            var client = _mqttService.ConnectedClients.First(d => d.Id == MqttContext.ClientId);
-            if (client.Username != deviceName)
+            var client = _mqttService.ConnectedClients.FirstOrDefault(d => d.Id == MqttContext.ClientId);
+            if (client != null)
             {
-                MqttContext.CloseConnection = true;
-                return BadMessage();
-            }
-            var device = _db.Devices.FirstOrDefault(d => d.Name == deviceName);
-            
-            if (device == null)
-            {
-                MqttContext.CloseConnection = true;
-                return BadMessage();
-            }
-            
-            var payload = Encoding.ASCII.GetString(Message.Payload);
-            var measurement = 
-                JsonSerializer.Deserialize<Measurement>(payload,new JsonSerializerOptions(JsonSerializerDefaults.Web));
-            if (measurement != null)
-            {
-                measurement.Date = DateTime.Now;
-                measurement.Id = Guid.NewGuid();
-                measurement.Device = device;
-                _db.Measurements.Add(measurement);
-                _db.SaveChanges();
-                _logger.LogInformation(
-                    $"It's {measurement.Id} {measurement.Date} {measurement.Device.Name} send measurement");
-                
-            }
-            else
-            {
-                _logger.LogInformation($"It's {client.Username} {client.Id}  unsuccessfully send measurement");
-                MqttContext.CloseConnection = true;
-                return BadMessage();
+                if (client.Username != deviceName)
+                {
+                    MqttContext.CloseConnection = true;
+                    return BadMessage();
+                }
+
+                var device = _db.Devices.FirstOrDefault(d => d.Name == deviceName);
+
+                if (device == null)
+                {
+                    MqttContext.CloseConnection = true;
+                    return BadMessage();
+                }
+
+                var payload = Encoding.ASCII.GetString(Message.Payload);
+                var measurement =
+                    JsonSerializer.Deserialize<Measurement>(payload,
+                        new JsonSerializerOptions(JsonSerializerDefaults.Web));
+                if (measurement != null)
+                {
+                    measurement.Date = DateTime.Now;
+                    measurement.Id = Guid.NewGuid();
+                    measurement.Device = device;
+                    _db.Measurements.Add(measurement);
+                    _db.SaveChanges();
+                    _loggerService.Log(
+                        $"It's {measurement.Id} {measurement.Date} {measurement.Device.Name} send measurement");
+
+                }
+                else
+                {
+                    _loggerService.LogEventDevice(device,
+                        $"It's {client.Username} {client.Id}  unsuccessfully send measurement");
+                    _loggerService.Log($"It's {client.Username} {client.Id}  unsuccessfully send measurement");
+                    MqttContext.CloseConnection = true;
+                    return BadMessage();
+                }
             }
             return Ok();
         }

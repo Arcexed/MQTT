@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using MQTT.Api.Services;
 using MQTT.Data;
 using MQTT.Data.Entities;
 using MQTT.Shared.DBO;
@@ -27,15 +28,15 @@ namespace MQTT.Api.Controllers.Api
     [ApiController]
     public class MeasurementsController : ControllerBase
     {
+        private readonly LoggerService _loggerService;
         private readonly MQTTDbContext _db;
-        private readonly ILogger<MeasurementsController> _logger;
         private readonly IMapper _mapper;
 
-        public MeasurementsController(ILogger<MeasurementsController> logger, MQTTDbContext db, IMapper mapper)
+        public MeasurementsController(MQTTDbContext db, IMapper mapper, LoggerService loggerService)
         {
-            _logger = logger;
             _db = db;
             _mapper = mapper;
+            _loggerService = loggerService;
         }
         
         
@@ -65,7 +66,7 @@ namespace MQTT.Api.Controllers.Api
                 _db.Measurements.Add(measurement);
                 await _db.SaveChangesAsync();
                 StringBuilder sb = new();
-                sb.Append($"{DateTime.Now.ToString("O")} Device {deviceName} {mqttToken} add record ");
+                sb.Append($"Device {deviceName} {mqttToken} add record ");
                 sb.Append($"AP={atmosphericPressure}");
                 sb.Append($"T={temperature}");
                 sb.Append($"AH={airHumidity}");
@@ -73,12 +74,11 @@ namespace MQTT.Api.Controllers.Api
                 sb.Append($"SL={smokeLevel}");
                 sb.Append($"RL={radiationLevel}");
                 sb.Append($"({Request.Query}) IP:{HttpContext.Request.Host.Host}");
-                _logger.Log(LogLevel.Information, sb.ToString());
+                _loggerService.Log(sb.ToString());
                 return Ok("Success");
             }
 
-            _logger.Log(LogLevel.Information,
-                $"{DateTime.Now.ToString("O")} Device {deviceName} {mqttToken} fail (device does not find) ({Request.Query}) IP:{HttpContext.Request.Host.Host}");
+            _loggerService.Log($"Device {deviceName} {mqttToken} fail (device does not find) ({Request.Query}) IP:{HttpContext.Request.Host.Host}");
             return NotFound("Device does not exists");
         }
 

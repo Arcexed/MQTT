@@ -18,7 +18,7 @@ using System.Linq;
 
 namespace MQTT.Data.Entities
 {
-    public class Device : IEntity<Guid>
+    public class Device
     {
         [Required] public string Name { get; set; }
 
@@ -45,6 +45,7 @@ namespace MQTT.Data.Entities
             Measurements == null ? "Unknown" : Measurements.Last().Date.ToString(CultureInfo.CurrentCulture);
 
         [Required] public Guid Id { get; set; }
+        [Required] public User User { get; set; }
 
         public Device TakeMeasurements(int count)
         {

@@ -25,16 +25,16 @@ namespace MQTT.Api.Controllers.Api
     [ApiController]
     public class DeviceController : ControllerBase
     {
+        private readonly LoggerService _loggerService;
         private readonly MQTTDbContext _db;
-        private readonly ILogger<DeviceController> _logger;
         private readonly IMapper _mapper;
         private readonly MqttService _mqttService;
-        public DeviceController(ILogger<DeviceController> logger, MQTTDbContext db, IMapper mapper, MqttService mqttService)
+        public DeviceController(MQTTDbContext db, IMapper mapper, MqttService mqttService,LoggerService loggerService)
         {
-            _logger = logger;
             _db = db;
             _mapper = mapper;
             _mqttService = mqttService;
+            _loggerService = loggerService;
         }
 
         [Authorize]
@@ -51,7 +51,7 @@ namespace MQTT.Api.Controllers.Api
             devices.ForAll(x => x.TakeMeasurements(3).TakeEvents(3));
             var deviceView =
                 _mapper.Map<IEnumerable<Device>, IEnumerable<DeviceViewModel>>(devices);
-            _logger.Log(LogLevel.Information,
+            _loggerService.Log(
                 $"{DateTime.Now.ToString("O")} GetAllDevices ({Request.Query}) IP:{HttpContext.Request.Host.Host}");
             return Ok(deviceView);
         }
@@ -72,8 +72,7 @@ namespace MQTT.Api.Controllers.Api
 
             if (deviceViewModel != null)
                 return Ok(deviceViewModel);
-            _logger.Log(LogLevel.Information,
-                $"{DateTime.Now.ToString("O")} GetDevice ({name}) ({Request.Query}) IP:{HttpContext.Request.Host.Host}");
+            _loggerService.Log($"{DateTime.Now.ToString("O")} GetDevice ({name}) ({Request.Query}) IP:{HttpContext.Request.Host.Host}");
             return BadRequest();
         }
 
@@ -107,13 +106,11 @@ namespace MQTT.Api.Controllers.Api
                     };
                     user.Devices.Add(device);
                     await _db.SaveChangesAsync();
-                    _logger.Log(LogLevel.Information,
-                        $"{DateTime.Now.ToString("O")} User {User.Identity?.Name} added device (name:{name}\tdesc:{desc}\tgeo:{geo}) ({Request.Query}) IP:{HttpContext.Request.Host.Host}");
+                    _loggerService.Log($"{DateTime.Now.ToString("O")} User {User.Identity?.Name} added device (name:{name}\tdesc:{desc}\tgeo:{geo}) ({Request.Query}) IP:{HttpContext.Request.Host.Host}");
                     return Ok("Success adding");
                 }
 
-                _logger.Log(LogLevel.Information,
-                    $"{DateTime.Now.ToString("O")} User {User.Identity?.Name} (Not found in database) trying added (fail) device (name:{name}\tdesc:{desc}\tgeo:{geo})  ({Request.Query}) IP:{HttpContext.Request.Host.Host}");
+                _loggerService.Log($"{DateTime.Now.ToString("O")} User {User.Identity?.Name} (Not found in database) trying added (fail) device (name:{name}\tdesc:{desc}\tgeo:{geo})  ({Request.Query}) IP:{HttpContext.Request.Host.Host}");
                 return BadRequest("User not found");
             }
             catch (Exception ex)
@@ -149,25 +146,22 @@ namespace MQTT.Api.Controllers.Api
                         device.EditingDate = DateTime.Now;
 
                         await _db.SaveChangesAsync();
-                        _logger.Log(LogLevel.Information,
-                            $"{DateTime.Now.ToString("O")} User {User.Identity?.Name} (Not found in database user was have {name} device) trying edit (fail) device ({Request.Query}) IP:{HttpContext.Request.Host.Host}");
+                        _loggerService.Log($"{DateTime.Now.ToString("O")} User {User.Identity?.Name} (Not found in database user was have {name} device) trying edit (fail) device ({Request.Query}) IP:{HttpContext.Request.Host.Host}");
 
                         return Ok("Success editing");
                     }
 
-                    _logger.Log(LogLevel.Information,
-                        $"{DateTime.Now.ToString("O")} User {User.Identity?.Name} success edit (fail) device {name} ({desc} {geo}) ({Request.Query}) IP:{HttpContext.Request.Host.Host}");
+                    _loggerService.Log($"{DateTime.Now.ToString("O")} User {User.Identity?.Name} success edit (fail) device {name} ({desc} {geo}) ({Request.Query}) IP:{HttpContext.Request.Host.Host}");
 
                     return NotFound("This device is not exists");
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError($"{ex.Message} {Request.QueryString.Value}");
+                    _loggerService.Log($"{ex.Message} {Request.QueryString.Value}");
                     return BadRequest(ex.Message);
                 }
 
-            _logger.Log(LogLevel.Information,
-                $"{DateTime.Now.ToString("O")} User {User.Identity?.Name} (Not found in database) trying added (fail) device (name:{name}\tdesc:{desc}\tgeo:{geo})  ({Request.Query}) IP:{HttpContext.Request.Host.Host}");
+            _loggerService.Log($"{DateTime.Now.ToString("O")} User {User.Identity?.Name} (Not found in database) trying added (fail) device (name:{name}\tdesc:{desc}\tgeo:{geo})  ({Request.Query}) IP:{HttpContext.Request.Host.Host}");
             return NotFound("Name is null or empty");
         }
 
@@ -190,13 +184,11 @@ namespace MQTT.Api.Controllers.Api
                     {
                         _db.Devices.Remove(existsItem);
                         _db.SaveChanges();
-                        _logger.Log(LogLevel.Information,
-                            $"{DateTime.Now.ToString("O")} User {User.Identity?.Name} success delete device {name} ({Request.Query}) IP:{HttpContext.Request.Host.Host}");
+                        _loggerService.Log($"User {User.Identity?.Name} success delete device {name} ({Request.Query}) IP:{HttpContext.Request.Host.Host}");
                         return Ok("Success delete");
                     }
 
-                    _logger.Log(LogLevel.Information,
-                        $"{DateTime.Now.ToString("O")} User {User.Identity?.Name} fail (device is not exists) delete device {name}  ({Request.Query}) IP:{HttpContext.Request.Host.Host}");
+                    _loggerService.Log($"User {User.Identity?.Name} fail (device is not exists) delete device {name}  ({Request.Query}) IP:{HttpContext.Request.Host.Host}");
                     return NotFound("This device is not exists");
                 }
                 catch (Exception ex)
@@ -204,8 +196,7 @@ namespace MQTT.Api.Controllers.Api
                     return BadRequest(ex.Message);
                 }
 
-            _logger.Log(LogLevel.Information,
-                $"{DateTime.Now.ToString("O")} User {User.Identity?.Name} fail (device name is null or empty) delete device  ({Request.Query}) IP:{HttpContext.Request.Host.Host}");
+            _loggerService.Log($"User {User.Identity?.Name} fail (device name is null or empty) delete device  ({Request.Query}) IP:{HttpContext.Request.Host.Host}");
             return NotFound("Name is null or empty");
         }
 

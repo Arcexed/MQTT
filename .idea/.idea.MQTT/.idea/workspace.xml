@@ -26,24 +26,28 @@
     </treeState>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1aef981b-882b-4864-b7b7-5e45bf597cf4" name="Changes" comment="Maybe working API :D / Before release new feature (mqtt server in WebApi)">
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/Controllers/Mqtt/MeasurementsController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/Models/AppSettings.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/Models/Client.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/Models/KestrelSettings.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/Services/MqttService.cs" afterDir="false" />
+    <list default="true" id="1aef981b-882b-4864-b7b7-5e45bf597cf4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/MQTT.Api/Services/LoggerService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MQTT.Data/Entities/Event.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.MQTT/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MQTT/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Api/Controllers/Api/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Controllers/Api/AccountController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Api/Controllers/Api/DeviceController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Controllers/Api/DeviceController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Api/Controllers/Api/MeasurementsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Controllers/Api/MeasurementsController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Api/Controllers/Api/ReportController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Controllers/Api/ReportController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/Controllers/Mqtt/MeasurementsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Controllers/Mqtt/MeasurementsController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Api/Extensions/ConfigureExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Extensions/ConfigureExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/MQTT.Api.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/MQTT.Api.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Api/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/Services/MqttService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Services/MqttService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Api/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Startup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/appsettings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Data/Entities/Device.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/Entities/Device.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Data/Entities/EventsDevice.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/Entities/EventsDevice.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Data/Entities/Measurement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/Entities/Measurement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Data/Entities/EventsUser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/Entities/EventsUser.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Data/Entities/IEntity.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Data/Entities/Role.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/Entities/Role.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Data/Entities/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/Entities/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Data/MQTT.Data.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/MQTT.Data.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Data/MQTTDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/MQTTDbContext.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Data/Migrations/MQTTDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/Migrations/MQTTDbContextModelSnapshot.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.sln" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.sln" afterDir="false" />
     </list>
@@ -75,9 +79,10 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d7a3ca84869f48e0aa5c354ee22cb1ee1b190/ef/d8840ed7/ILogger`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/MQTT.Api/Startup.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bdd96c5f630a45298dacc07d80deb23b29190/A/ServiceProvider.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/MQTT.Api/appsettings.json" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MQTT.Api/appsettings.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/619de5eaceea499387688c8799556b809600/9a/15bb667a/TemplateParser.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f6c16478e39642568a8ee6c8b6db92a4d7590/70/JsonConverterOfT.ReadCore.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bc0dac173c9c44d7ab6b9ebd266b859e66590/46/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bc3d7024e97f4f818de53bc3c23872b48f5790/233/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/ed92340b5670447ab78a69a564a858d31bfb88/6B/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2b369d19768947fcba24b2d54b76014c1bbb78/170/ControllerFactoryProvider.cs" root0="SKIP_HIGHLIGHTING" />
@@ -111,6 +116,24 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected=".NET Launch Settings Profile.MQTT.Api: TestWebApiApplication">
+    <configuration name="MQTT.Client" type="DotNetProject" factoryName=".NET Project" temporary="true">
+      <option name="EXE_PATH" value="$PROJECT_DIR$/MQTT.Client/bin/Debug/net5.0/MQTT.Client.exe" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/MQTT.Client/bin/Debug/net5.0" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="PROJECT_PATH" value="$PROJECT_DIR$/MQTT.Client/MQTT.Client.csproj" />
+      <option name="PROJECT_EXE_PATH_TRACKING" value="1" />
+      <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
+      <option name="PROJECT_WORKING_DIRECTORY_TRACKING" value="1" />
+      <option name="PROJECT_KIND" value="DotNetCore" />
+      <option name="PROJECT_TFM" value="net5.0" />
+      <method v="2">
+        <option name="Build" />
+      </method>
+    </configuration>
     <configuration name="MQTT.Api: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/MQTT.Api/MQTT.Api.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value="net5.0" />
@@ -176,12 +199,11 @@
       <item itemvalue=".NET Launch Settings Profile.MQTT.Dashboard: IIS Express" />
       <item itemvalue=".NET Launch Settings Profile.MQTT.Dashboard: MQTTDashboard" />
       <item itemvalue=".NET Launch Settings Profile.MQTT.Api: IIS Express" />
+      <item itemvalue=".NET Project.MQTT.Client" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue=".NET Project.MQTT.Broker" />
-        <item itemvalue=".NET Project.MQTT.Broker" />
-        <item itemvalue=".NET Project.MQTT.Broker" />
+        <item itemvalue=".NET Project.MQTT.Client" />
       </list>
     </recent_temporary>
   </component>
@@ -206,7 +228,9 @@
       <workItem from="1633641590946" duration="718000" />
       <workItem from="1633986467197" duration="4378000" />
       <workItem from="1634593293723" duration="725000" />
-      <workItem from="1634594277501" duration="54263000" />
+      <workItem from="1634594277501" duration="55031000" />
+      <workItem from="1634802724258" duration="5022000" />
+      <workItem from="1634927759011" duration="30162000" />
     </task>
     <task id="LOCAL-00001" summary="Testing functionality and initial migration.">
       <created>1632068867120</created>
@@ -264,7 +288,14 @@
       <option name="project" value="LOCAL" />
       <updated>1634656510879</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Mqtt Server is working and some correction in API Controller / &#10;Fix Bug in Models and Api MeasurementsController.cs">
+      <created>1634765099723</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1634765099723</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -501,7 +532,8 @@
     <MESSAGE value="Some Changes with controllers / Refactoring" />
     <MESSAGE value="Refactoring" />
     <MESSAGE value="Maybe working API :D / Before release new feature (mqtt server in WebApi)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Maybe working API :D / Before release new feature (mqtt server in WebApi)" />
+    <MESSAGE value="Mqtt Server is working and some correction in API Controller / &#10;Fix Bug in Models and Api MeasurementsController.cs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Mqtt Server is working and some correction in API Controller / &#10;Fix Bug in Models and Api MeasurementsController.cs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -534,29 +566,16 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/MQTT.Api/Controllers/Api/MeasurementsController.cs</url>
-          <line>64</line>
+          <line>65</line>
           <properties documentPath="C:\Users\la046\RiderProjects\MQTT\MQTT.Api\Controllers\Api\MeasurementsController.cs" initialLine="63" containingFunctionPresentation="method 'AddMeasurements'">
             <startOffsets>
-              <option value="2193" />
+              <option value="2210" />
             </startOffsets>
             <endOffsets>
-              <option value="2224" />
+              <option value="2241" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="24" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/MQTT.Api/Controllers/Api/AccountController.cs</url>
-          <line>27</line>
-          <properties documentPath="C:\Users\la046\RiderProjects\MQTT\MQTT.Api\Controllers\Api\AccountController.cs" initialLine="27" containingFunctionPresentation="constructor 'AccountController'">
-            <startOffsets>
-              <option value="838" />
-            </startOffsets>
-            <endOffsets>
-              <option value="855" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="28" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

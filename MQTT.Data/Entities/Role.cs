@@ -11,7 +11,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MQTT.Data.Entities
 {
-    public class Role : IEntity<Guid>
+    public class Role
     {
         [Required] public string Name { get; set; }
         [Required] public Guid Id { get; set; }

@@ -12,7 +12,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MQTT.Data.Entities
 {
-    public class User : IEntity<Guid>
+    public class User
     {
         [Required] public string Username { get; set; }
         [Required] public string Password { get; set; }

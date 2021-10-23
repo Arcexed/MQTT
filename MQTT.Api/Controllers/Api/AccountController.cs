@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
@@ -11,7 +12,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using MQTT.Api.Auth;
+using MQTT.Api.Services;
 using MQTT.Data;
+using MQTT.Data.Entities;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace MQTT.Api.Controllers.Api
@@ -21,12 +24,11 @@ namespace MQTT.Api.Controllers.Api
     public class AccountController : ControllerBase
     {
         private readonly MQTTDbContext _db;
-        private readonly ILogger<AccountController> _logger;
-
-        public AccountController(ILogger<AccountController> logger, MQTTDbContext db)
+        private readonly LoggerService _loggerService;
+        public AccountController(MQTTDbContext db, LoggerService loggerService)
         {
-            _logger = logger;
             _db = db;
+            _loggerService = loggerService;
         }
 
         [HttpPost]
@@ -41,8 +43,8 @@ namespace MQTT.Api.Controllers.Api
 
             if (identity == null)
             {
-                _logger.Log(LogLevel.Information,
-                    $"{DateTime.Now.ToString("O")} Invalid token ({accessToken}) IP:{HttpContext.Request.Host.Host}");
+                _loggerService.Log($"{DateTime.Now.ToString(CultureInfo.CurrentCulture)} Invalid token ({accessToken}) IP:{HttpContext.Request.Host.Host}");
+                _loggerService.LogEvent($"Invalid token ({accessToken}) IP:{HttpContext.Request.Host.Host}");
                 return BadRequest("Invalid token.");
             }
 
@@ -65,8 +67,9 @@ namespace MQTT.Api.Controllers.Api
                 nowBefore = DateTime.Now,
                 expires = now.Add(TimeSpan.FromMinutes(AuthOptions.Lifetime))
             };
-            _logger.Log(LogLevel.Information,
-                $"{DateTime.Now.ToString("O")} Success authentication ({accessToken}) IP:{HttpContext.Request.Host.Host}");
+            _loggerService.Log($"{DateTime.Now.ToString("O")} Success authentication ({accessToken}) IP:{HttpContext.Request.Host.Host}");
+            _loggerService.LogEvent($"Invalid token ({accessToken}) IP:{HttpContext.Request.Host.Host}");
+
             return Ok(response);
         }
 
@@ -87,6 +90,48 @@ namespace MQTT.Api.Controllers.Api
             }
 
             return null;
+        }
+
+
+        [HttpGet]
+        [AllowAnonymous]
+        [SwaggerResponse((int) HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(string), 200)]
+        [SwaggerOperation("database add some changes")]
+        [Route("database")]
+        public async Task<IActionResult> Database()
+        {
+            _db.Roles.Add(new Role()
+            {
+                Id = Guid.NewGuid(),
+                Name = "User"
+            });
+            await _db.SaveChangesAsync();
+            _db.Users.Add(new User()
+            {
+                Id = Guid.NewGuid(),
+                Email = "arcex.off@gmail.com",
+                Ip = "",
+                Password = "test",
+                Role = await _db.Roles.FirstAsync(d=>d.Name=="User"),
+                AccessToken = "5356cf8159584b31864e1c8ba72232cb",
+                IsBlock = false,
+                Username = "Arcex",
+            });
+            await _db.SaveChangesAsync();
+            _db.Devices.Add(new Device()
+            {
+                Id = Guid.NewGuid(),
+                Description = "Device for testing system",
+                Geo = "Lomonosova, 67",
+                Name = "TestDevice",
+                CreatingDate = DateTime.Now,
+                IsPublic = false,
+                MqttToken = "3db1f91c8ba1475fb24c3c0ce62e1415",
+                User = await _db.Users.FirstAsync(d=>d.Username=="Arcex")
+            });
+            await _db.SaveChangesAsync();
+            return Ok();
         }
     }
 }

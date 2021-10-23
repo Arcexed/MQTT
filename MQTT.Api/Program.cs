@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using MQTTnet.AspNetCore.Extensions;
 
@@ -13,9 +14,12 @@ namespace MQTT.Api
 
         private static IHostBuilder CreateHostBuilder(string[] args)
         {
-            var mqttPipeLinePort = 1883;
-            var httpPipeLinePort = 8080;
-            var httpsPipeLinePort = 8443;
+            var config = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", false)
+                .Build();
+            var mqttPipeLinePort = int.Parse(config["AppSettings:KestrelSettings:MqttPipeLinePort"]);
+            var httpPipeLinePort = int.Parse(config["AppSettings:KestrelSettings:HttpPipeLinePort"]);
+            var httpsPipeLinePort = int.Parse(config["AppSettings:KestrelSettings:HttpsPipeLinePort"]);
 
             return Host.CreateDefaultBuilder(args).ConfigureWebHostDefaults(webBuilder =>
             {

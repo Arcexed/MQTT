@@ -47,6 +47,7 @@ namespace MQTT.Api
             services.AddSingleton(_appSettings);
 
             // Allow CORS
+            services.LoggerServiceConfiguration();
             services.MqttConfiguration();
             // Add the Controllers
         }

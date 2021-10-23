@@ -42,19 +42,21 @@ namespace MQTT.Data.Migrations
                     b.Property<bool>("IsPublic")
                         .HasColumnType("bit");
 
+                    b.Property<string>("MqttToken")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PrivateIp")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PublicIp")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("UserId")
+                    b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -62,6 +64,27 @@ namespace MQTT.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Devices");
+                });
+
+            modelBuilder.Entity("MQTT.Data.Entities.Event", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsSeen")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("MQTT.Data.Entities.EventsDevice", b =>
@@ -73,7 +96,7 @@ namespace MQTT.Data.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("DeviceId")
+                    b.Property<Guid>("DeviceId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsSeen")
@@ -106,7 +129,7 @@ namespace MQTT.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("UserId")
+                    b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -131,7 +154,7 @@ namespace MQTT.Data.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("DeviceId")
+                    b.Property<Guid>("DeviceId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("LightLevel")
@@ -209,30 +232,46 @@ namespace MQTT.Data.Migrations
 
             modelBuilder.Entity("MQTT.Data.Entities.Device", b =>
                 {
-                    b.HasOne("MQTT.Data.Entities.User", null)
+                    b.HasOne("MQTT.Data.Entities.User", "User")
                         .WithMany("Devices")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MQTT.Data.Entities.EventsDevice", b =>
                 {
-                    b.HasOne("MQTT.Data.Entities.Device", null)
+                    b.HasOne("MQTT.Data.Entities.Device", "Device")
                         .WithMany("EventsDevices")
-                        .HasForeignKey("DeviceId");
+                        .HasForeignKey("DeviceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Device");
                 });
 
             modelBuilder.Entity("MQTT.Data.Entities.EventsUser", b =>
                 {
-                    b.HasOne("MQTT.Data.Entities.User", null)
+                    b.HasOne("MQTT.Data.Entities.User", "User")
                         .WithMany("EventsUsers")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MQTT.Data.Entities.Measurement", b =>
                 {
-                    b.HasOne("MQTT.Data.Entities.Device", null)
+                    b.HasOne("MQTT.Data.Entities.Device", "Device")
                         .WithMany("Measurements")
-                        .HasForeignKey("DeviceId");
+                        .HasForeignKey("DeviceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Device");
                 });
 
             modelBuilder.Entity("MQTT.Data.Entities.User", b =>

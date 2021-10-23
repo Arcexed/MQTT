@@ -28,16 +28,16 @@ namespace MQTT.Api.Services
         IMqttServerClientUnsubscribedTopicHandler
     {
         private readonly AppSettings _appSettings;
-        private readonly ILogger<MqttService> _logger;
+        private readonly LoggerService _loggerService;
         public IMqttServer Server;
         public List<Client> PreConnectedClients = new();
         public List<Client> ConnectedClients = new();
         private readonly MQTTDbContext _db;
-        public MqttService(AppSettings appSettings, ILogger<MqttService> logger,MQTTDbContext db)
+        public MqttService(AppSettings appSettings,MQTTDbContext db, LoggerService loggerService)
         {
             _appSettings = appSettings;
-            _logger = logger;
             _db = db;
+            _loggerService = loggerService;
         }
         
         public void ConfigureMqttServerOptions(AspNetMqttServerOptionsBuilder options)
@@ -69,15 +69,19 @@ namespace MQTT.Api.Services
             {
                 var deviceName = context.Username;
                 var mqttToken = context.Password;
+                
                 var device = _db.Devices.FirstOrDefault(d => d.Name == deviceName && d.MqttToken == mqttToken);
                 if (device != null)
                 {
-                    _logger.LogInformation(
-                        $"Validate success user id: {context.ClientId} username: {context.Username} password: {context.Password}");
+                    _loggerService.Log($"Validate success user id: {context.ClientId} username: {context.Username} password: {context.Password}");
+                    
+                    _loggerService.LogEventDevice(device,$"Validate success user id: {context.ClientId} username: {context.Username} password: {context.Password}");
+                    
+
                     if (ConnectedClients.Any(d => d.Username == deviceName))
                     {
-                        _logger.LogWarning(
-                            $"User id is contains in ConnectedClients: {context.ClientId} username: {context.Username} password: {context.Password}");
+                        _loggerService.Log($"User id is contains in ConnectedClients: {context.ClientId} username: {context.Username} password: {context.Password}");
+                        _loggerService.LogEventDevice(device,$"User id is contains in ConnectedClients: {context.ClientId} username: {context.Username} password: {context.Password}");
                     }
                     var client = new Client()
                     {
@@ -92,8 +96,7 @@ namespace MQTT.Api.Services
                 }
                 else
                 {
-                    _logger.LogInformation(
-                        $"Error validate (not found device in db) user id: {context.ClientId} username: {context.Username} password: {context.Password}");
+                    _loggerService.Log($"Error validate (not found device in db) user id: {context.ClientId} username: {context.Username} password: {context.Password}");
                     context.ReasonCode = MqttConnectReasonCode.NotAuthorized;
                 }
             });
@@ -103,40 +106,35 @@ namespace MQTT.Api.Services
         {
             return Task.Run(() =>
             {
-                _logger.LogInformation(
-                    $"{DateTime.Now.ToString(CultureInfo.InvariantCulture)} - Received MQTT Message Logged " +
-                    $"- Topic = {eventArgs.ApplicationMessage.Topic}" +
-                    $"- Payload = {Encoding.UTF8.GetString(eventArgs.ApplicationMessage.Payload)}" +
-                    $"- QoS = {eventArgs.ApplicationMessage.QualityOfServiceLevel}" +
-                    $"- Retain = {eventArgs.ApplicationMessage.Retain}");
+                _loggerService.Log($"Received MQTT Message Logged " +
+                                   $"- Topic = {eventArgs.ApplicationMessage.Topic}" +
+                                   $"- Payload = {Encoding.UTF8.GetString(eventArgs.ApplicationMessage.Payload)}" +
+                                   $"- QoS = {eventArgs.ApplicationMessage.QualityOfServiceLevel}" +
+                                   $"- Retain = {eventArgs.ApplicationMessage.Retain}");
             });
         }
 
         public Task InterceptApplicationMessagePublishAsync(MqttApplicationMessageInterceptorContext context)
         {
-            return Task.Run(() => { _logger.LogInformation($"{DateTime.Now.ToString(CultureInfo.InvariantCulture)} - " +
-                                                           "InterceptApplicationMessagePublishAsync Handler Triggered"); });
+            return Task.Run(() => { _loggerService.Log($"InterceptApplicationMessagePublishAsync Handler Triggered"); });
         }
 
         public Task HandleServerStartedAsync(EventArgs eventArgs)
         {
-            return Task.Run(() => { _logger.LogInformation($"{DateTime.Now.ToString(CultureInfo.InvariantCulture)} - " +
-                                                           "HandleServerStartedAsync Handler Triggered"); });
+            return Task.Run(() => { _loggerService.Log($"HandleServerStartedAsync Handler Triggered"); });
         }
 
         public Task HandleServerStoppedAsync(EventArgs eventArgs)
         {
             
-            return Task.Run(() => { _logger.LogInformation($"{DateTime.Now.ToString(CultureInfo.InvariantCulture)} - " +
-                                                           "HandleServerStoppedAsync Handler Triggered"); });
+            return Task.Run(() => { _loggerService.Log($"HandleServerStoppedAsync Handler Triggered"); });
         }
 
         public Task HandleClientConnectedAsync(MqttServerClientConnectedEventArgs eventArgs)
         {
             return Task.Run(() =>
             {
-                _logger.LogInformation($"{DateTime.Now.ToString(CultureInfo.InvariantCulture)} - " +
-                                       "HandleClientConnectedAsync Handler Triggered");
+                _loggerService.Log($"HandleClientConnectedAsync Handler Triggered");
                 
                 
                 var clientId = eventArgs.ClientId;
@@ -153,35 +151,30 @@ namespace MQTT.Api.Services
                     });
                 }
                 PreConnectedClients.Remove(client);
-                _logger.LogInformation($"{DateTime.Now.ToString(CultureInfo.InvariantCulture)} - " +
-                                       $"MQTT Client Connected - ClientID = {clientId}");
+                _loggerService.Log($"MQTT Client Connected - ClientID = {clientId}");
             });
         }
 
         public Task HandleClientDisconnectedAsync(MqttServerClientDisconnectedEventArgs eventArgs)
         {
             return Task.Run(() => { 
-                _logger.LogInformation($"{DateTime.Now.ToString(CultureInfo.InvariantCulture)} - " +
-                                       "HandleClientDisconnectedAsync Handler Triggered");
+                _loggerService.Log($"HandleClientDisconnectedAsync Handler Triggered");
                 
                 var clientId = eventArgs.ClientId;
                 var client = ConnectedClients.First(d => d.Id == clientId);
                 ConnectedClients.Remove(client);
                 
-                _logger.LogInformation($"{DateTime.Now.ToString(CultureInfo.InvariantCulture)} - " +
-                                       $"MQTT Client Disconnected - ClientID = {clientId} Username = {client.Username} MqttToken = {client.MqttToken}");
+                _loggerService.Log($"MQTT Client Disconnected - ClientID = {clientId} Username = {client.Username} MqttToken = {client.MqttToken}");
             });        }
 
         public Task HandleClientSubscribedTopicAsync(MqttServerClientSubscribedTopicEventArgs eventArgs)
         {
-            return Task.Run(() => { _logger.LogInformation($"{DateTime.Now.ToString(CultureInfo.InvariantCulture)} - " +
-                                                           "ClientSubscribedTopicHandler Handler Triggered"); });
+            return Task.Run(() => { _loggerService.Log("ClientSubscribedTopicHandler Handler Triggered"); });
         }
 
         public Task HandleClientUnsubscribedTopicAsync(MqttServerClientUnsubscribedTopicEventArgs eventArgs)
         {
-            return Task.Run(() => { _logger.LogInformation($"{DateTime.Now.ToString(CultureInfo.InvariantCulture)} - " +
-                                                           "ClientSubscribedTopicHandler Handler Triggered"); });
+            return Task.Run(() => { _loggerService.Log("ClientSubscribedTopicHandler Handler Triggered"); });
         }
     }
 }
