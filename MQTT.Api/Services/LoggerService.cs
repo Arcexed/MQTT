@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MQTT.Data;
@@ -13,7 +14,7 @@ namespace MQTT.Api.Services
         {
         }
 
-        public void LogEventDevice(Device device, string message)
+        public void LogEventDevice(Guid device, string message)
         {
             using (var _db = new MQTTDbContext(Test.Options))
             {
@@ -24,11 +25,10 @@ namespace MQTT.Api.Services
                     Date = DateTime.Now,
                     Message = message,
                     IsSeen = false,
-                    //Device = device
+                    Device = _db.Devices.First(d=>d.Id==device)
                 };
-                device.EventsDevices.Add(eventDevice);
+                _db.EventsDevices.Add(eventDevice);
                 _db.SaveChanges();
-                //_db.EventsDevices.Add(eventDevice);
                 //_db.SaveChanges();
             }
         }

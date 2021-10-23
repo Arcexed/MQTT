@@ -78,13 +78,13 @@ namespace MQTT.Api.Services
                     {
                         _loggerService.Log($"Validate success user id: {context.ClientId} username: {context.Username} password: {context.Password}");
                     
-                        _loggerService.LogEventDevice(device,$"Validate success user id: {context.ClientId} username: {context.Username} password: {context.Password}");
+                        _loggerService.LogEventDevice(device.Id,$"Validate success user id: {context.ClientId} username: {context.Username} password: {context.Password}");
                     
 
                         if (ConnectedClients.Any(d => d.Username == deviceName))
                         {
                             _loggerService.Log($"User id is contains in ConnectedClients: {context.ClientId} username: {context.Username} password: {context.Password}");
-                            _loggerService.LogEventDevice(device,$"User id is contains in ConnectedClients: {context.ClientId} username: {context.Username} password: {context.Password}");
+                            _loggerService.LogEventDevice(device.Id,$"User id is contains in ConnectedClients: {context.ClientId} username: {context.Username} password: {context.Password}");
                         }
                         var client = new Client()
                         {

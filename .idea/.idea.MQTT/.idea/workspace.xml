@@ -26,14 +26,12 @@
     </treeState>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1aef981b-882b-4864-b7b7-5e45bf597cf4" name="Changes" comment="Working version / Have bug with Transient and Singleton Services / Need Fix / Backup">
+    <list default="true" id="1aef981b-882b-4864-b7b7-5e45bf597cf4" name="Changes" comment="Logging is broken (With adding object with another object) / Need testing API controller (Maybe does not working)">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.MQTT/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MQTT/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/Extensions/ConfigureExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Extensions/ConfigureExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/Controllers/Mqtt/MeasurementsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Controllers/Mqtt/MeasurementsController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Api/Services/LoggerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Services/LoggerService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Api/Services/MqttService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Services/MqttService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Startup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Dashboard/Views/_ViewImports.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Dashboard/Views/_ViewImports.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Data/MQTTDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/MQTTDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.sln" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.sln" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,9 +80,11 @@
     <setting file="mock://C:/Users/la046/RiderProjects/MQTT/MQTT.Api/Controllers/Api/AccountController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/la046/RiderProjects/MQTT/MQTT.Api/Services/LoggerService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bc3d7024e97f4f818de53bc3c23872b48f5790/233/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/la046/RiderProjects/MQTT/MQTT.Dashboard/Views/_ViewImports.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2b369d19768947fcba24b2d54b76014c1bbb78/170/ControllerFactoryProvider.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bc3d7024e97f4f818de53bc3c23872b48f5790/1B2/ExecutionContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bc3d7024e97f4f818de53bc3c23872b48f5790/1D0/Task.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MQTT.Dashboard/Views/_ViewImports.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bc3d7024e97f4f818de53bc3c23872b48f5790/1A2/ThreadPool.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Users/la046/RiderProjects/MQTT/MQTT.Api/Extensions/ConfigureExtensions.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
@@ -225,7 +225,7 @@
       <workItem from="1634593293723" duration="725000" />
       <workItem from="1634594277501" duration="55031000" />
       <workItem from="1634802724258" duration="5022000" />
-      <workItem from="1634927759011" duration="41809000" />
+      <workItem from="1634927759011" duration="45210000" />
     </task>
     <task id="LOCAL-00001" summary="Testing functionality and initial migration.">
       <created>1632068867120</created>
@@ -304,7 +304,14 @@
       <option name="project" value="LOCAL" />
       <updated>1635016676214</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Logging is broken (With adding object with another object) / Need testing API controller (Maybe does not working)">
+      <created>1635018969179</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1635018969179</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -544,7 +551,8 @@
     <MESSAGE value="Mqtt Server is working and some correction in API Controller / &#10;Fix Bug in Models and Api MeasurementsController.cs" />
     <MESSAGE value="Add LoggerService, adding logging, but not working, because must fix dependency inj types" />
     <MESSAGE value="Working version / Have bug with Transient and Singleton Services / Need Fix / Backup" />
-    <option name="LAST_COMMIT_MESSAGE" value="Working version / Have bug with Transient and Singleton Services / Need Fix / Backup" />
+    <MESSAGE value="Logging is broken (With adding object with another object) / Need testing API controller (Maybe does not working)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Logging is broken (With adding object with another object) / Need testing API controller (Maybe does not working)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -590,13 +598,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/MQTT.Api/Services/LoggerService.cs</url>
-          <line>14</line>
+          <line>15</line>
           <properties documentPath="C:\Users\la046\RiderProjects\MQTT\MQTT.Api\Services\LoggerService.cs" initialLine="21" containingFunctionPresentation="method 'GetDbContext'">
             <startOffsets>
-              <option value="288" />
+              <option value="307" />
             </startOffsets>
             <endOffsets>
-              <option value="288" />
+              <option value="307" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="31" />
