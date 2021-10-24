@@ -122,7 +122,7 @@ namespace MQTT.Api.Extensions
 
         public static void LoggerServiceConfiguration(this IServiceCollection services)
         {
-            services.AddSingleton<LoggerService>();
+            services.AddTransient<LoggerService>();
         }
     }
 }

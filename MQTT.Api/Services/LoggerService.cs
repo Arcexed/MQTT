@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -14,7 +15,7 @@ namespace MQTT.Api.Services
         {
         }
 
-        public void LogEventDevice(Guid device, string message)
+        public void LogEventDevice(Device device, string message)
         {
             using (var _db = new MQTTDbContext(Test.Options))
             {
@@ -25,7 +26,7 @@ namespace MQTT.Api.Services
                     Date = DateTime.Now,
                     Message = message,
                     IsSeen = false,
-                    Device = _db.Devices.First(d=>d.Id==device)
+                    Device = _db.Devices.First(d=>d.Id==device.Id)
                 };
                 _db.EventsDevices.Add(eventDevice);
                 _db.SaveChanges();
@@ -42,7 +43,7 @@ namespace MQTT.Api.Services
                     Date = DateTime.Now,
                     Message = message,
                     IsSeen = false,
-                    User = user,
+                    User = _db.Users.First(d=>d.Id == user.Id)
                 };
                 _db.EventsUsers.Add(eventUser);
                 _db.SaveChanges();
@@ -52,6 +53,7 @@ namespace MQTT.Api.Services
         public void Log(string message)
         {
             Console.WriteLine($"{DateTime.Now.ToString(CultureInfo.CurrentCulture)} {message}");
+            File.AppendAllText("log.txt", $"{DateTime.Now.ToString(CultureInfo.CurrentCulture)} {message}\n");
         }
 
         public void LogEvent(string message)

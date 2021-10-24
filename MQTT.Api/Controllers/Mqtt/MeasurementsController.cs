@@ -79,7 +79,7 @@ namespace MQTT.Api.Controllers.Mqtt
                 }
                 else
                 {
-                    _loggerService.LogEventDevice(device.Id,
+                    _loggerService.LogEventDevice(device,
                         $"It's {client.Username} {client.Id}  unsuccessfully send measurement");
                     _loggerService.Log($"It's {client.Username} {client.Id}  unsuccessfully send measurement");
                     MqttContext.CloseConnection = true;
