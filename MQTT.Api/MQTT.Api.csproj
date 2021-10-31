@@ -13,6 +13,7 @@
     <ItemGroup>
         <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.9" />
+        <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.11" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.10" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.10">
             <PrivateAssets>all</PrivateAssets>
@@ -33,6 +34,12 @@
 
     <ItemGroup>
         <None Remove="..\.dockerignore" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="ClientApp\test\package-lock.json" />
+      <_ContentIncludedByDefault Remove="ClientApp\test\package.json" />
+      <_ContentIncludedByDefault Remove="ClientApp\test\public\manifest.json" />
     </ItemGroup>
 
 </Project>

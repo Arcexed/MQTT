@@ -124,5 +124,7 @@ namespace MQTT.Api.Extensions
         {
             services.AddTransient<LoggerService>();
         }
+
+        
     }
 }

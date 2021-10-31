@@ -27,14 +27,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1aef981b-882b-4864-b7b7-5e45bf597cf4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/JavaScript-Lessons/app.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/JavaScript-Lessons/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mqtt.dashboard/src/components/Header.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mqtt.dashboard/src/components/Sidebar.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/public/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/public/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/public/logo192.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/public/logo512.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/public/manifest.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/public/robots.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/App.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/App.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/App.test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/index.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/logo.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/reportWebVitals.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/setupTests.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MQTT.Api/Pages/Error.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MQTT.Api/Pages/Error.cshtml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MQTT.Api/Pages/_ViewImports.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.MQTT/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MQTT/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/Controllers/Mqtt/MeasurementsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Controllers/Mqtt/MeasurementsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/Services/LoggerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Services/LoggerService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/Services/MqttService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Services/MqttService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/Extensions/ConfigureExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Extensions/ConfigureExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/MQTT.Api.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/MQTT.Api.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Startup.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -228,7 +245,7 @@
       <workItem from="1634594277501" duration="55031000" />
       <workItem from="1634802724258" duration="5022000" />
       <workItem from="1634927759011" duration="61194000" />
-      <workItem from="1635679437249" duration="869000" />
+      <workItem from="1635679437249" duration="8141000" />
     </task>
     <task id="LOCAL-00001" summary="Testing functionality and initial migration.">
       <created>1632068867120</created>
@@ -335,7 +352,14 @@
       <option name="project" value="LOCAL" />
       <updated>1635111581622</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="May to add React.js on Api app and testing all functionality / BACKUP">
+      <created>1635680659708</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1635680659708</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -579,7 +603,8 @@
     <MESSAGE value="Delete MQTT.Dashboard" />
     <MESSAGE value="Some changes / Need write Dashboard on React.JS / Need testing MQTT Service and Controllers / Maybe Working / Need review in dependency injection services" />
     <MESSAGE value="Add some files to solution git" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add some files to solution git" />
+    <MESSAGE value="May to add React.js on Api app and testing all functionality / BACKUP" />
+    <option name="LAST_COMMIT_MESSAGE" value="May to add React.js on Api app and testing all functionality / BACKUP" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
