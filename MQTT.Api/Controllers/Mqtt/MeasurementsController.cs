@@ -11,7 +11,9 @@ using MQTT.Api.Models;
 using MQTT.Api.Services;
 using MQTT.Data;
 using MQTT.Data.Entities;
+using MQTTnet;
 using MQTTnet.AspNetCore.AttributeRouting;
+using MQTTnet.Extensions;
 
 #endregion Using Imports
 
@@ -61,11 +63,8 @@ namespace MQTT.Api.Controllers.Mqtt
                     MqttContext.CloseConnection = true;
                     return BadMessage();
                 }
-
-                var payload = Encoding.ASCII.GetString(Message.Payload);
-                var measurement =
-                    JsonSerializer.Deserialize<Measurement>(payload,
-                        new JsonSerializerOptions(JsonSerializerDefaults.Web));
+                
+                var measurement = ParseMeasurementFromMqttMessage(Message);
                 if (measurement != null)
                 {
                     measurement.Date = DateTime.Now;
@@ -80,8 +79,8 @@ namespace MQTT.Api.Controllers.Mqtt
                 else
                 {
                     _loggerService.LogEventDevice(device,
-                        $"It's {client.Username} {client.Id}  unsuccessfully send measurement");
-                    _loggerService.Log($"It's {client.Username} {client.Id}  unsuccessfully send measurement");
+                        $"It's {client.Username} {client.Id}  unsuccessfully send measurement {measurement.Id} (Measurement ID)");
+                    _loggerService.Log($"It's {client.Username} {client.Id}  unsuccessfully send measurement {measurement.Id} (Measurement ID)");
                     MqttContext.CloseConnection = true;
                     return BadMessage();
                 }
@@ -89,5 +88,24 @@ namespace MQTT.Api.Controllers.Mqtt
             return Ok();
         }
 
+        private Measurement? ParseMeasurementFromMqttMessage(MqttApplicationMessage message)
+        {
+            var payload = message.Payload;
+            if (payload != null)
+            {
+                try
+                {
+                    var measurement =
+                        JsonSerializer.Deserialize<Measurement>(payload,
+                            new JsonSerializerOptions(JsonSerializerDefaults.Web));
+                    return measurement;
+                }
+                catch (Exception ex)
+                {
+                    _loggerService.Log($"{message.Topic} not parse {ex.Message}");
+                }
+            }
+            return null;
+        }
     }
 }

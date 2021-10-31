@@ -11,6 +11,7 @@ namespace MQTT.Api.Services
 {
     public class LoggerService
     {
+        
         public LoggerService()
         {
         }

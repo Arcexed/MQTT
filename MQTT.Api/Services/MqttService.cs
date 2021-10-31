@@ -38,7 +38,7 @@ namespace MQTT.Api.Services
             _appSettings = appSettings;
             _loggerService = loggerService;
         }
-        
+            
         public void ConfigureMqttServerOptions(AspNetMqttServerOptionsBuilder options)
         {
             // Configure the MQTT Server options here
@@ -166,17 +166,18 @@ namespace MQTT.Api.Services
         {
             return Task.Run(() => { 
                 _loggerService.Log($"HandleClientDisconnectedAsync Handler Triggered");
-                
                 var clientId = eventArgs.ClientId;
                 var client = ConnectedClients.First(d => d.Id == clientId);
                 ConnectedClients.Remove(client);
-                
                 _loggerService.Log($"MQTT Client Disconnected - ClientID = {clientId} Username = {client.Username} MqttToken = {client.MqttToken}");
             });        }
 
         public Task HandleClientSubscribedTopicAsync(MqttServerClientSubscribedTopicEventArgs eventArgs)
         {
-            return Task.Run(() => { _loggerService.Log("ClientSubscribedTopicHandler Handler Triggered"); });
+            return Task.Run(() =>
+            {
+                _loggerService.Log("ClientSubscribedTopicHandler Handler Triggered");
+            });
         }
 
         public Task HandleClientUnsubscribedTopicAsync(MqttServerClientUnsubscribedTopicEventArgs eventArgs)
