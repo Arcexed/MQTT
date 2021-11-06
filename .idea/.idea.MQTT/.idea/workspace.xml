@@ -27,31 +27,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1aef981b-882b-4864-b7b7-5e45bf597cf4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/public/favicon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/public/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/public/logo192.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/public/logo512.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/public/manifest.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/public/robots.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/App.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/App.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/App.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/index.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/logo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/reportWebVitals.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/setupTests.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/Pages/Error.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/Pages/Error.cshtml.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/Pages/_ViewImports.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/models/device.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MQTT.Api/Controllers/Api/ServiceController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.MQTT/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MQTT/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/Extensions/ConfigureExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Extensions/ConfigureExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/MQTT.Api.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/MQTT.Api.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Startup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/public/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/public/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/public/robots.txt" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/public/robots.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/App.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/App.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/reportWebVitals.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/setupTests.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/Controllers/Api/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Controllers/Api/AccountController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Program.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,10 +62,17 @@
   <component name="ExportToHTMLSettings">
     <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/../MQTT\exportToHTML" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="3d1a5d7fc719e042e7ba7016eda08a2abbc5e590" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -99,13 +100,13 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/ed92340b5670447ab78a69a564a858d31bfb88/6B/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bdd96c5f630a45298dacc07d80deb23b29190/F/CallSiteValidator.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2b369d19768947fcba24b2d54b76014c1bbb78/170/ControllerFactoryProvider.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/MQTT.Api/Controllers/Api/AccountController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b938043d271c482fab2e70a6b8b5c181133178/150/SingleQueryingEnumerable.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bc3d7024e97f4f818de53bc3c23872b48f5790/1B2/ExecutionContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f6c16478e39642568a8ee6c8b6db92a4d7590/6/ThrowHelper.Serialization.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bc3d7024e97f4f818de53bc3c23872b48f5790/1D0/Task.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/619de5eaceea499387688c8799556b809600/ab/e7d6e3cf/MqttRouter.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bc3d7024e97f4f818de53bc3c23872b48f5790/1A2/ThreadPool.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/MQTT.Api/Controllers/Api/AccountController.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="1yMGjc0k9xjXxgG1jIMR8SD6S0e" />
   <component name="ProjectLevelVcsManager">
@@ -116,7 +117,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.16073872" />
+    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.1608884" />
     <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.0" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
@@ -126,7 +127,8 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.selected.configurable" value="terminal" />
+    <property name="ts.external.directory.path" value="C:\Users\la046\RiderProjects\MQTT\MQTT.Api\ClientApp\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected=".NET Launch Settings Profile.MQTT.Api: TestWebApiApplication">
@@ -218,6 +220,7 @@
     <recent_temporary>
       <list>
         <item itemvalue=".NET Project.MQTT.Client" />
+        <item itemvalue=".NET Project.MQTT.Client" />
       </list>
     </recent_temporary>
   </component>
@@ -246,6 +249,9 @@
       <workItem from="1634802724258" duration="5022000" />
       <workItem from="1634927759011" duration="61194000" />
       <workItem from="1635679437249" duration="8141000" />
+      <workItem from="1636046023417" duration="1889000" />
+      <workItem from="1636140692945" duration="5165000" />
+      <workItem from="1636220166445" duration="6239000" />
     </task>
     <task id="LOCAL-00001" summary="Testing functionality and initial migration.">
       <created>1632068867120</created>
@@ -359,7 +365,14 @@
       <option name="project" value="LOCAL" />
       <updated>1635680659708</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Some changes / Delete unused files">
+      <created>1635967135984</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1635967135984</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -552,19 +565,7 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="dev" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
@@ -604,7 +605,8 @@
     <MESSAGE value="Some changes / Need write Dashboard on React.JS / Need testing MQTT Service and Controllers / Maybe Working / Need review in dependency injection services" />
     <MESSAGE value="Add some files to solution git" />
     <MESSAGE value="May to add React.js on Api app and testing all functionality / BACKUP" />
-    <option name="LAST_COMMIT_MESSAGE" value="May to add React.js on Api app and testing all functionality / BACKUP" />
+    <MESSAGE value="Some changes / Delete unused files" />
+    <option name="LAST_COMMIT_MESSAGE" value="Some changes / Delete unused files" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -697,5 +699,9 @@
         <PinnedItemInfo parentTag="Type#MQTT.Data.Entities.User" memberName="Devices" />
       </pinned-members>
     </pin-to-top-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

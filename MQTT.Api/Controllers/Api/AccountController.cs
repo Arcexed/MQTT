@@ -93,45 +93,6 @@ namespace MQTT.Api.Controllers.Api
         }
 
 
-        [HttpGet]
-        [AllowAnonymous]
-        [SwaggerResponse((int) HttpStatusCode.NotFound)]
-        [ProducesResponseType(typeof(string), 200)]
-        [SwaggerOperation("database add some changes")]
-        [Route("database")]
-        public async Task<IActionResult> Database()
-        {
-            _db.Roles.Add(new Role()
-            {
-                Id = Guid.NewGuid(),
-                Name = "User"
-            });
-            await _db.SaveChangesAsync();
-            _db.Users.Add(new User()
-            {
-                Id = Guid.NewGuid(),
-                Email = "arcex.off@gmail.com",
-                Ip = "",
-                Password = "test",
-                Role = await _db.Roles.FirstAsync(d=>d.Name=="User"),
-                AccessToken = "5356cf8159584b31864e1c8ba72232cb",
-                IsBlock = false,
-                Username = "Arcex",
-            });
-            await _db.SaveChangesAsync();
-            _db.Devices.Add(new Device()
-            {
-                Id = Guid.NewGuid(),
-                Description = "Device for testing system",
-                Geo = "Lomonosova, 67",
-                Name = "TestDevice",
-                CreatingDate = DateTime.Now,
-                IsPublic = false,
-                MqttToken = "3db1f91c8ba1475fb24c3c0ce62e1415",
-                User = await _db.Users.FirstAsync(d=>d.Username=="Arcex")
-            });
-            await _db.SaveChangesAsync();
-            return Ok();
-        }
+        
     }
 }
