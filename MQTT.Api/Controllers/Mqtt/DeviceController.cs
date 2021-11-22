@@ -30,8 +30,7 @@ namespace MQTT.Api.Controllers.Mqtt
         private readonly LoggerService _loggerService;
         private readonly MqttService _mqttService;
         private readonly MQTTDbContext _db;
-        private const string Pub = "publish/";
-        private const string MqttNetPubWeatherReport = Pub + "{deviceName}";
+        private const string MqttNetPubWeatherReport = "Device/" + "{deviceName}" + "/Measurements";
         #endregion Variable Declarations
         
         // Initialize the MQTT Controller with full dependency injection support (Like normal AspNetCore controllers)
@@ -44,7 +43,7 @@ namespace MQTT.Api.Controllers.Mqtt
         }
         
         
-        [MqttRoute(MqttNetPubWeatherReport)] // Generate MQTT Attribute Routing for this Topic
+        [MqttRoute($"Device/{deviceName}/Measurements")] // Generate MQTT Attribute Routing for this Topic
         public Task PublishWeatherReport(string deviceName)
         {
             var client = _mqttService.ConnectedClients.FirstOrDefault(d => d.Id == MqttContext.ClientId);
