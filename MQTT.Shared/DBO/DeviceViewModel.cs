@@ -15,7 +15,7 @@ namespace MQTT.Shared.DBO
 
         public string Name { get; set; }
         public DateTime CreatingDate { get; set; }
-        public DateTime EditingDate { get; set; }
+        public DateTime? EditingDate { get; set; }
         public string Geo { get; set; }
         public string Desc { get; set; }
         public IEnumerable<MeasurementViewModel> LastThreeMeasurements { get; set; }

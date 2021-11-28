@@ -37,6 +37,7 @@ namespace MQTT.Api.Extensions
                         ValidateIssuerSigningKey = true
                     };
                 });
+
         }
 
         public static void DatabaseConfiguration(this IServiceCollection services, IConfiguration configuration)
@@ -109,15 +110,25 @@ namespace MQTT.Api.Extensions
             services
                 .AddHostedMqttServerWithServices(aspNetMqttServerOptionsBuilder =>
                 {
+                    aspNetMqttServerOptionsBuilder.WithAttributeRouting(
+                        /* 
+                            By default, messages published to topics that don't
+                            match any routes are rejected. Change this to true
+                            to allow those messages to be routed without hitting
+                            any controller actions.
+                        */
+                        allowUnmatchedRoutes: false
+                    );
                     var mqttService = aspNetMqttServerOptionsBuilder.ServiceProvider.GetRequiredService<MqttService>();
                     mqttService.ConfigureMqttServerOptions(aspNetMqttServerOptionsBuilder);
                     aspNetMqttServerOptionsBuilder.Build();
+                    
                 })
                 .AddMqttConnectionHandler()
                 .AddConnections()
                 .AddMqttWebSocketServerAdapter();
             // Add Scoped Services
-            services.AddScoped<MqttBaseController, MeasurementsController>();
+            services.AddScoped<MqttBaseController, DeviceController>();
         }
 
         public static void LoggerServiceConfiguration(this IServiceCollection services)

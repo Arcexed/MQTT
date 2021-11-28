@@ -1,0 +1,16 @@
+﻿version: "3.6"
+services:
+  mqttwebapi:
+    container_name: mqttwebapi
+    ports:
+      - 8000:80
+      - 8001:443
+    environment:
+      - ASPNETCORE_HTTPS_PORT=5001
+      - "ASPNETCORE_URLS=https://+;http://+"
+      - Kestrel__Certificates__Default__Path=certificate.pfx
+      - Kestrel__Certificates__Default__Password=12345
+    image: arcex/mqttwebapi
+    restart: on-failure
+
+

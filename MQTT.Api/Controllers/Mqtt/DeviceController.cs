@@ -20,13 +20,12 @@ using MQTTnet.Extensions;
 namespace MQTT.Api.Controllers.Mqtt
 {
     [MqttController] // Generate MQTT Attribute Routing for the Controller
-    [MqttRoute("Measurements")] // Defines the Route Prefix for the Controller
-    public class MeasurementsController : MqttBaseController // Inherit from MqttBaseController for convenience functions
+    [MqttRoute("[controller]")] // Defines the Route Prefix for the Controller
+    public class DeviceController : MqttBaseController // Inherit from MqttBaseController for convenience functions
     {
         #region Variable Declarations
 
         // Default Variable Initialization
-        private readonly AppSettings _appSettings;
         private readonly LoggerService _loggerService;
         private readonly MqttService _mqttService;
         private readonly MQTTDbContext _db;
@@ -34,16 +33,15 @@ namespace MQTT.Api.Controllers.Mqtt
         #endregion Variable Declarations
         
         // Initialize the MQTT Controller with full dependency injection support (Like normal AspNetCore controllers)
-        public MeasurementsController(AppSettings appSettings, LoggerService loggerService, MqttService mqttService, MQTTDbContext db)
+        public DeviceController(LoggerService loggerService, MqttService mqttService, MQTTDbContext db)
         {
-            _appSettings = appSettings;
             _loggerService = loggerService;
             _mqttService = mqttService;
             _db = db;
         }
         
         
-        [MqttRoute($"Device/{deviceName}/Measurements")] // Generate MQTT Attribute Routing for this Topic
+        [MqttRoute("{deviceName}/Measurements")] // Generate MQTT Attribute Routing for this Topic
         public Task PublishWeatherReport(string deviceName)
         {
             var client = _mqttService.ConnectedClients.FirstOrDefault(d => d.Id == MqttContext.ClientId);

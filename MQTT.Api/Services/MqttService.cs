@@ -27,15 +27,13 @@ namespace MQTT.Api.Services
         IMqttServerClientSubscribedTopicHandler,
         IMqttServerClientUnsubscribedTopicHandler
     {
-        private readonly AppSettings _appSettings;
         private readonly LoggerService _loggerService;
         public IMqttServer Server;
         public List<Client> PreConnectedClients = new();
         public List<Client> ConnectedClients = new();
         
-        public MqttService(AppSettings appSettings, LoggerService loggerService)
+        public MqttService(LoggerService loggerService)
         {
-            _appSettings = appSettings;
             _loggerService = loggerService;
         }
             

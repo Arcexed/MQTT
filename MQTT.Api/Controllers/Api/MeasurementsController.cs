@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -84,22 +85,43 @@ namespace MQTT.Api.Controllers.Api
 
         [Authorize(Roles = "Root, Admin")]
         [HttpGet("{deviceName}/Get")]
-        public async Task<IEnumerable<MeasurementViewModel>?> GetMeasurements([Required] string deviceName)
+        [SwaggerResponse((int) HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(IEnumerable<MeasurementViewModel>), 200)]
+        public async Task<IActionResult> GetMeasurements([Required] string deviceName, DateTime? startDate, DateTime? endDate, int page = 1, int limit = 25)
         {
+            if (limit > 1000)
+            {
+                return BadRequest("Limit must be less than 1000");
+            }
+
+            if (startDate > endDate)
+            {
+                return BadRequest("Start date must be greater than end date");
+            }
+
+            if (page < 1)
+            {
+                return BadRequest("Page must be greater than 1");
+            }
+            
             Device device = await _db.Devices.Where(d => d.Name == deviceName).FirstOrDefaultAsync();
             if (device != null)
             {
                 var measurementViewModels =
-                    _mapper.Map<IEnumerable<Measurement>, IEnumerable<MeasurementViewModel>>(device.Measurements);
-
+                    _mapper.Map<IEnumerable<Measurement>, IEnumerable<MeasurementViewModel>>
+                        (_db.Measurements
+                            .Where(d=>d.Device== device && ((endDate!=null && startDate!=null) ? d.Date>startDate && d.Date<endDate : true))
+                            .Skip(limit*(page-1))
+                            .OrderByDescending(d=>d.Date)
+                            .Take(limit));
+            
                 //IEnumerable<MeasurementViewModel> measurementViewModels = 
                 //    _mapper.Map<IEnumerable<Measurement>, IEnumerable<MeasurementViewModel>>(_db.Measurements
                 //        .Where(m => m.Device.Name == deviceName).Take(limit != 0 ? (limit < 1000 ? limit : 1000) : 10));
-                return measurementViewModels;
+                return Ok(measurementViewModels);
             }
 
-            Response.StatusCode = 404;
-            return null;
+            return NotFound();
         }
     }
 }

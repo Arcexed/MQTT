@@ -20,6 +20,10 @@ namespace MQTT.Data.Entities
 {
     public class Device
     {
+        public Device()
+        {
+            Measurements = new HashSet<Measurement>(); 
+        }
         [Required] public string Name { get; set; }
 
         [Required] public DateTime CreatingDate { get; set; }
@@ -49,13 +53,13 @@ namespace MQTT.Data.Entities
 
         public Device TakeMeasurements(int count)
         {
-            Measurements = Measurements.Take(Measurements.Count >= count ? count : Measurements.Count).ToList();
+            Measurements = Measurements?.Take(Measurements.Count >= count ? count : Measurements.Count).ToList();
             return this;
         }
 
         public Device TakeEvents(int count)
         {
-            EventsDevices = EventsDevices.Take(EventsDevices.Count >= count ? count : EventsDevices.Count).ToList();
+            EventsDevices = EventsDevices?.Take(EventsDevices.Count >= count ? count : EventsDevices.Count).ToList();
             return this;
         }
     }

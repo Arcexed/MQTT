@@ -53,8 +53,8 @@ namespace MQTT.Api.Services
 
         public void Log(string message)
         {
-            Console.WriteLine($"{DateTime.Now.ToString(CultureInfo.CurrentCulture)} {message}");
-            File.AppendAllText("log.txt", $"{DateTime.Now.ToString(CultureInfo.CurrentCulture)} {message}\n");
+            Console.WriteLine($"{DateTime.Now.ToString("G")} {message}");
+                //File.AppendAllText("log.txt", $"{DateTime.Now.ToString(CultureInfo.CurrentCulture)} {message}\n");
         }
 
         public void LogEvent(string message)

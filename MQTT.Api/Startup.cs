@@ -43,10 +43,8 @@ namespace MQTT.Api
             services.DatabaseConfiguration(Configuration);
             services.AutoMapperConfiguration();
             services.SwaggerConfiguration();
-            /////////
-            _appSettings = new AppSettings();
-            Configuration.Bind("AppSettings", _appSettings);
-            services.AddSingleton(_appSettings);
+            
+            
 
             // Allow CORS
             services.LoggerServiceConfiguration();
