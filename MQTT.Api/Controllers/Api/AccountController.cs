@@ -50,7 +50,7 @@ namespace MQTT.Api.Controllers.Api
                 _loggerService.LogEvent($"Invalid username = {email} and password = {password} IP:{HttpContext.Request.Host.Host}");
                 return Unauthorized("Invalid credentials.");
             }
-
+            
             var now = DateTime.UtcNow;
 
             var jwt = new JwtSecurityToken(
@@ -84,7 +84,7 @@ namespace MQTT.Api.Controllers.Api
             {
                 var claims = new List<Claim>
                 {
-                    new(ClaimsIdentity.DefaultNameClaimType, user.Username),
+                    new(ClaimsIdentity.DefaultNameClaimType, user.Id.ToString()),
                     new(ClaimsIdentity.DefaultRoleClaimType, user.Role.Name)
                 };
                 ClaimsIdentity claimsIdentity =

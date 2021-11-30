@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using MQTT.Api.Controllers.Mqtt;
 using MQTT.Api.Extensions;
 using MQTT.Api.Models;
+using MQTT.Api.Repository;
 using MQTT.Api.Services;
 using MQTT.Data;
 using MQTTnet.AspNetCore;
@@ -31,9 +32,7 @@ namespace MQTT.Api
         }
 
         private IConfiguration Configuration { get; }
-
-        private AppSettings _appSettings;
-
+        
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -43,8 +42,8 @@ namespace MQTT.Api
             services.DatabaseConfiguration(Configuration);
             services.AutoMapperConfiguration();
             services.SwaggerConfiguration();
-            
-            
+
+            services.AddTransient<IDeviceRepository, DeviceRepository>();
 
             // Allow CORS
             services.LoggerServiceConfiguration();

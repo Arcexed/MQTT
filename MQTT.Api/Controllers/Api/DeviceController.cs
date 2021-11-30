@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MQTT.Api.Models;
+using MQTT.Api.Repository;
 using MQTT.Api.Services;
 using MQTT.Data;
 using MQTT.Data.Entities;
@@ -23,59 +24,36 @@ namespace MQTT.Api.Controllers.Api
 {
     [Route("/api/[controller]")]
     [ApiController]
+    [Authorize]
     public class DeviceController : ControllerBase
     {
-        private readonly LoggerService _loggerService;
-        private readonly MQTTDbContext _db;
-        private readonly IMapper _mapper;
-        private readonly MqttService _mqttService;
-        public DeviceController(MQTTDbContext db, IMapper mapper, MqttService mqttService,LoggerService loggerService)
+        private readonly IDeviceRepository _deviceRepository;
+        public Guid UserId => Guid.Parse(User.Identity?.Name!);
+        public DeviceController(IDeviceRepository deviceRepository)
         {
-            _db = db;
-            _mapper = mapper;
-            _mqttService = mqttService;
-            _loggerService = loggerService;
+            _deviceRepository = deviceRepository;
         }
 
-        [Authorize]
         [HttpGet]
         [SwaggerResponse((int) HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(IEnumerable<DeviceViewModel>), 200)]
         [SwaggerOperation("Get All Device For User")]
-        public IActionResult AllDevicesForUserGet()
+        public IActionResult GetAllDevices()
         {
-            var user = _db.Users.Include(d => d.Devices).First(x => x.Username == User.Identity!.Name);
-            var devices = user.Devices;
-            // var devices =
-            //     _db.Users.FirstOrDefault(x => x.Username == User.Identity!.Name)?.Devices;
-            devices.ForAll(x => x.TakeMeasurements(3).TakeEvents(3));
-            var deviceView =
-                _mapper.Map<IEnumerable<Device>, IEnumerable<DeviceViewModel>>(devices);
-            _loggerService.Log(
-                $"{DateTime.Now.ToString("O")} GetAllDevices ({Request.Query}) IP:{HttpContext.Request.Host.Host}");
-            return Ok(deviceView);
+            return Ok(_deviceRepository.GetDevices(UserId));
         }
 
-        [Authorize]
         [HttpGet]
         [SwaggerResponse((int) HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(DeviceViewModel), 200)]
         [SwaggerOperation("Get Device For User")]
-        [Route("{name}")]
-        public IActionResult GetDeviceForUser([Required] string name)
+        [Route("{DeviceId}")]
+        public IActionResult GetDeviceById([FromBody] Guid DeviceId)
         {
-            var username = User.Identity?.Name;
-            DeviceViewModel deviceViewModel =
-                _mapper.Map<Device?, DeviceViewModel>(_db.Users
-                    .FirstOrDefault(x => x.Username == username)?.Devices.FirstOrDefault(x => x.Name == name)
-                    ?.TakeMeasurements(3).TakeEvents(3));
-
-            if (deviceViewModel != null)
-                return Ok(deviceViewModel);
-            _loggerService.Log($"{DateTime.Now.ToString("O")} GetDevice ({name}) ({Request.Query}) IP:{HttpContext.Request.Host.Host}");
-            return BadRequest();
+            var deviceViewModel = _deviceRepository.GetDeviceById(DeviceId, UserId);
+            return Ok(deviceViewModel);
         }
-
+/*
         [Authorize]
         [HttpPut]
         [SwaggerResponse((int) HttpStatusCode.NotFound)]
@@ -198,16 +176,8 @@ namespace MQTT.Api.Controllers.Api
 
             _loggerService.Log($"User {User.Identity?.Name} fail (device name is null or empty) delete device  ({Request.Query}) IP:{HttpContext.Request.Host.Host}");
             return NotFound("Name is null or empty");
-        }
+        }*/
 
-        [HttpGet]
-        [SwaggerResponse((int) HttpStatusCode.NotFound)]
-        [ProducesResponseType(typeof(List<Client>), 200)]
-        [SwaggerOperation("Get All MQTT Devices")]
-        [Route("Mqtt")]
-        public IActionResult GetAllMqttDevices()
-        {
-            return Ok(_mqttService.ConnectedClients);
-        }
+        
     }
 }
