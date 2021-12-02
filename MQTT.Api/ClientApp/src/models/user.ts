@@ -1,6 +1,6 @@
-import { Role } from "./role";
-import { Device } from "./device";
-import { EventsUser } from "./eventsUser";
+import {Role} from "./role";
+import {Device} from "./device";
+import {EventsUser} from "./eventsUser";
 
 export interface User {
     username: string;

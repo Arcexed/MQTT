@@ -1,7 +1,8 @@
 import './Sidebar.css';
 import logo from './icons/logo.svg';
 import icon_overview from './icons/Overview.svg'
-function Sidebar(){
+
+function Sidebar() {
     return (
         <div className="sidebar">
             <a href="" className="sidebar__logo">
@@ -33,4 +34,5 @@ function Sidebar(){
         </div>
     );
 }
+
 export default Sidebar;

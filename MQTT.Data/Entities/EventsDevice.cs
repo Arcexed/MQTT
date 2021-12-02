@@ -15,12 +15,15 @@ namespace MQTT.Data.Entities
     {
         [Required] public DateTime Date { get; set; }
         
+#pragma warning disable 8618
         [Required] public string Message { get; set; }
+        [Required] public Device Device { get; set; }
+
+#pragma warning restore 8618
 
         public bool IsSeen { get; set; } = false;
         
         [Required] public Guid Id { get; set; }
-        [Required] public Device Device { get; set; }
 
         public override string ToString() => $"{Date.ToString(CultureInfo.CurrentCulture)} {Id} {Device.Name} {Message}";
     }

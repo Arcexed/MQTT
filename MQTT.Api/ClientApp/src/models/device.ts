@@ -1,5 +1,5 @@
-﻿import { EventsDevice } from "./eventsDevice";
-import { Measurement } from "./measurement";
+﻿import {EventsDevice} from "./eventsDevice";
+import {Measurement} from "./measurement";
 
 export interface Device {
     name: string;

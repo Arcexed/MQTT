@@ -6,8 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using MQTT.Api.Auth;
 using MQTT.Api.Controllers.Mqtt;
+using MQTT.Api.Options;
 using MQTT.Api.Services;
 using MQTT.Data;
 using MQTT.Shared.Profiles;
@@ -37,7 +37,6 @@ namespace MQTT.Api.Extensions
                         ValidateIssuerSigningKey = true
                     };
                 });
-
         }
 
         public static void DatabaseConfiguration(this IServiceCollection services, IConfiguration configuration)
@@ -48,7 +47,7 @@ namespace MQTT.Api.Extensions
                 /*options.EnableDetailedErrors();
                 options.LogTo(Console.WriteLine);
                 options.EnableSensitiveDataLogging();*/
-            },ServiceLifetime.Transient);
+            }, ServiceLifetime.Transient);
         }
 
         public static void AutoMapperConfiguration(this IServiceCollection services)
@@ -117,12 +116,11 @@ namespace MQTT.Api.Extensions
                             to allow those messages to be routed without hitting
                             any controller actions.
                         */
-                        allowUnmatchedRoutes: false
+                        false
                     );
                     var mqttService = aspNetMqttServerOptionsBuilder.ServiceProvider.GetRequiredService<MqttService>();
                     mqttService.ConfigureMqttServerOptions(aspNetMqttServerOptionsBuilder);
                     aspNetMqttServerOptionsBuilder.Build();
-                    
                 })
                 .AddMqttConnectionHandler()
                 .AddConnections()
@@ -135,7 +133,5 @@ namespace MQTT.Api.Extensions
         {
             services.AddTransient<LoggerService>();
         }
-
-        
     }
 }

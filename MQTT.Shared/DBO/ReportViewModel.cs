@@ -2,7 +2,6 @@
 
 using System;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 using AutoMapper;
 using MQTT.Data;
 
@@ -18,7 +17,7 @@ namespace MQTT.Shared.DBO
         [JsonIgnore] public DeviceViewModel Device { get; set; }
 
 
-        public static async Task<ReportViewModel> GenerateReportMeasurements(DeviceViewModel deviceVm, MQTTDbContext db,
+        public static ReportViewModel GenerateReportMeasurements(DeviceViewModel deviceVm, MQTTDbContext db,
             DateTime startDate, IMapper mapper)
         {
             if (deviceVm == null) return null;

@@ -2,18 +2,13 @@
 
 using System;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using MQTT.Api.Models;
 using MQTT.Api.Services;
 using MQTT.Data;
 using MQTT.Data.Entities;
 using MQTTnet;
 using MQTTnet.AspNetCore.AttributeRouting;
-using MQTTnet.Extensions;
 
 #endregion Using Imports
 
@@ -23,15 +18,6 @@ namespace MQTT.Api.Controllers.Mqtt
     [MqttRoute("[controller]")] // Defines the Route Prefix for the Controller
     public class DeviceController : MqttBaseController // Inherit from MqttBaseController for convenience functions
     {
-        #region Variable Declarations
-
-        // Default Variable Initialization
-        private readonly LoggerService _loggerService;
-        private readonly MqttService _mqttService;
-        private readonly MQTTDbContext _db;
-        private const string MqttNetPubWeatherReport = "Device/" + "{deviceName}" + "/Measurements";
-        #endregion Variable Declarations
-        
         // Initialize the MQTT Controller with full dependency injection support (Like normal AspNetCore controllers)
         public DeviceController(LoggerService loggerService, MqttService mqttService, MQTTDbContext db)
         {
@@ -39,8 +25,8 @@ namespace MQTT.Api.Controllers.Mqtt
             _mqttService = mqttService;
             _db = db;
         }
-        
-        
+
+
         [MqttRoute("{deviceName}/Measurements")] // Generate MQTT Attribute Routing for this Topic
         public Task PublishWeatherReport(string deviceName)
         {
@@ -60,7 +46,7 @@ namespace MQTT.Api.Controllers.Mqtt
                     MqttContext.CloseConnection = true;
                     return BadMessage();
                 }
-                
+
                 var measurement = ParseMeasurementFromMqttMessage(Message);
                 if (measurement != null)
                 {
@@ -71,17 +57,18 @@ namespace MQTT.Api.Controllers.Mqtt
                     _db.SaveChanges();
                     _loggerService.Log(
                         $"It's {measurement.Id} {measurement.Date} {measurement.Device.Name} send measurement");
-
                 }
                 else
                 {
                     _loggerService.LogEventDevice(device,
                         $"It's {client.Username} {client.Id}  unsuccessfully send measurement {measurement.Id} (Measurement ID)");
-                    _loggerService.Log($"It's {client.Username} {client.Id}  unsuccessfully send measurement {measurement.Id} (Measurement ID)");
+                    _loggerService.Log(
+                        $"It's {client.Username} {client.Id}  unsuccessfully send measurement {measurement.Id} (Measurement ID)");
                     MqttContext.CloseConnection = true;
                     return BadMessage();
                 }
             }
+
             return Ok();
         }
 
@@ -89,7 +76,6 @@ namespace MQTT.Api.Controllers.Mqtt
         {
             var payload = message.Payload;
             if (payload != null)
-            {
                 try
                 {
                     var measurement =
@@ -101,8 +87,18 @@ namespace MQTT.Api.Controllers.Mqtt
                 {
                     _loggerService.Log($"{message.Topic} not parse {ex.Message}");
                 }
-            }
+
             return null;
         }
+
+        #region Variable Declarations
+
+        // Default Variable Initialization
+        private readonly LoggerService _loggerService;
+        private readonly MqttService _mqttService;
+        private readonly MQTTDbContext _db;
+        private const string MqttNetPubWeatherReport = "Device/" + "{deviceName}" + "/Measurements";
+
+        #endregion Variable Declarations
     }
 }

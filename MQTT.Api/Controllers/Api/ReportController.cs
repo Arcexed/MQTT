@@ -1,4 +1,4 @@
-﻿#region
+﻿/*#region
 
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using MQTT.Api.Services;
 using MQTT.Data;
 using MQTT.Shared.DBO;
@@ -23,15 +22,16 @@ namespace MQTT.Api.Controllers.Api
     public class ReportController : ControllerBase
     {
         private readonly MQTTDbContext _db;
-        private readonly IMapper _mapper;
         private readonly LoggerService _loggerService;
-        public ReportController(MQTTDbContext db, IMapper mapper,LoggerService loggerService)
+        private readonly IMapper _mapper;
+
+        public ReportController(MQTTDbContext db, IMapper mapper, LoggerService loggerService)
         {
             _db = db;
             _mapper = mapper;
             _loggerService = loggerService;
         }
-        
+
         private DeviceViewModel? FindUserAsync(string deviceName)
         {
             var username = User.Identity?.Name;
@@ -42,13 +42,13 @@ namespace MQTT.Api.Controllers.Api
 
         [Authorize]
         [HttpGet("{deviceName}/Minutely")]
-        public async Task<ReportViewModel?> MinutelyInfoGet([Required]string deviceName)
+        public ReportViewModel? MinutelyInfoGet([Required] string deviceName)
         {
             var device = FindUserAsync(deviceName);
             if (device != null)
             {
                 ReportViewModel report =
-                    await ReportViewModel.GenerateReportMeasurements(device, _db, DateTime.Now.AddMinutes(-1), _mapper);
+                    ReportViewModel.GenerateReportMeasurements(device, _db, DateTime.Now.AddMinutes(-1), _mapper);
                 return report;
             }
 
@@ -57,13 +57,12 @@ namespace MQTT.Api.Controllers.Api
 
         [Authorize]
         [HttpGet("{deviceName}/Hourly")]
-        public async Task<ReportViewModel?> HourlyInfoGet([Required] string deviceName)
+        public ReportViewModel? HourlyInfoGet([Required] string deviceName)
         {
             var device = FindUserAsync(deviceName);
             if (device != null)
             {
-                ReportViewModel report =
-                    await ReportViewModel.GenerateReportMeasurements(device, _db, DateTime.Now.AddHours(-1), _mapper);
+                ReportViewModel report = ReportViewModel.GenerateReportMeasurements(device, _db, DateTime.Now.AddHours(-1), _mapper);
                 return report;
             }
 
@@ -72,13 +71,13 @@ namespace MQTT.Api.Controllers.Api
 
         [Authorize]
         [HttpGet("{deviceName}/Daily")]
-        public async Task<ReportViewModel?> DailyInfoGet([Required] string deviceName)
+        public ReportViewModel? DailyInfoGet([Required] string deviceName)
         {
             var device = FindUserAsync(deviceName);
             if (device != null)
             {
                 ReportViewModel report =
-                    await ReportViewModel.GenerateReportMeasurements(device, _db, DateTime.Now.AddDays(-1), _mapper);
+                    ReportViewModel.GenerateReportMeasurements(device, _db, DateTime.Now.AddDays(-1), _mapper);
                 return report;
             }
 
@@ -87,17 +86,16 @@ namespace MQTT.Api.Controllers.Api
 
         [Authorize]
         [HttpGet("{deviceName}/Monthly")]
-        public async Task<ReportViewModel?> MonthlyInfoGet([Required] string deviceName)
+        public ReportViewModel? MonthlyInfoGet([Required] string deviceName)
         {
             var device = FindUserAsync(deviceName);
             if (device != null)
             {
-                ReportViewModel report =
-                    await ReportViewModel.GenerateReportMeasurements(device, _db, DateTime.Now.AddMonths(-1), _mapper);
+                ReportViewModel report = ReportViewModel.GenerateReportMeasurements(device, _db, DateTime.Now.AddMonths(-1), _mapper);
                 return report;
             }
 
             return null;
         }
     }
-}
+}*/

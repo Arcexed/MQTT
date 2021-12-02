@@ -1,8 +1,9 @@
-import './Header.css' 
+import './Header.css'
 import userPhoto from './icons/User-photo.jpg'
 import searchIcon from './icons/Search.svg'
 import eventsIcon from './icons/Events.svg'
-function Header(){
+
+function Header() {
     return (
         <div className="header">
             <div className="header__inner">
@@ -41,4 +42,5 @@ function Header(){
         </div>
     );
 }
+
 export default Header;

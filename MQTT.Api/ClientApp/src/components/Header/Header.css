@@ -1,13 +1,15 @@
-.header{
+.header {
 
 }
+
 .header__inner {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 30px 30px 54px;
-    
+
 }
+
 .header__inner span {
     font-size: 24px;
     line-height: 30px;
@@ -15,28 +17,32 @@
 }
 
 .header__items-blocks,
-.header__items{
+.header__items {
     display: flex;
     align-items: center;
 }
-.header__items{
+
+.header__items {
     padding-right: 32px;
     height: 32px;
 }
 
-.header__items-block-item:nth-child(1){
+.header__items-block-item:nth-child(1) {
     border-right: 1px solid #DDE2FF;
     margin-right: 32px;
 }
-.header__item:nth-child(1){
+
+.header__item:nth-child(1) {
     margin-right: 15px;
 }
-.header__item-text{
+
+.header__item-text {
     font-weight: 600;
     font-size: 14px;
     line-height: 20px;
 }
-.header__item-link-img{
+
+.header__item-link-img {
     border-radius: 25px;
     border: 1px solid #DFE0EB;
 }

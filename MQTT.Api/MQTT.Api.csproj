@@ -37,9 +37,13 @@
     </ItemGroup>
 
     <ItemGroup>
-      <_ContentIncludedByDefault Remove="ClientApp\test\package-lock.json" />
-      <_ContentIncludedByDefault Remove="ClientApp\test\package.json" />
-      <_ContentIncludedByDefault Remove="ClientApp\test\public\manifest.json" />
+        <_ContentIncludedByDefault Remove="ClientApp\test\package-lock.json" />
+        <_ContentIncludedByDefault Remove="ClientApp\test\package.json" />
+        <_ContentIncludedByDefault Remove="ClientApp\test\public\manifest.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Contracts\v1\Response" />
     </ItemGroup>
 
 </Project>

@@ -8,14 +8,11 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MQTT.Api.Controllers.Mqtt;
 using MQTT.Api.Extensions;
-using MQTT.Api.Models;
 using MQTT.Api.Repository;
 using MQTT.Api.Services;
 using MQTT.Data;
 using MQTTnet.AspNetCore;
-using MQTTnet.AspNetCore.AttributeRouting;
 using MQTTnet.AspNetCore.Extensions;
 
 // ReSharper disable UnusedAutoPropertyAccessor.Local
@@ -32,7 +29,7 @@ namespace MQTT.Api
         }
 
         private IConfiguration Configuration { get; }
-        
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -43,17 +40,14 @@ namespace MQTT.Api
             services.AutoMapperConfiguration();
             services.SwaggerConfiguration();
 
-            services.AddTransient<IDeviceRepository, DeviceRepository>();
-
+            services.AddTransient<IDeviceService, DeviceService>();
+            services.AddTransient<IMeasurementService, MeasurementService>();
             // Allow CORS
             services.LoggerServiceConfiguration();
             services.MqttConfiguration();
             // Add the Controllers
-            
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/build";
-            });
+
+            services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,26 +77,19 @@ namespace MQTT.Api
                     httpConnectionDispatcherOptions =>
                         httpConnectionDispatcherOptions.WebSockets.SubProtocolSelector =
                             protocolList => protocolList.FirstOrDefault() ?? string.Empty);
-
             });
             app.UseMqttServer(server =>
                 app.ApplicationServices.GetRequiredService<MqttService>().ConfigureMqttServer(server));
-            
-            
-            
+
+
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";
 
-                if (env.IsDevelopment())
-                {
-                    spa.UseReactDevelopmentServer(npmScript: "start");
-                }
+                if (env.IsDevelopment()) spa.UseReactDevelopmentServer("start");
             });
 
-            
-            
-            
+
             app.Run(async context => { await context.Response.WriteAsync("Unknown request"); });
         }
     }

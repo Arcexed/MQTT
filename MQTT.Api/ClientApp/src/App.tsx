@@ -3,6 +3,7 @@ import Sidebar from "./components/Sidebar/Sidebar";
 import './Reset.css';
 import './App.css';
 import Header from "./components/Header/Header";
+
 function App() {
     return (
         <div className="App">
@@ -31,7 +32,7 @@ function App() {
                         </div>
                         <div className="content__chart-box">
                             <div className="content__chart-item">
-                                
+
                             </div>
                             <div className="content__chart-list">
                                 <div className="content__chart-item">

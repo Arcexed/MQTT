@@ -2,11 +2,6 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
-
-// ReSharper disable ClassNeverInstantiated.Global
-// ReSharper disable UnusedAutoPropertyAccessor.Global
-// ReSharper disable PropertyCanBeMadeInitOnly.Global
 
 #endregion
 
@@ -23,6 +18,8 @@ namespace MQTT.Data.Entities
         public double SmokeLevel { get; set; }
         public double RadiationLevel { get; set; }
         
+#pragma warning disable 8618
         [Required] public Device Device { get; set; }
+#pragma warning restore 8618
     }
 }

@@ -1,6 +1,4 @@
-using System;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using MQTTnet.AspNetCore.Extensions;
 
@@ -15,16 +13,12 @@ namespace MQTT.Api
 
         private static IHostBuilder CreateHostBuilder(string[] args)
         {
-           
-            var mqttPipeLinePort = 1883;
-          
             return Host.CreateDefaultBuilder(args).ConfigureWebHostDefaults(webBuilder =>
             {
                 webBuilder.UseKestrel(kestrelServerOptions =>
                 {
-                    kestrelServerOptions.ListenAnyIP(mqttPipeLinePort,
+                    kestrelServerOptions.ListenAnyIP(1883,
                         listenOptions => listenOptions.UseMqtt());
-                   
                 }).UseStartup<Startup>();
             });
         }
