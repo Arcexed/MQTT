@@ -10,14 +10,17 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using MQTT.Api.Contracts.v1.Request.AccountController;
+using MQTT.Api.Contracts.v1.Response.AccountController;
+using MQTT.Api.Extensions;
 using MQTT.Api.Options;
 using MQTT.Api.Services;
 using MQTT.Data;
 using Swashbuckle.AspNetCore.Annotations;
-
+using static MQTT.Api.Options.ApiRoutes;
 namespace MQTT.Api.Controllers.Api
 {
-    [Route("/api/[controller]")]
+
     [ApiController]
     public class AccountController : ControllerBase
     {
@@ -34,19 +37,19 @@ namespace MQTT.Api.Controllers.Api
         [HttpPost]
         [AllowAnonymous]
         [SwaggerResponse((int) HttpStatusCode.NotFound)]
-        [ProducesResponseType(typeof(JsonResult), 200)]
+        [ProducesResponseType(typeof(UserLoginResponse), 200)]
         [SwaggerOperation("Authentication user")]
-        [Route("token")]
-        public async Task<IActionResult> Token([Required] string email, [Required] string password)
+        [Route(Account.Login)]
+        public async Task<IActionResult> Login(UserLoginRequest request)
         {
-            var identity = await GetIdentity(email, password, "Token");
+            var identity = await GetIdentity(request.Email, request.Password, "Token");
 
             if (identity == null)
             {
                 _loggerService.Log(
-                    $"{DateTime.Now.ToString(CultureInfo.CurrentCulture)} Invalid username = {email} and password = {password} IP:{HttpContext.Request.Host.Host}");
+                    $"{DateTime.Now.ToString(CultureInfo.CurrentCulture)} Invalid username = {request.Email} and password = {request.Password} IP:{HttpContext.Request.Host.Host}");
                 _loggerService.LogEvent(
-                    $"Invalid username = {email} and password = {password} IP:{HttpContext.Request.Host.Host}");
+                    $"Invalid username = {request.Email} and password = {request.Password} IP:{HttpContext.Request.Host.Host}");
                 return Unauthorized("Invalid credentials.");
             }
 
@@ -62,17 +65,18 @@ namespace MQTT.Api.Controllers.Api
                     SecurityAlgorithms.HmacSha256));
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-            var response = new
+            var response = new UserLoginResponse()
             {
-                access_token = encodedJwt,
-                username = identity.Name,
-                nowBefore = DateTime.Now,
-                expires = now.Add(TimeSpan.FromMinutes(AuthOptions.Lifetime))
+                AccessToken = encodedJwt,
+                UserId = identity.Name,
+                NowBefore = DateTime.Now,
+                Expires = now.Add(TimeSpan.FromMinutes(AuthOptions.Lifetime)),
             };
+            
             _loggerService.Log(
-                $"{DateTime.Now.ToString("O")} Success login username = {email} and password = {password} IP:{HttpContext.Request.Host.Host}");
+                $"{DateTime.Now.ToString("O")} Success login username = {request.Email} and password = {request.Password} IP:{HttpContext.Request.Host.Host}");
             _loggerService.LogEvent(
-                $"Success login username = {email} and password = {password} IP:{HttpContext.Request.Host.Host}");
+                $"Success login username = {request.Email} and password = {request.Password} IP:{HttpContext.Request.Host.Host}");
 
             return Ok(response);
         }
@@ -80,7 +84,7 @@ namespace MQTT.Api.Controllers.Api
         private async Task<ClaimsIdentity?> GetIdentity(string email, string password, string authenticationType)
         {
             var user = await _db.Users.Include(d => d.Role)
-                .FirstOrDefaultAsync(d => d.Email == email && d.Password == password);
+                .FirstOrDefaultAsync(d => d.Email == email && d.Password == password.ToSHA1());
             if (user is {IsBlock: false})
             {
                 var claims = new List<Claim>

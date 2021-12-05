@@ -88,8 +88,6 @@ namespace MQTT.Api
 
                 if (env.IsDevelopment()) spa.UseReactDevelopmentServer("start");
             });
-
-
             app.Run(async context => { await context.Response.WriteAsync("Unknown request"); });
         }
     }

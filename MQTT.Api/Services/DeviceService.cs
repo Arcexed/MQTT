@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.Internal;
 using Microsoft.EntityFrameworkCore;
@@ -21,66 +22,99 @@ namespace MQTT.Api.Repository
             _mapper = mapper;
         }
 
-        public IEnumerable<DeviceViewModel> GetDevices(Guid userId)
+        public async Task<IEnumerable<DeviceViewModel>> GetDevicesAsync(Guid userId)
         {
-            var user = _db.Users.Include(d => d.Devices).First(x => x.Id == userId);
+            // TODO: FIX BUG (DEVICE DOES NOT RETURN LASTTHREE MEASUREMENTS AND EVENTS)
+            var user = await _db.Users.Include(d => d.Devices).FirstAsync(x => x.Id == userId);
             var devices = user.Devices;
             devices.ForAll(x => x.TakeMeasurements(3).TakeEvents(3));
             var devicesView =
                 _mapper.Map<IEnumerable<Device>, IEnumerable<DeviceViewModel>>(devices);
             return devicesView.ToList();
         }
+        
 
-        public DeviceViewModel? GetDeviceById(Guid deviceId, Guid userId)
+       
+
+        public async Task<DeviceViewModel> GetDeviceViewModelByIdAsync(Guid deviceId)
         {
+            var device = await _db.Devices.FirstOrDefaultAsync(d => d.Id == deviceId);
             DeviceViewModel deviceViewModel =
-                _mapper.Map<Device?, DeviceViewModel>(_db.Users
-                    .FirstOrDefault(x => x.Id == userId)?.Devices.FirstOrDefault(x => x.Id == deviceId)
-                    ?.TakeMeasurements(3).TakeEvents(3));
+                _mapper.Map<Device?, DeviceViewModel>(device);
             return deviceViewModel;
         }
 
-        public string InsertDevice(Device device, Guid userId)
+        public async Task<DeviceViewModel> GetDeviceViewModelByNameAsync(string deviceName)
         {
-            if (!_db.Devices.Any(d => d.Name == device.Name))
-            {
-                device.Id = Guid.NewGuid();
-                device.CreatingDate = DateTime.Now;
-                _db.Users.FirstOrDefault(d => d.Id == userId)?.Devices.Add(device);
-                Save();
-                return "Success";
-            }
-
-            return "Device is added";
+            var device = await _db.Devices.FirstOrDefaultAsync(d => d.Name == deviceName);
+            var deviceViewModel = _mapper.Map<Device, DeviceViewModel>(device);
+            return deviceViewModel;
         }
 
-        public string DeleteDevice(Device device, Guid userId)
+        public async Task<Device> GetDeviceByIdAsync(Guid deviceId)
         {
-            var deviceToDelete = _db.Devices.FirstOrDefault(d => d == device && d.User.Id == userId);
-            _db.Devices.Remove(deviceToDelete!);
-            Save();
-            return "Success";
+            var device = await _db.Devices.FirstOrDefaultAsync(d => d.Id == deviceId);
+            return device;
         }
 
-        public string UpdateDevice(Device device, Guid userId)
+        public async Task<bool> InsertDeviceAsync(Device device, Guid userId)
         {
-            var currentDevice = _db.Devices.FirstOrDefault(d => d.Id == device.Id && d.User.Id == userId);
-            if (currentDevice != null)
-            {
-                currentDevice.EditingDate = DateTime.Now;
-                currentDevice.IsPublic = device.IsPublic;
-                currentDevice.MqttToken = device.MqttToken;
-                currentDevice.Geo = device.Geo;
-                currentDevice.Description = device.Description;
-                Save();
-                return "Success updating";
-            }
-            return "Failed updating";
+            var user = await _db.Users.Include(d=>d.Devices).FirstAsync(d => d.Id == userId);
+            device.Id = Guid.NewGuid();
+            device.CreatingDate = DateTime.Now;
+            device.User = user;
+            device.MqttToken = Guid.NewGuid().ToString();
+            _db.Devices.Add(device);
+            return await SaveAsync();;
+
         }
 
-        public void Save()
+        public async Task<bool> DeleteDeviceAsync(Device device)
         {
-            _db.SaveChanges();
+            _db.Devices.Remove(device);
+            return await SaveAsync();
+        }
+        
+        
+        // MAYBE OK
+        public async Task<DeviceViewModel> UpdateDeviceAsync(Device device)
+        {
+            device.EditingDate = DateTime.Now;
+            _db.Devices.Update(device);
+            await SaveAsync();
+            return _mapper.Map<Device, DeviceViewModel>(device);
+        }
+
+        public async Task<bool> DeviceNameIsExists(string deviceName)
+        {
+            var result = await _db.Devices.AnyAsync(d => d.Name == deviceName);
+            return result;
+        }
+
+
+        // OK
+        public async Task<bool> SaveAsync()
+        {
+            var created = await _db.SaveChangesAsync();
+            return created > 0;
+        }
+
+        
+        
+        // OK
+        public async Task<User> GetUserByIdAsync(Guid userId)
+        {
+            return await _db.Users.FirstOrDefaultAsync(d => d.Id == userId);
+        }
+
+        
+        
+        // OK
+        public async Task<bool> UserOwnsDeviceAsync(Guid deviceId, Guid userId)
+        {
+            var device = await _db.Devices.FirstOrDefaultAsync(d => d.Id == deviceId && d.User.Id == userId);
+
+            return device != null ? true : false;
         }
     }
 }

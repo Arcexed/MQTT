@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MQTT.Data", "MQTT.Data\MQTT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MQTT.Client", "MQTT.Client\MQTT.Client.csproj", "{661DEC48-1D5C-46D0-9476-38953B9C72A9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MQTT.IntegrationTests", "MQTT.IntegrationTests\MQTT.IntegrationTests.csproj", "{15DEE197-6D6E-4B1C-8E66-C78BC22B278F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{661DEC48-1D5C-46D0-9476-38953B9C72A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{661DEC48-1D5C-46D0-9476-38953B9C72A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{661DEC48-1D5C-46D0-9476-38953B9C72A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15DEE197-6D6E-4B1C-8E66-C78BC22B278F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15DEE197-6D6E-4B1C-8E66-C78BC22B278F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15DEE197-6D6E-4B1C-8E66-C78BC22B278F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15DEE197-6D6E-4B1C-8E66-C78BC22B278F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

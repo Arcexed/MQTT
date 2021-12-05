@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MQTT.Api.Contracts.v1.Request
 {
     public class CreateMeasurementRequest
     {
-        [FromRoute] public Guid DeviceId { get; set; } 
         public double AtmosphericPressure { get; set; }
         public double Temperature { get; set; }
         public double AirHumidity { get; set; }

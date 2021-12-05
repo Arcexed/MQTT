@@ -42,8 +42,4 @@
         <_ContentIncludedByDefault Remove="ClientApp\test\public\manifest.json" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Contracts\v1\Response" />
-    </ItemGroup>
-
 </Project>

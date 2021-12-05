@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using MQTT.Api.Contracts.v1.Request;
 using MQTT.Data;
 using MQTT.Data.Entities;
@@ -22,40 +24,41 @@ namespace MQTT.Api.Repository
             _mapper = mapper;
         }
         
-        public User? GetUserById(Guid userId)
+        public async Task<User?> GetUserByIdAsync(Guid userId)
         {
-            return _db.Users.FirstOrDefault(d => d.Id == userId);
+            return await _db.Users.FirstOrDefaultAsync(d => d.Id == userId);
         }
 
-        public Device? GetDeviceById(Guid deviceId)
+        public async Task<Device?> GetDeviceByIdAsync(Guid deviceId)
         {
-            return _db.Devices.FirstOrDefault(d => d.Id == deviceId);
+            return await _db.Devices.FirstOrDefaultAsync(d => d.Id == deviceId);
         }
         
-        public IEnumerable<MeasurementViewModel>? GetMeasurementsByDevice(Device device, User user,
+        public async Task<IEnumerable<MeasurementViewModel>?> GetMeasurementsByDeviceAsync(Device device, User user,
             DateTime? startDate, DateTime? endDate, int page, int limit)
         {
+            var measurements = _db.Measurements
+                .Where(d => d.Device == device && (endDate != null && startDate != null
+                    ? d.Date > startDate && d.Date < endDate
+                    : true) && d.Device.User == user)
+                .Skip(limit * (page - 1))
+                .OrderByDescending(d => d.Date)
+                .Take(limit);
             var measurementViewModels =
-                    _mapper.Map<IEnumerable<Measurement>, IEnumerable<MeasurementViewModel>>
-                    (_db.Measurements
-                        .Where(d => d.Device == device && (endDate != null && startDate != null
-                            ? d.Date > startDate && d.Date < endDate
-                            : true) && d.Device.User == user)
-                        .Skip(limit * (page - 1))
-                        .OrderByDescending(d => d.Date)
-                        .Take(limit));
-                return measurementViewModels;
+                _mapper.Map<IEnumerable<Measurement>, IEnumerable<MeasurementViewModel>>
+                    (measurements);
+            return measurementViewModels;
         }
-        public MeasurementViewModel InsertMeasurement(Measurement measurement)
+        public async Task<MeasurementViewModel> InsertMeasurement(Measurement measurement)
         {
-            _db.Measurements.Add(measurement);
-            Save();
+            await _db.Measurements.AddAsync(measurement);
+            await Save();
             return _mapper.Map<MeasurementViewModel>(measurement);
         }
 
-        public void Save()
+        public async Task Save()
         {
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
         }
     }
 }

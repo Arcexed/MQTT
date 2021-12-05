@@ -31,7 +31,7 @@ namespace MQTT.Api.Services
         public IMqttServer Server;
 
         public MqttService(LoggerService loggerService)
-        {
+                 {
             _loggerService = loggerService;
         }
 

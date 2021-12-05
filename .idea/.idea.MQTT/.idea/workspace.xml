@@ -27,65 +27,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1aef981b-882b-4864-b7b7-5e45bf597cf4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/Contracts/v1/Request/DeviceController/CreateDeviceRequest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/Contracts/v1/Request/DeviceController/GetDeviceByIdRequest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/Contracts/v1/Request/MeasurementController/CreateMeasurementRequest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/Contracts/v1/Request/MeasurementController/GetMeasurementRequest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/Options/ApiRoutes.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/Services/IDeviceService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/Services/IMeasurementService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MQTT.Api/Services/MeasurementService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MQTT.Api/Contracts/v1/Request/AccountController/UserLoginRequest.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MQTT.Api/Contracts/v1/Request/DeviceController/UpdateDeviceRequest.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MQTT.Api/Contracts/v1/Response/AccountController/UserLoginResponse.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MQTT.IntegrationTests/AccountControllerTests.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MQTT.IntegrationTests/DeviceControllerTests.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.MQTT/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MQTT/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/Auth/AuthOptions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Options/AuthOptions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/Reset.css" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/Reset.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/components/Header/Header.css" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/components/Header/Header.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/components/Header/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/components/Header/Header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/components/Header/icons/Events.svg" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/components/Header/icons/Events.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/components/Header/icons/Search.svg" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/components/Header/icons/Search.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/components/Sidebar/Sidebar.css" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/components/Sidebar/Sidebar.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/components/Sidebar/Sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/components/Sidebar/Sidebar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/components/Sidebar/icons/Overview.svg" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/components/Sidebar/icons/Overview.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/components/Sidebar/icons/logo.svg" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/components/Sidebar/icons/logo.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/logo.svg" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/logo.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/models/device.ts" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/models/device.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/models/eventsDevice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/models/eventsDevice.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/models/eventsUser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/models/eventsUser.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/models/measurement.ts" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/models/measurement.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/models/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/models/user.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/reportWebVitals.ts" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/reportWebVitals.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/setupTests.ts" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/ClientApp/src/setupTests.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/Contracts/v1/Request/DeviceController/CreateDeviceRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Contracts/v1/Request/DeviceController/CreateDeviceRequest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/Contracts/v1/Request/DeviceController/GetDeviceByIdRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Contracts/v1/Request/DeviceController/GetDeviceByIdRequest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/Contracts/v1/Request/MeasurementController/CreateMeasurementRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Contracts/v1/Request/MeasurementController/CreateMeasurementRequest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/Contracts/v1/Request/MeasurementController/GetMeasurementRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Contracts/v1/Request/MeasurementController/GetMeasurementRequest.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Api/Controllers/Api/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Controllers/Api/AccountController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/Controllers/Api/AdminController.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Api/Controllers/Api/DeviceController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Controllers/Api/DeviceController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Api/Controllers/Api/MeasurementsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Controllers/Api/MeasurementsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/Controllers/Api/ReportController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Controllers/Api/ReportController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/Controllers/Api/ServiceController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/Controllers/Mqtt/DeviceController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Controllers/Mqtt/DeviceController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Api/Extensions/ConfigureExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Extensions/ConfigureExtensions.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Api/MQTT.Api.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/MQTT.Api.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/Models/AppSettings.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/Models/KestrelSettings.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/Pages/Error.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Pages/Error.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/Pages/Error.cshtml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Pages/Error.cshtml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/Pages/_ViewImports.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Pages/_ViewImports.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/Repository/DeviceRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Services/DeviceService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/Repository/IDeviceRepository.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Api/Services/LoggerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Services/LoggerService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/Options/ApiRoutes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Options/ApiRoutes.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Properties/launchSettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/Services/DeviceService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Services/DeviceService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/Services/IDeviceService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Services/IDeviceService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/Services/IMeasurementService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Services/IMeasurementService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.Api/Services/MeasurementService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Services/MeasurementService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Api/Services/MqttService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Services/MqttService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MQTT.Api/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Api/Startup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Data/Entities/Device.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/Entities/Device.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Data/Entities/Event.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/Entities/Event.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Data/Entities/EventsDevice.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/Entities/EventsDevice.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Data/Entities/Measurement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Data/Entities/Measurement.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Shared/DBO/ReportViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Shared/DBO/ReportViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTT.Shared/Extensions/ReportViewGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.Shared/Extensions/ReportViewGenerator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTT.sln" beforeDir="false" afterPath="$PROJECT_DIR$/MQTT.sln" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,9 +96,14 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8f88dc2109e24122aeb72941f9e9f22d56778/7/SqlServerDbContextOptionsBuilderExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/JetBrains/Shared/vAny/SourcesCache/879e64150fe442079fadd555ede677aa8f5788/233/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/JetBrains/Shared/vAny/SourcesCache/f727163ee11949a8bf0479531b672d911bbb78/13A/ResourceInvoker.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/JetBrains/Shared/vAny/SourcesCache/879e64150fe442079fadd555ede677aa8f5788/2C2/AsyncTaskMethodBuilderT.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/754cc28255e3437b9f4e691658eb26a748200/BA/IMqttServerApplicationMessageInterceptor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/JetBrains/Shared/vAny/SourcesCache/f727163ee11949a8bf0479531b672d911bbb78/10F/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/JetBrains/Shared/vAny/SourcesCache/67a925642afd437a8e9f9826815ed6ec98578/17/EndpointMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bdd96c5f630a45298dacc07d80deb23b29190/A/ServiceProvider.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/JetBrains/Shared/vAny/SourcesCache/879e64150fe442079fadd555ede677aa8f5788/1D5/TaskContinuation.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/JetBrains/Shared/vAny/SourcesCache/879e64150fe442079fadd555ede677aa8f5788/1D0/Task.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/JetBrains/Shared/vAny/SourcesCache/879e64150fe442079fadd555ede677aa8f5788/1B2/ExecutionContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bc0dac173c9c44d7ab6b9ebd266b859e66590/46/ThrowHelper.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/ed92340b5670447ab78a69a564a858d31bfb88/6B/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bdd96c5f630a45298dacc07d80deb23b29190/F/CallSiteValidator.cs" root0="SKIP_HIGHLIGHTING" />
@@ -141,6 +111,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b938043d271c482fab2e70a6b8b5c181133178/150/SingleQueryingEnumerable.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/619de5eaceea499387688c8799556b809600/ab/e7d6e3cf/MqttRouter.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/879e64150fe442079fadd555ede677aa8f5788/394/FileStream.Windows.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/JetBrains/Shared/vAny/SourcesCache/879e64150fe442079fadd555ede677aa8f5788/37/Object.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/619de5eaceea499387688c8799556b809600/76/88ddd55c/MqttRouteAttribute.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/619de5eaceea499387688c8799556b809600/f5/57c2e9d6/RouteConstraint.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d7a3ca84869f48e0aa5c354ee22cb1ee1b190/ef/d8840ed7/ILogger`1.cs" root0="SKIP_HIGHLIGHTING" />
@@ -154,14 +125,18 @@
     <setting file="file://$USER_HOME$/AppData/Local/JetBrains/Shared/vAny/SourcesCache/b938043d271c482fab2e70a6b8b5c181133178/150/SingleQueryingEnumerable.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bc3d7024e97f4f818de53bc3c23872b48f5790/233/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bc3d7024e97f4f818de53bc3c23872b48f5790/394/FileStream.Windows.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/JetBrains/Shared/vAny/SourcesCache/0e99f43339e642af832c2f931a8312c285778/20/Socket.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2b369d19768947fcba24b2d54b76014c1bbb78/170/ControllerFactoryProvider.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/MQTT.Api/Controllers/Api/AccountController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bc3d7024e97f4f818de53bc3c23872b48f5790/1B2/ExecutionContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/MQTT.Api/Controllers/Api/MeasurementsController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/JetBrains/Shared/vAny/SourcesCache/b5a7728d8fb6400c988dea54f0d42189a578/5/FeatureReferences.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f6c16478e39642568a8ee6c8b6db92a4d7590/6/ThrowHelper.Serialization.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bc3d7024e97f4f818de53bc3c23872b48f5790/1D0/Task.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/JetBrains/Shared/vAny/SourcesCache/f727163ee11949a8bf0479531b672d911bbb78/38/ControllerBase.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bc3d7024e97f4f818de53bc3c23872b48f5790/1A2/ThreadPool.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/JetBrains/Shared/vAny/SourcesCache/ed92340b5670447ab78a69a564a858d31bfb88/6B/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/JetBrains/Shared/vAny/DecompilerCache/decompiler/377b61b613ea444f826f377d9474ffca3c9a8/84/24c5b4b8/TestInvoker`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/JetBrains/Shared/vAny/SourcesCache/ae604afeb6574617a94df2a743c6288e46000/61/PrimitiveHelper.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/AppData/Local/JetBrains/Shared/vAny/DecompilerCache/decompiler/f727163ee11949a8bf0479531b672d911bbb78/e7/d3452ec6/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
@@ -179,7 +154,6 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="XThreadsFramesViewSplitterKey" value="0.23909532" />
     <property name="last_opened_file_path" value="$USER_HOME$/Downloads/mqtt-client-dotnet-core-master/Mqtt.Client.AspNetCore.csproj" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -330,7 +304,10 @@
       <workItem from="1638231778286" duration="544000" />
       <workItem from="1638232520492" duration="22734000" />
       <workItem from="1638309369477" duration="4871000" />
-      <workItem from="1638383212294" duration="13035000" />
+      <workItem from="1638383212294" duration="16477000" />
+      <workItem from="1638456294818" duration="49465000" />
+      <workItem from="1638629672729" duration="12163000" />
+      <workItem from="1638721898314" duration="5177000" />
     </task>
     <task id="LOCAL-00001" summary="Testing functionality and initial migration.">
       <created>1632068867120</created>
@@ -479,7 +456,14 @@
       <option name="project" value="LOCAL" />
       <updated>1638283828770</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="does not work / Must fixing :D">
+      <created>1638432072352</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1638432072352</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -717,7 +701,8 @@
     <MESSAGE value="Some changes to the unversioned files" />
     <MESSAGE value="working" />
     <MESSAGE value="Implement microservice architecture and some refactoring / Must be refactored all controllers and implement all logic in services" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implement microservice architecture and some refactoring / Must be refactored all controllers and implement all logic in services" />
+    <MESSAGE value="does not work / Must fixing :D" />
+    <option name="LAST_COMMIT_MESSAGE" value="does not work / Must fixing :D" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -778,29 +763,139 @@
           <line>180</line>
           <properties documentPath="C:\Users\la046\RiderProjects\MQTT\MQTT.Api\Services\MqttService.cs" initialLine="183" containingFunctionPresentation="method 'HandleClientUnsubscribedTopicAsync'">
             <startOffsets>
-              <option value="3781" />
-              <option value="3805" />
+              <option value="3790" />
+              <option value="3814" />
             </startOffsets>
             <endOffsets>
-              <option value="3878" />
-              <option value="3874" />
+              <option value="3887" />
+              <option value="3883" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="42" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/MQTT.Api/Controllers/Api/MeasurementsController.cs</url>
-          <line>41</line>
+          <line>42</line>
           <properties documentPath="C:\Users\la046\RiderProjects\MQTT\MQTT.Api\Controllers\Api\MeasurementsController.cs" initialLine="41" containingFunctionPresentation="method 'AddMeasurements'">
             <startOffsets>
-              <option value="1197" />
+              <option value="1243" />
             </startOffsets>
             <endOffsets>
-              <option value="1262" />
+              <option value="1311" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="43" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/MQTT.Api/Controllers/Api/DeviceController.cs</url>
+          <line>94</line>
+          <properties documentPath="C:\Users\la046\RiderProjects\MQTT\MQTT.Api\Controllers\Api\DeviceController.cs" initialLine="89" containingFunctionPresentation="method 'UpdateDevice'">
+            <startOffsets>
+              <option value="3523" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3604" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="44" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/MQTT.Api/Services/DeviceService.cs</url>
+          <line>62</line>
+          <properties documentPath="C:\Users\la046\RiderProjects\MQTT\MQTT.Api\Services\DeviceService.cs" initialLine="54" containingFunctionPresentation="method 'InsertDeviceAsync'">
+            <startOffsets>
+              <option value="2189" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2216" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="54" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/MQTT.Api/Services/DeviceService.cs</url>
+          <line>63</line>
+          <properties documentPath="C:\Users\la046\RiderProjects\MQTT\MQTT.Api\Services\DeviceService.cs" initialLine="56" containingFunctionPresentation="method 'InsertDeviceAsync'">
+            <startOffsets>
+              <option value="2229" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2264" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="55" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/MQTT.Api/Controllers/Api/DeviceController.cs</url>
+          <line>64</line>
+          <properties documentPath="C:\Users\la046\RiderProjects\MQTT\MQTT.Api\Controllers\Api\DeviceController.cs" initialLine="64" containingFunctionPresentation="method 'AddDevice'">
+            <startOffsets>
+              <option value="2341" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2420" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="61" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/MQTT.Api/Controllers/Api/DeviceController.cs</url>
+          <line>79</line>
+          <properties documentPath="C:\Users\la046\RiderProjects\MQTT\MQTT.Api\Controllers\Api\DeviceController.cs" initialLine="79" containingFunctionPresentation="method 'AddDevice'">
+            <startOffsets>
+              <option value="2970" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2997" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="62" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/MQTT.Api/Controllers/Api/DeviceController.cs</url>
+          <line>81</line>
+          <properties documentPath="C:\Users\la046\RiderProjects\MQTT\MQTT.Api\Controllers\Api\DeviceController.cs" initialLine="81" containingFunctionPresentation="method 'AddDevice'">
+            <startOffsets>
+              <option value="3032" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3075" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="63" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/MQTT.Api/Controllers/Api/DeviceController.cs</url>
+          <line>83</line>
+          <properties documentPath="C:\Users\la046\RiderProjects\MQTT\MQTT.Api\Controllers\Api\DeviceController.cs" initialLine="83" containingFunctionPresentation="method 'AddDevice'">
+            <startOffsets>
+              <option value="3102" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3145" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="64" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/MQTT.IntegrationTests/AccountControllerTests.cs</url>
+          <line>16</line>
+          <properties documentPath="C:\Users\la046\RiderProjects\MQTT\MQTT.IntegrationTests\AccountControllerTests.cs" initialLine="16" containingFunctionPresentation="method 'AuthWithInvalidCredentialsWhyDoesNotContainsInDatabase_ReturnBadRequest'">
+            <startOffsets>
+              <option value="479" />
+            </startOffsets>
+            <endOffsets>
+              <option value="629" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="66" />
+        </line-breakpoint>
+        <breakpoint enabled="true" type="DotNet Exception Breakpoints">
+          <properties exception="System.InvalidOperationException" isInternal="false" displayValue="InvalidOperationException" namespaceName="System">
+            <option name="internal" value="false" />
+          </properties>
+          <option name="timeStamp" value="46" />
+        </breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <pin-to-top-manager>

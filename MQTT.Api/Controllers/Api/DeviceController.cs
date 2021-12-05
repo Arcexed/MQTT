@@ -1,6 +1,7 @@
-﻿/*using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MQTT.Api.Contracts.v1.Request.DeviceController;
@@ -27,55 +28,104 @@ namespace MQTT.Api.Controllers.Api
 
         private Guid UserId => Guid.Parse(User.Identity?.Name!);
 
-        [HttpGet(ApiRoutes.Device.GetAll)]
+        [HttpGet(Devices.GetAll)]
         [SwaggerResponse((int) HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(IEnumerable<DeviceViewModel>), 200)]
         [SwaggerOperation("Get All Device For User")]
-        public IActionResult GetAllDevices()
+        public async Task<IActionResult> GetAllDevices()
         {
-            return Ok(_deviceService.GetDevices(UserId));
+            var devices = await _deviceService.GetDevicesAsync(UserId);
+            return Ok(devices);
         }
 
         [HttpGet]
         [SwaggerResponse((int) HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(DeviceViewModel), 200)]
         [SwaggerOperation("Get Device For User")]
-        [Route("{deviceId}")]
-        public IActionResult GetDeviceById(GetDeviceByIdRequest request)
+        [Route(Devices.Get)]
+        public async Task<IActionResult> GetDeviceById([FromRoute] Guid deviceId, [FromRoute] GetDeviceByIdRequest request)
         {
-            var deviceViewModel = _deviceService.GetDeviceById(request.DeviceId, UserId);
-            return Ok(deviceViewModel);
-        }
+            var userIsOwnDevice = await _deviceService.UserOwnsDeviceAsync(deviceId, UserId);
+            if (userIsOwnDevice)
+            {
+                var deviceViewModel = await _deviceService.GetDeviceViewModelByIdAsync(deviceId);
+                return Ok(deviceViewModel);
+            }
+            return BadRequest("Not found device");
+            
+        }   
 
         [HttpPut]
         [SwaggerResponse((int) HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(string), 200)]
         [SwaggerOperation("Add Device For User")]
-        [Route("Add")]
-        public IActionResult AddDeviceGet(CreateDeviceRequest device)
+        [Route(Devices.Create)]
+        public async Task<IActionResult> AddDevice(CreateDeviceRequest request)
         {
-            return Ok(_deviceService.InsertDevice(device, UserId));
+            var deviceNameIsExists = await _deviceService.DeviceNameIsExists(request.Name);
+            if (!deviceNameIsExists)
+            {
+                Device device = new Device()
+                {
+                    Name = request.Name,
+                    Description = request.Description,
+                    Geo = request.Geo,
+                    
+
+                };
+                var result = await _deviceService.InsertDeviceAsync(device, UserId);
+                if (result)
+                {
+                    var deviceViewModel = await _deviceService.GetDeviceViewModelByNameAsync(request.Name);
+                    return Ok(deviceViewModel);
+                }
+                return BadRequest("Adding unsuccessfully");
+            }
+            return BadRequest("Device name is exists");
         }
 
-
+        
         [HttpPatch]
         [SwaggerResponse((int) HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(string), 200)]
-        [SwaggerOperation("Edit Device For User")]
-        [Route("Edit")]
-        public IActionResult EditDevice([FromBody] Device device)
+        [SwaggerOperation("Update Device For User")]
+        [Route(Devices.Update)]
+        public async Task<IActionResult> UpdateDevice([FromRoute] Guid deviceId, [FromBody] UpdateDeviceRequest request)
         {
-            return Ok(_deviceService.UpdateDevice(device, UserId));
+            var userIsOwnDevice = await _deviceService.UserOwnsDeviceAsync(deviceId, UserId);
+            if (userIsOwnDevice)
+            {
+                var device = await _deviceService.GetDeviceByIdAsync(deviceId);
+                device.Geo = request.Geo;
+                device.Description = request.Description;
+                
+                var updatedDevice = await _deviceService.UpdateDeviceAsync(device);
+                return Ok(updatedDevice);
+            }
+            return NotFound("Not found device");
         }
-
+        
+        
         [HttpDelete]
         [SwaggerResponse((int) HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(string), 200)]
         [SwaggerOperation("Delete Device For User")]
-        [Route("Delete")]
-        public IActionResult DeleteDevice([FromBody] Device device)
+        [Route(Devices.Delete)]
+        public async Task<IActionResult> DeleteDevice([FromRoute] Guid deviceId)
         {
-            return Ok(_deviceService.DeleteDevice(device, UserId));
+            var userOwnsDevice = await _deviceService.UserOwnsDeviceAsync(deviceId, UserId);
+            if (userOwnsDevice)
+            {
+                var device = await _deviceService.GetDeviceByIdAsync(deviceId);
+                var isSuccess = await _deviceService.DeleteDeviceAsync(device);
+                if (isSuccess)
+                {
+                    return Ok("Success delete");
+                }
+                return BadRequest("Failed deleting");
+            }
+
+            return BadRequest("Device does not found");
         }
     }
-}*/
+}
