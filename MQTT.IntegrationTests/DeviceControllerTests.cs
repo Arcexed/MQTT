@@ -15,7 +15,7 @@ namespace MQTT.IntegrationTests
     public class DeviceControllerTests : IntegrationTest
     {
         [Fact]
-        public async Task GetAll_WithoutAnyDevices_ReturnsEmptyResponse()
+        public async Task GetAll_WithAnyDevices_ReturnsEmptyResponseOrList()
         {
             await AuthenticateAsync();
 
